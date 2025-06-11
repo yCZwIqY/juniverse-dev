@@ -1,0 +1,67 @@
+# 📦 Dependencies
+**/node_modules/
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# ⚙️ Build outputs
+**/dist/
+**/build/
+**/.next/
+**/out/
+**/*.tsbuildinfo
+**/*.js
+**/*.js.map
+
+# 📁 Production
+**/.vercel/
+
+# 🧪 Testing
+**/coverage/
+**/.nyc_output/
+
+# 🐞 Logs & Debug
+logs
+**/*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+**/*.pid
+**/*.seed
+**/*.pid.lock
+report.*.json
+
+# 🔐 Environment
+.env
+.env.*
+!.env.example
+
+# 💻 IDEs & Editors
+**/.idea/
+**/.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+**/*.sublime-workspace
+**/.project
+**/.classpath
+**/.c9/
+**/*.launch
+**/.settings/
+
+# 🖥 OS
+**/.DS_Store
+
+# 🔧 Misc
+**/*.pem
+**/.temp/
+**/.tmp/
+apps/**/next-env.d.ts
