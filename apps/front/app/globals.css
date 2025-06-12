@@ -1,26 +1,46 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    padding: 0;
+    margin: 0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@layer utilities {
+    .bg-primary-gradient {
+        background-image: linear-gradient(
+                to right,
+                var(--color-gradient-from),
+                var(--color-gradient-to)
+        );
+    }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@theme {
+    --color-primary: #4DBBFF;
+    --color-primary-light: #91D5FF;
+    --color-primary-lighter: #D0EDFF;
+    --color-gray: #E8E8E8;
+    --color-gray-dark: #8A8D8E;
+    --color-primary-active: #7AB4FF;
+
+    --color-gradient-from: #69C6FF;
+    --color-gradient-to: #7BB4FF;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+.text-3d {
+    @apply font-bold text-white;
+    text-shadow:
+            0 1px 0 #ccc,
+            0 2px 0 #c9c9c9,
+            0 3px 0 #bbb,
+            0 4px 0 #b9b9b9,
+            0 5px 0 #aaa,
+            0 6px 1px rgba(0, 0, 0, 0.1),
+            0 0 5px rgba(0, 0, 0, 0.1),
+            0 1px 3px rgba(0, 0, 0, 0.3),
+            0 3px 5px rgba(0, 0, 0, 0.2),
+            0 5px 10px rgba(0, 0, 0, 0.25),
+            0 10px 10px rgba(0, 0, 0, 0.2),
+            0 20px 20px rgba(0, 0, 0, 0.15);
 }
