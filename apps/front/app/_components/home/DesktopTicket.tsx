@@ -103,7 +103,7 @@ const DesktopTicket = () => {
               transform="translate(163.551 373.464)"
               fill="white"
               xmlSpace="preserve"
-              className="whitespace-pre text-[20px] font-medium"
+              className="whitespace-pre text-xl font-medium"
               style={{
                 textShadow: '1px 1px 0px rgba(0,0,0,0.2)',
               }}
@@ -131,7 +131,7 @@ const DesktopTicket = () => {
               transform="translate(489.366 373.464)"
               fill="white"
               xmlSpace="preserve"
-              className="whitespace-pre text-20px font-medium"
+              className="whitespace-pre text-xl font-medium"
               style={{
                 textShadow: '1px 1px 0px rgba(0,0,0,0.2)',
               }}
@@ -159,7 +159,7 @@ const DesktopTicket = () => {
               transform="translate(815.181 373.464)"
               fill="white"
               xmlSpace="preserve"
-              className="whitespace-pre font-medium"
+              className={'whitespace-pre text-xl font-medium'}
               style={{
                 textShadow: '1px 1px 0px rgba(0,0,0,0.2)',
               }}
@@ -217,7 +217,7 @@ const DesktopTicket = () => {
               transform="translate(163.551 448.156)"
               fill="white"
               xmlSpace="preserve"
-              className="whitespace-pre text-[20px] font-medium"
+              className="whitespace-pre text-xl font-medium"
               style={{
                 textShadow: '1px 1px 0px rgba(0,0,0,0.2)',
               }}
@@ -231,7 +231,7 @@ const DesktopTicket = () => {
               transform="translate(489.366 448.156)"
               fill="white"
               xmlSpace="preserve"
-              className="whitespace-pre text-[20px] font-medium"
+              className="whitespace-pre text-xl font-medium"
               style={{
                 textShadow: '1px 1px 0px rgba(0,0,0,0.2)',
               }}
@@ -259,7 +259,7 @@ const DesktopTicket = () => {
               transform="translate(815.181 448.156)"
               fill="white"
               xmlSpace="preserve"
-              className="whitespace-pre text-[20px] font-medium"
+              className="whitespace-pre text-xl font-medium"
               style={{
                 textShadow: '1px 1px 0px rgba(0,0,0,0.2)',
               }}
@@ -292,9 +292,9 @@ const DesktopTicket = () => {
             <rect x="73.3293" y="46.2854" width="1416.74" height="528.152" stroke="white" strokeWidth="5" />
 
             {/* 우측 패널 텍스트들 */}
-            <text transform="translate(1274 161.5)" fill="#4DBBFF" xmlSpace="preserve" className="whitespace-pre text-[24px] font-bold">
+            <text transform="translate(1274 161.5)" fill="#4DBBFF" xmlSpace="preserve" className="whitespace-pre text-2xl font-bold">
               <tspan x="0" y="23.2273">
-                Shortcut
+                MENU
               </tspan>
             </text>
 
@@ -302,10 +302,10 @@ const DesktopTicket = () => {
               transform="translate(1274 223.5)"
               fill="#91D5FF"
               xmlSpace="preserve"
-              className={'whitespace-pre text-[24px] font-medium  hover:text-shadow-xs hover:font-bold cursor-pointer '}
+              className={'whitespace-pre text-2xl font-medium  hover:text-shadow-xs hover:font-bold cursor-pointer '}
             >
               <tspan x="0" y="23.2273">
-                ABOUT ME
+                <a href={'#about-me'}> ABOUT ME</a>
               </tspan>
             </text>
 
@@ -313,7 +313,7 @@ const DesktopTicket = () => {
               transform="translate(1274 285.5)"
               fill="#91D5FF"
               xmlSpace="preserve"
-              className={'whitespace-pre text-[24px] font-medium hover:text-shadow-xs hover:font-bold cursor-pointer '}
+              className={'whitespace-pre text-2xl font-medium hover:text-shadow-xs hover:font-bold cursor-pointer '}
             >
               <tspan x="0" y="23.2273">
                 SKILL
@@ -324,7 +324,7 @@ const DesktopTicket = () => {
               transform="translate(1274 347.5)"
               fill="#91D5FF"
               xmlSpace="preserve"
-              className={'whitespace-pre text-[24px] font-medium hover:text-shadow-xs hover:font-bold cursor-pointer '}
+              className={'whitespace-pre text-2xl font-medium hover:text-shadow-xs hover:font-bold cursor-pointer '}
             >
               <tspan x="0" y="23.2273">
                 PROJECT
@@ -335,7 +335,7 @@ const DesktopTicket = () => {
               transform="translate(1274 409.5)"
               fill="#91D5FF"
               xmlSpace="preserve"
-              className={'whitespace-pre text-[24px] font-medium hover:text-shadow-xs hover:font-bold cursor-pointer '}
+              className={'whitespace-pre text-2xl font-medium hover:text-shadow-xs hover:font-bold cursor-pointer '}
             >
               <tspan x="0" y="23.2273">
                 BLOG
