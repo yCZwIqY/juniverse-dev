@@ -1,8 +1,16 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { Career } from './career.entity';
 import { CareerService } from './career.service';
 
-@Controller('career')
+@Controller('api/careers')
 export class CareerController {
   constructor(private readonly careerService: CareerService) {}
 
