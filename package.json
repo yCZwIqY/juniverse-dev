@@ -6,8 +6,10 @@
   "scripts": {
     "dev:front": "pnpm --filter front dev",
     "dev:back": "pnpm --filter back start:dev",
+    "dev:admin": "pnpm --filter admin dev",
     "build:front": "pnpm --filter front build",
-    "build:back": "pnpm --filter back build"
+    "build:back": "pnpm --filter back build",
+    "build:admin": "pnpm --filter admin build"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +19,7 @@
     "libs/*"
   ],
   "dependencies": {
+    "@tanstack/react-query": "^5.80.7",
     "ky": "1.8.1",
     "next": "15.3.3",
     "react": "19.1.0",
