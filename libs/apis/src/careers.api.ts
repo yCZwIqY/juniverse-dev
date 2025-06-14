@@ -1,4 +1,4 @@
-import { Career } from '@shared/career';
+import { Career } from 'shared-types';
 import { get, post, put, remove } from './client/apiClient';
 
 export const getAllCareers = () => get<Career[]>('careers');

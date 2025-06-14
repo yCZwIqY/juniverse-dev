@@ -9,7 +9,6 @@ import { Badge } from '@/components/ui/badge';
 interface FormMultiInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   name: string;
-  required?: boolean;
   options: {
     label: string;
     value: string;
@@ -17,7 +16,7 @@ interface FormMultiInputProps extends InputHTMLAttributes<HTMLInputElement> {
   onCreate?: (value: string) => void;
 }
 
-const FormMultiInput = ({ label, name, required = true, options, onCreate, ...props }: FormMultiInputProps) => {
+const FormMultiInput = ({ label, name, options, onCreate }: FormMultiInputProps) => {
   const { control } = useFormContext();
   const [open, setOpen] = React.useState(false);
   const [tempValue, setTempValue] = React.useState('');

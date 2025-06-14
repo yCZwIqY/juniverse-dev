@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Tech } from 'shared-types';
 import { FormProvider, useForm } from 'react-hook-form';
 import FormTextInput from '@/components/form/FormTextInput';
 import FormDropdown from '@/components/form/FormDropdown';
 import { Button } from '@/components/ui/button';
-import { useCreateTech, useUpdateTech } from 'apis';
+import { useCreateTech } from 'apis';
 import { useQueryClient } from '@tanstack/react-query';
 
 const LEVEL = [

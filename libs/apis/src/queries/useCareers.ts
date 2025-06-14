@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { getAllCareers, getCareer, postCareer, putCareer, removeCareer } from '../careers.api';
-import { Career } from '@shared/career';
+import { Career } from 'shared-types';
 
 export const useCareers = () => {
   return useQuery({

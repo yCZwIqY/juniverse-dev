@@ -1,6 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { getAllTech, postTech, putTech, removeTech } from '../tech.api';
-import { Tech } from '@shared/tech';
+import { Tech } from 'shared-types';
 
 export const useTech = () =>
   useQuery({

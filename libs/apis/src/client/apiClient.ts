@@ -1,5 +1,5 @@
 import ky from 'ky';
-import { SuccessResponse } from '@shared/common';
+import { SuccessResponse } from 'shared-types';
 
 const apiUrl = process.env.NEXT_API_URL ?? process.env.NEXT_PUBLIC_API_URL;
 

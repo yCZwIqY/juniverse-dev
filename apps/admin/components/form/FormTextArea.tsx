@@ -6,10 +6,9 @@ import { Textarea } from '@/components/ui/textarea';
 interface FormTextAreaProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   name: string;
-  required?: boolean;
 }
 
-const FormTextArea = ({ label, name, required = true, ...props }: FormTextAreaProps) => {
+const FormTextArea = ({ label, name }: FormTextAreaProps) => {
   const { control } = useFormContext();
 
   return (

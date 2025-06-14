@@ -37,7 +37,7 @@ const CareerFormDialog = ({ id }: CareerFormProps) => {
   const { mutate: createCareer } = useCreateCareer();
   const { mutate: updateCareer } = useUpdateCareer();
   const { mutate: createTech } = useCreateTech();
-  const techOptions = techData?.result.map((it: Tech) => ({ label: it.name, value: it.id })) ?? [];
+  const techOptions = techData?.result.map((it: Tech) => ({ label: it.name, value: it.id! })) ?? [];
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -54,14 +54,17 @@ const CareerFormDialog = ({ id }: CareerFormProps) => {
         techs: [],
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, career]);
 
   const onCreateNewTech = (name: string) => {
-    if (techData?.result.find((it: { label: string }) => it.label === name)) {
+    if (techData?.result.find((it: Tech) => it.name === name)) {
       return;
     }
     createTech(
-      { name },
+      {
+        name,
+      },
       {
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ['tech'] });

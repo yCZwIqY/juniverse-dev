@@ -52,11 +52,12 @@ const TechItem = ({ tech }: TechItemProps) => {
 
   useEffect(() => {
     form.reset(tech);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tech]);
 
   const onUpdate = (tech: Tech) => {
     updateTech(
-      { id: tech.id, tech },
+      { id: tech.id!, tech },
       {
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ['tech'] });
@@ -65,11 +66,14 @@ const TechItem = ({ tech }: TechItemProps) => {
     );
   };
   const onDelete = () => {
-    removeTech(tech?.id!, {
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['tech'] });
-      },
-    });
+    if (!tech?.id) return;
+    if (tech && tech.id) {
+      removeTech(tech.id, {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['tech'] });
+        },
+      });
+    }
   };
 
   return (
