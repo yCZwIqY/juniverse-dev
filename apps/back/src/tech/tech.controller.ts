@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { Tech } from './tech.entity';
 import { TechService } from './tech.service';
 
@@ -8,11 +16,21 @@ export class TechController {
 
   @Post()
   create(@Body() tech: Tech) {
-    return this.techService.create(tech.name);
+    return this.techService.create(tech);
   }
 
   @Get()
   findAll() {
     return this.techService.findAll();
+  }
+
+  @Put(':id')
+  update(@Param() id: number, @Body() tech: Tech) {
+    return this.techService.update(id, tech);
+  }
+
+  @Delete(':id')
+  remove(@Param() id: number) {
+    return this.techService.remove(id);
   }
 }

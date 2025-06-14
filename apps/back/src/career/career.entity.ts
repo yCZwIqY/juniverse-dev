@@ -27,6 +27,9 @@ export class Career {
   @Column('text', { nullable: true })
   contents?: string;
 
+  @Column({ nullable: true })
+  inOffice?: boolean;
+
   @ManyToMany(() => Tech, (tech) => tech.careers)
   @JoinTable()
   techs?: Tech[];

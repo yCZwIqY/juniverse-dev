@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { getAllCareers, getCareer, postCareer, putCareer } from '../careers.api';
+import { getAllCareers, getCareer, postCareer, putCareer, removeCareer } from '../careers.api';
 import { Career } from '@shared/career';
 
 export const useCareers = () => {
@@ -25,4 +25,9 @@ export const useCreateCareer = () =>
 export const useUpdateCareer = () =>
   useMutation({
     mutationFn: ({ id, career }: { id: string; career: Career }) => putCareer(id, career),
+  });
+
+export const useRemoveCareer = () =>
+  useMutation({
+    mutationFn: (id: string) => removeCareer(id),
   });

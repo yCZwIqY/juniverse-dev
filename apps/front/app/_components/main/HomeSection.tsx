@@ -2,8 +2,8 @@
 
 import useMediaQuery from '@/hooks/useMediaQuery';
 import React from 'react';
-import DesktopTicket from '@/app/_components/home/DesktopTicket';
-import MobileTicket from '@/app/_components/home/MobileTicket';
+import DesktopTicket from '@/app/_components/main/DesktopTicket';
+import MobileTicket from '@/app/_components/main/MobileTicket';
 
 const HomeSection = () => {
   const { isDesktop } = useMediaQuery();

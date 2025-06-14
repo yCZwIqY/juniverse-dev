@@ -3,8 +3,8 @@
 import React from 'react';
 import useScrollTriggerValue from '@/hooks/useScrollTriggerValue';
 import Image from 'next/image';
-import AboutMeLabelText from '@/app/_components/home/AboutMeLabelText';
-import CareerBox from '@/app/_components/home/CareerBox';
+import AboutMeLabelText from '@/app/_components/main/aboutMe/AboutMeLabelText';
+import CareerBox from '@/app/_components/main/aboutMe/CareerBox';
 import { useCareers } from 'apis';
 import { Career } from 'shared-types';
 
@@ -61,6 +61,11 @@ const AboutMeSection = () => {
                       <AboutMeLabelText label={'MBTI'} value={'INTP/INFP'} />
                       <AboutMeLabelText label={'Job'} value={'웹 프론트엔드 개발자'} />
                     </div>
+                    <div>
+                      3년차 웹 프론트엔드 개발자 이지윤입니다. 사용자 중심의 디자인과 사용자 경험을 중요하게 생각하며, 최신 기술을 통해
+                      안정적이고 효율적인 서비스를 제공하고자 노력합니다. 견고한 기반 위에 차곡차곡 쌓아 올린 경험과 지식을 바탕으로
+                      프로젝트를 진행하고 있습니다.
+                    </div>
                   </div>
                 </div>
               </div>
@@ -69,8 +74,8 @@ const AboutMeSection = () => {
         </div>
         <div className={`absolute flex justify-center items-center rounded-b-md bottom-0 w-full h-full bg-blue-950  shadow-xl `}>
           <div className={'absolute inset-0 bg-white rounded-b-md mx-[10px] mb-[10px] flex flex-col'}>
-            <div className={'font-bold text-xl mb-4 px-12 pt-8'}>CAREER</div>
-            <div className={'flex-1 overflow-y-scroll px-12 py-4'}>
+            <div className={'font-bold text-xl mb-4 p-4 md:px-12 md:pt-8'}>CAREER</div>
+            <div className={'flex-1 overflow-y-scroll p-2 md:px-12 md:py-4'}>
               <div className={'flex gap-2'}>
                 {careers.map((career: Career) => (
                   <CareerBox

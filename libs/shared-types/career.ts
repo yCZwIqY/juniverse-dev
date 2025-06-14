@@ -5,6 +5,6 @@ export interface Career {
   startDate: string;
   endDate?: string | null;
   contents: string;
-  inOffice?: boolean;
+  inOffice: boolean;
   techs: string[];
 }

@@ -17,7 +17,7 @@ export class CareerService {
   async create(career: CareerDTO) {
     const techEntities: Tech[] = [];
     for (const name of career.techs) {
-      const tech = await this.techService.create(name); // 🔥 여기 활용!
+      const tech = await this.techService.create({ name }); // 🔥 여기 활용!
       techEntities.push(tech);
     }
 
@@ -39,14 +39,13 @@ export class CareerService {
       where: { id: Number(id) },
       relations: ['techs'],
     });
-
     return career ? toCareerDTO(career) : null;
   }
 
   async update(id: number, career: CareerDTO) {
     const techEntities: Tech[] = [];
     for (const name of career.techs) {
-      const tech = await this.techService.create(name); // 🔥 여기 활용!
+      const tech = await this.techService.create({ name }); // 🔥 여기 활용!
       techEntities.push(tech);
     }
 

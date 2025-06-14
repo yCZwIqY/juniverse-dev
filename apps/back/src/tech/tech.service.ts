@@ -9,18 +9,32 @@ export class TechService {
     @InjectRepository(Tech) private readonly techRepository: Repository<Tech>,
   ) {}
 
-  async create(name: string): Promise<Tech> {
-    const existing = await this.techRepository.findOne({ where: { name } });
+  async create(tech: Tech): Promise<Tech> {
+    const existing = await this.techRepository.findOne({
+      where: { name: tech.name },
+    });
 
     if (existing) {
       return existing;
     }
 
-    const tech = this.techRepository.create({ name });
-    return await this.techRepository.save(tech);
+    const result = this.techRepository.create(tech);
+    return this.techRepository.save(result);
   }
 
   findAll(): Promise<Tech[]> {
-    return this.techRepository.find();
+    return this.techRepository.find({
+      order: {
+        id: 'ASC',
+      },
+    });
+  }
+
+  update(id: number, data: Partial<Tech>) {
+    return this.techRepository.update(id, data);
+  }
+
+  remove(id: number) {
+    return this.techRepository.delete(id);
   }
 }

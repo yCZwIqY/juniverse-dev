@@ -11,6 +11,7 @@ export function toCareerDTO(career: Career): CareerDTO {
   dto.endDate = career.endDate;
   dto.inOffice = !career.endDate;
   dto.contents = career.contents;
+  dto.inOffice = career.inOffice ?? false;
   dto.techs = (career.techs ?? []).map((tech) => tech.name);
   return dto;
 }

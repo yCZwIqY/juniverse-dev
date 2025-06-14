@@ -1,5 +1,5 @@
-import HomeSection from '@/app/_components/home/HomeSection';
-import AboutMeSection from '@/app/_components/home/AboutMeSection';
+import HomeSection from '@/app/_components/main/HomeSection';
+import AboutMeSection from '@/app/_components/main/aboutMe/AboutMeSection';
 
 export default function Home() {
   return (
