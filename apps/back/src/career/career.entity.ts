@@ -18,17 +18,14 @@ export class Career {
   @Column()
   position: string;
 
-  @Column()
-  period: string;
-
   @Column({ type: 'date' })
   startDate: Date;
 
   @Column({ type: 'date', nullable: true })
-  endDate?: Date | null;
+  endDate?: Date;
 
-  @Column('text', { array: true, nullable: true })
-  contents?: string[];
+  @Column('text', { nullable: true })
+  contents?: string;
 
   @ManyToMany(() => Tech, (tech) => tech.careers)
   @JoinTable()
@@ -38,9 +35,6 @@ export class Career {
     this.id = 0;
     this.name = '';
     this.position = '';
-    this.period = '';
     this.startDate = new Date();
-    this.endDate = null;
-    this.contents = [];
   }
 }

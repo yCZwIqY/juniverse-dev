@@ -5,9 +5,13 @@ import useScrollTriggerValue from '@/hooks/useScrollTriggerValue';
 import Image from 'next/image';
 import AboutMeLabelText from '@/app/_components/home/AboutMeLabelText';
 import CareerBox from '@/app/_components/home/CareerBox';
+import { useCareers } from 'apis';
+import { Career } from 'shared-types';
 
 const AboutMeSection = () => {
   const { value, targetRef } = useScrollTriggerValue(180);
+  const { data } = useCareers();
+  const careers = data?.result ?? [];
 
   return (
     <div ref={targetRef} className={'w-dvw h-dvh flex justify-center items-center p-5 md:p-0'} id={'about-me'}>
@@ -55,7 +59,7 @@ const AboutMeSection = () => {
                     <div>
                       <AboutMeLabelText label={'Name'} value={'이지윤'} />
                       <AboutMeLabelText label={'MBTI'} value={'INTP/INFP'} />
-                      <AboutMeLabelText label={'Job'} value={'Web Developer'} />
+                      <AboutMeLabelText label={'Job'} value={'웹 프론트엔드 개발자'} />
                     </div>
                   </div>
                 </div>
@@ -64,14 +68,21 @@ const AboutMeSection = () => {
           </div>
         </div>
         <div className={`absolute flex justify-center items-center rounded-b-md bottom-0 w-full h-full bg-blue-950  shadow-xl `}>
-          <div className={'absolute inset-0 bg-white rounded-b-md mx-[10px] mb-[10px] py-8 px-12'}>
-            <div className={'font-bold text-xl'}>CAREER</div>
-            <div>
-              <CareerBox
-                title={'CRSCube 주니어 웹 풀스택 개발자'}
-                period={'2021.12 ~ 2025.04'}
-                contents={['의약품 관리 솔루션 신규기능 개발 및 유지보수', '주요 기술: Typescript, Vue.js, Java, Spring Boot']}
-              />
+          <div className={'absolute inset-0 bg-white rounded-b-md mx-[10px] mb-[10px] flex flex-col'}>
+            <div className={'font-bold text-xl mb-4 px-12 pt-8'}>CAREER</div>
+            <div className={'flex-1 overflow-y-scroll px-12 py-4'}>
+              <div className={'flex gap-2'}>
+                {careers.map((career: Career) => (
+                  <CareerBox
+                    key={career.id}
+                    name={career.name}
+                    position={career.position}
+                    period={`${career.startDate} ~ ${career.endDate ?? '재직중'}`}
+                    contents={career.contents}
+                    tags={career.techs}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
