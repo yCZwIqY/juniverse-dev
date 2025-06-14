@@ -4,7 +4,7 @@ export interface Career {
   position: string;
   startDate: string;
   endDate?: string | null;
-  contents: string[];
+  contents: string;
   inOffice?: boolean;
-  tags: string[];
+  techs: string[];
 }

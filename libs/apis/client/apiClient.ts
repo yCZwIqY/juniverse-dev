@@ -1,4 +1,5 @@
 import ky from 'ky';
+import { SuccessResponse } from '@shared/common';
 
 const apiUrl = process.env.NEXT_API_URL ?? process.env.NEXT_PUBLIC_API_URL;
 
@@ -26,25 +27,25 @@ export const apiClient = ky.create({
   },
 });
 
-export const get = async <T>(url: string, params = {}): Promise<T> => {
+export const get = async <T>(url: string, params = {}): Promise<SuccessResponse<T>> => {
   const res = await apiClient.get(url, params);
-  return res.json<T>();
+  return res.json<SuccessResponse<T>>();
 };
-export const post = async <T, R = unknown>(url: string, body?: T): Promise<R> => {
+export const post = async <T, R = unknown>(url: string, body?: T): Promise<SuccessResponse<R>> => {
   const res = await apiClient.post(url, {
     ...(body && { body: JSON.stringify(body) }),
   });
 
-  return res.json<R>();
+  return res.json<SuccessResponse<R>>();
 };
-export const put = async <T, R = unknown>(url: string, body?: T): Promise<R> => {
+export const put = async <T, R = unknown>(url: string, body?: T): Promise<SuccessResponse<R>> => {
   const res = await apiClient.put(url, {
     ...(body && { body: JSON.stringify(body) }),
   });
 
-  return res.json<R>();
+  return res.json<SuccessResponse<R>>();
 };
-export const remove = async <T>(url: string, params = {}): Promise<T> => {
+export const remove = async <T>(url: string, params = {}): Promise<SuccessResponse<T>> => {
   const res = await apiClient.delete(url, params);
-  return res.json<T>();
+  return res.json<SuccessResponse<T>>();
 };

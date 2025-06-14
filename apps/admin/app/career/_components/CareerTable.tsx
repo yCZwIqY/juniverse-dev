@@ -1,20 +1,10 @@
 'use client';
 import { ColumnDef, flexRender, getCoreRowModel, Row, useReactTable } from '@tanstack/react-table';
-import { Career } from 'shared-types/src';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import CareerFormDialog from '@/app/career/_components/CareerFormDialog';
+import { Career } from 'shared-types';
+import { useCareers } from 'apis';
 
-const data: Career[] = [
-  {
-    id: 0,
-    name: 'CRSCube',
-    position: '주니어 웹 개발자',
-    startDate: '2025-01-01',
-    endDate: '2025-01-01',
-    contents: ['의약품 관리 솔루션 신규기능 개발 및 유지보수', 'Typescript, Vue.js, Java, Spring Boot'],
-    inOffice: false,
-    tags: ['javascript', 'typescript'],
-  },
-];
 const columns: ColumnDef<Career>[] = [
   {
     accessorKey: 'name',
@@ -24,12 +14,12 @@ const columns: ColumnDef<Career>[] = [
   {
     accessorKey: 'position',
     header: '포지션',
-    cell: ({ row }: { row: Row<Career> }) => <div>{row.getValue('position')}</div>,
+    cell: ({ row }: { row: Row<Career> }) => <div className={'w-48'}>{row.getValue('position')}</div>,
   },
   {
     accessorKey: 'startDate',
     header: '입사일',
-    cell: ({ row }: { row: Row<Career> }) => <div>{row.getValue('startDate')}</div>,
+    cell: ({ row }: { row: Row<Career> }) => <div className={'w-48'}>{row.getValue('startDate')}</div>,
   },
   {
     accessorKey: 'endDate',
@@ -40,22 +30,30 @@ const columns: ColumnDef<Career>[] = [
     accessorKey: 'contents',
     header: '내용',
     cell: ({ row }: { row: Row<Career> }) => (
-      <div className={'max-w-80 whitespace-nowrap overflow-hidden text-ellipsis'}>
-        {((row.getValue('contents') ?? []) as string[]).join(',')}
-      </div>
+      <div className={'max-w-96 whitespace-nowrap overflow-hidden text-ellipsis'}>{row.getValue('contents')}</div>
     ),
   },
   {
     accessorKey: 'inOffice',
     header: '재직중',
+
     cell: ({ row }: { row: Row<Career> }) => <div>{row.getValue('inOffice') ? 'true' : 'false'}</div>,
+  },
+  {
+    accessorKey: 'id',
+    header: '',
+    cell: ({ row }: { row: Row<Career> }) => (
+      <div>
+        <CareerFormDialog id={row.getValue('id')} />
+      </div>
+    ),
   },
 ];
 
 const CareerTable = () => {
-  // const { data } = useCareer();
+  const { data } = useCareers();
   const table = useReactTable({
-    data,
+    data: data?.result ?? [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
