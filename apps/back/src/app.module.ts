@@ -5,6 +5,7 @@ import { CareerModule } from './career/career.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TechModule } from './tech/tech.module';
+import { ProjectModule } from './project/project.module';
 
 @Module({
   controllers: [AppController],
@@ -28,6 +29,7 @@ import { TechModule } from './tech/tech.module';
     }),
     CareerModule,
     TechModule,
+    ProjectModule,
   ],
   providers: [AppService],
 })
