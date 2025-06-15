@@ -19,7 +19,7 @@ export class Project {
   images?: string[]; // S3 URL, base64 등
 
   @Column('text', { nullable: true })
-  videos?: string;
+  video?: string;
 
   @Column({ type: 'date' })
   startDate: Date;
@@ -28,7 +28,17 @@ export class Project {
   endDate?: Date;
 
   @ManyToMany(() => Tech, (tech) => tech.projects, { cascade: true })
-  @JoinTable()
+  @JoinTable({
+    name: 'project_tech_tech',
+    joinColumn: {
+      name: 'project_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'tech_id',
+      referencedColumnName: 'id',
+    },
+  })
   techs?: Tech[];
 
   @Column('text')
@@ -43,11 +53,8 @@ export class Project {
   @Column({ nullable: true })
   DemoUrl?: string;
 
-  @Column('text', { array: true, nullable: true })
-  roles?: string[];
-
-  @Column('text', { array: true, nullable: true })
-  features?: string[];
+  @Column('text', { nullable: true })
+  role?: string;
 
   constructor(
     id: number,

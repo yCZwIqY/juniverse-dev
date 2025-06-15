@@ -1,9 +1,9 @@
-import ProjectTable from '@/app/project/_components/ProjectTable';
+import ProjectList from '@/app/project/_components/ProjectList';
 
 const ProjectPage = () => {
   return (
     <div>
-      <ProjectTable />
+      <ProjectList />
     </div>
   );
 };

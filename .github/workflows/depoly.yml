@@ -3,7 +3,7 @@ name: Deploy to Lightsail
 on:
   push:
     branches:
-      - main  # 또는 배포 브랜치 이름
+      - main
 
 jobs:
   deploy:
@@ -26,20 +26,20 @@ jobs:
       - name: Log in to DockerHub
         run: echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
 
-      - name: Build and push admin image
+      - name: Build and push Admin image
         run: |
           docker build -t $DOCKER_USER/admin:latest ./apps/admin
-          docker push $DOCKER_USER/admin:latest
+          docker push $DOCKER_USER/portfolio-admin:latest
 
-      - name: Build and push main front image
+      - name: Build and push Front image
         run: |
           docker build -t $DOCKER_USER/front:latest ./apps/front
-          docker push $DOCKER_USER/front:latest
+          docker push $DOCKER_USER/portfolio-front:latest
 
-      - name: Build and push NestJS backend image
+      - name: Build and push API image
         run: |
-          docker build -t $DOCKER_USER/api:latest ./apps/api
-          docker push $DOCKER_USER/api:latest
+          docker build -t $DOCKER_USER/back:latest ./apps/back
+          docker push $DOCKER_USER/portfolio-back:latest
 
       - name: SSH into Lightsail and update containers
         uses: appleboy/ssh-action@v1.0.3
@@ -50,6 +50,15 @@ jobs:
           script: |
             docker pull $DOCKER_USER/admin:latest
             docker pull $DOCKER_USER/front:latest
-            docker pull $DOCKER_USER/api:latest
-            cd ~/your-docker-folder
+            docker pull $DOCKER_USER/back:latest
+
+            docker stop portfolio-admin || true
+            docker rm portfolio-admin || true
+            docker stop portfolio-front || true
+            docker rm portfolio-front || true
+            docker stop portfolio-back || true
+            docker rm portfolio-back || true
+
+            cd ~/portfolio-docker
+
             docker compose up -d admin front back

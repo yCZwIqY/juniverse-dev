@@ -31,7 +31,17 @@ export class Career {
   inOffice?: boolean;
 
   @ManyToMany(() => Tech, (tech) => tech.careers)
-  @JoinTable()
+  @JoinTable({
+    name: 'career_techs_tech',
+    joinColumn: {
+      name: 'career_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'tech_id', //
+      referencedColumnName: 'id',
+    },
+  })
   techs?: Tech[];
 
   constructor() {

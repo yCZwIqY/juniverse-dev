@@ -6,3 +6,8 @@ export interface ErrorResponse {
   errorCode: string;
   errorMsg: string;
 }
+
+export interface FileData {
+  id: string;
+  src: string;
+}

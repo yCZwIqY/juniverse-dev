@@ -6,6 +6,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TechModule } from './tech/tech.module';
 import { ProjectModule } from './project/project.module';
+import { S3Service } from './upload/s3.service';
+import { UploadController } from './upload/upload.controller';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   controllers: [AppController],
@@ -24,13 +27,14 @@ import { ProjectModule } from './project/project.module';
         password: configService.get<string>('POSTGRES_PASSWORD'),
         database: configService.get<string>('POSTGRES_DB'),
         autoLoadEntities: true,
-        synchronize: configService.get('NODE_ENV') !== 'production',
+        synchronize: false,
       }),
     }),
     CareerModule,
     TechModule,
     ProjectModule,
+    UploadModule,
   ],
-  providers: [AppService],
+  providers: [AppService, S3Service],
 })
 export class AppModule {}

@@ -56,6 +56,9 @@ const NewTech = () => {
         queryClient.invalidateQueries({ queryKey: ['tech'] });
         form.reset();
       },
+      onError: (e) => {
+        console.log('error', e);
+      },
     });
   };
 

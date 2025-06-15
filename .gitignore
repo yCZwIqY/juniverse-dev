@@ -42,6 +42,8 @@ report.*.json
 .env
 .env.*
 !.env.example
+**/.env
+**/.env.*
 
 # 💻 IDEs & Editors
 **/.idea/

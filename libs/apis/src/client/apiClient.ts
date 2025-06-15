@@ -1,7 +1,7 @@
 import ky from 'ky';
 import { SuccessResponse } from 'shared-types';
 
-const apiUrl = process.env.API_URL;
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const apiClient = ky.create({
   prefixUrl: `${apiUrl}/api`, // 기본 API URL
