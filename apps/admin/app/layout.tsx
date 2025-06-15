@@ -29,6 +29,10 @@ const ROUTES = [
     path: '/tech',
     label: 'TECH',
   },
+  {
+    path: '/project',
+    label: 'PROJECT',
+  },
 ];
 
 export default function RootLayout({

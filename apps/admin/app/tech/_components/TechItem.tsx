@@ -77,7 +77,7 @@ const TechItem = ({ tech }: TechItemProps) => {
   };
 
   return (
-    <div className={'flex p-4 gap-3 shadow-md justify-between'}>
+    <div className={'flex p-4 gap-3 shadow-md justify-between items-center'}>
       <FormProvider {...form}>
         <div className={'flex gap-3'}>
           <FormTextInput label={'이름'} name={'name'} />
