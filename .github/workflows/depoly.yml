@@ -1,0 +1,79 @@
+name: CI/CD - Monorepo Deploy
+
+on:
+  push:
+    branches:
+      - main  # 메인 브랜치 push 시 실행
+
+jobs:
+  deploy:
+    name: Build & Deploy to AWS
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: ap-northeast-2
+      ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+      - name: Enable Corepack for pnpm
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      # front 이미지
+      - name: Build front Docker image
+        run: |
+          docker build -f docker/front.Dockerfile -t front $GITHUB_WORKSPACE
+          docker tag front:latest $ECR_REGISTRY/front:latest
+
+      - name: Push front image to ECR
+        run: |
+          docker push $ECR_REGISTRY/front:latest
+
+      # admin 이미지
+      - name: Build admin Docker image
+        run: |
+          docker build -f docker/admin.Dockerfile -t admin $GITHUB_WORKSPACE
+          docker tag admin:latest $ECR_REGISTRY/admin:latest
+
+      - name: Push admin image to ECR
+        run: |
+          docker push $ECR_REGISTRY/admin:latest
+
+      # back 이미지
+      - name: Build back Docker image
+        run: |
+          docker build -f docker/back.Dockerfile -t back $GITHUB_WORKSPACE
+          docker tag back:latest $ECR_REGISTRY/back:latest
+
+      - name: Push back image to ECR
+        run: |
+          docker push $ECR_REGISTRY/back:latest
+
+
+      - name: Deploy to ECS
+        run: |
+          aws ecs update-service --cluster YOUR_CLUSTER_NAME --service front-service --force-new-deployment
+          aws ecs update-service --cluster YOUR_CLUSTER_NAME --service admin-service --force-new-deployment
+          aws ecs update-service --cluster YOUR_CLUSTER_NAME --service back-service --force-new-deployment

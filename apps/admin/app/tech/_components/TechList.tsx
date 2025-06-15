@@ -12,7 +12,8 @@ const TechList = () => {
 
   return (
     <div className={'w-full h-full p-12'}>
-      {techs.length > 0 && techs.map((tech) => <TechItem key={tech.id} tech={tech} />)} <NewTech />
+      <NewTech />
+      {techs.length > 0 && techs.map((tech) => <TechItem key={tech.id} tech={tech} />)}
     </div>
   );
 };

@@ -1,0 +1,32 @@
+# node_modules 모두 제외
+node_modules
+**/node_modules
+
+# pnpm 관련 캐시 및 잠금 파일 제외
+.pnpm
+.pnp.*
+
+# 빌드 산출물 제외
+.next
+dist
+build
+coverage
+
+# OS / Editor 파일 제외
+.DS_Store
+Thumbs.db
+*.log
+*.swp
+*.tmp
+
+# 환경 설정 제외
+.env
+.env.local
+.env.*.local
+
+# Git 관련 제외
+.git
+.gitignore
+
+# Docker 관련 (필요 시)
+docker/
