@@ -1,79 +1,55 @@
-name: CI/CD - Monorepo Deploy
+name: Deploy to Lightsail
 
 on:
   push:
     branches:
-      - main  # 메인 브랜치 push 시 실행
+      - main  # 또는 배포 브랜치 이름
 
 jobs:
   deploy:
-    name: Build & Deploy to AWS
     runs-on: ubuntu-latest
 
     env:
-      AWS_REGION: ap-northeast-2
-      ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+      DOCKER_USER: ${{ secrets.DOCKER_USER }}
+      DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
+      LIGHTSAIL_HOST: ${{ secrets.LIGHTSAIL_HOST }}
+      LIGHTSAIL_USER: ${{ secrets.LIGHTSAIL_USER }}
+      SSH_KEY: ${{ secrets.SSH_KEY }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to DockerHub
+        run: echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+
+      - name: Build and push admin image
+        run: |
+          docker build -t $DOCKER_USER/admin:latest ./apps/admin
+          docker push $DOCKER_USER/admin:latest
+
+      - name: Build and push main front image
+        run: |
+          docker build -t $DOCKER_USER/front:latest ./apps/front
+          docker push $DOCKER_USER/front:latest
+
+      - name: Build and push NestJS backend image
+        run: |
+          docker build -t $DOCKER_USER/api:latest ./apps/api
+          docker push $DOCKER_USER/api:latest
+
+      - name: SSH into Lightsail and update containers
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          node-version: 18
-          cache: 'pnpm'
-
-      - name: Enable Corepack for pnpm
-        run: corepack enable
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v3
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-
-      # front 이미지
-      - name: Build front Docker image
-        run: |
-          docker build -f docker/front.Dockerfile -t front $GITHUB_WORKSPACE
-          docker tag front:latest $ECR_REGISTRY/front:latest
-
-      - name: Push front image to ECR
-        run: |
-          docker push $ECR_REGISTRY/front:latest
-
-      # admin 이미지
-      - name: Build admin Docker image
-        run: |
-          docker build -f docker/admin.Dockerfile -t admin $GITHUB_WORKSPACE
-          docker tag admin:latest $ECR_REGISTRY/admin:latest
-
-      - name: Push admin image to ECR
-        run: |
-          docker push $ECR_REGISTRY/admin:latest
-
-      # back 이미지
-      - name: Build back Docker image
-        run: |
-          docker build -f docker/back.Dockerfile -t back $GITHUB_WORKSPACE
-          docker tag back:latest $ECR_REGISTRY/back:latest
-
-      - name: Push back image to ECR
-        run: |
-          docker push $ECR_REGISTRY/back:latest
-
-
-      - name: Deploy to ECS
-        run: |
-          aws ecs update-service --cluster YOUR_CLUSTER_NAME --service front-service --force-new-deployment
-          aws ecs update-service --cluster YOUR_CLUSTER_NAME --service admin-service --force-new-deployment
-          aws ecs update-service --cluster YOUR_CLUSTER_NAME --service back-service --force-new-deployment
+          host: ${{ env.LIGHTSAIL_HOST }}
+          username: ${{ env.LIGHTSAIL_USER }}
+          key: ${{ env.SSH_KEY }}
+          script: |
+            docker pull $DOCKER_USER/admin:latest
+            docker pull $DOCKER_USER/front:latest
+            docker pull $DOCKER_USER/api:latest
+            cd ~/your-docker-folder
+            docker compose up -d admin front back
