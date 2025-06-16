@@ -4,8 +4,11 @@ import {
   Column,
   ManyToMany,
   JoinTable,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Tech } from 'src/tech/tech.entity';
+import { Upload } from '../upload/upload.entity';
 
 @Entity()
 export class Project {
@@ -15,11 +18,27 @@ export class Project {
   @Column()
   title: string;
 
-  @Column('text', { array: true, nullable: true })
-  images?: string[]; // S3 URL, base64 등
+  @ManyToMany(() => Upload, { cascade: true })
+  @JoinTable({
+    name: 'project_upload_images',
+    joinColumn: {
+      name: 'project_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'upload_key',
+      referencedColumnName: 'key',
+    },
+  })
+  images?: Upload[];
 
-  @Column('text', { nullable: true })
-  video?: string;
+  @ManyToOne(() => Upload, { nullable: true, cascade: true })
+  @JoinColumn({ name: 'video_key', referencedColumnName: 'key' })
+  video?: Upload;
+
+  @ManyToOne(() => Upload, { nullable: true, cascade: true })
+  @JoinColumn({ name: 'thumbnail_key', referencedColumnName: 'key' })
+  thumbnail?: Upload;
 
   @Column({ type: 'date' })
   startDate: Date;
@@ -43,6 +62,9 @@ export class Project {
 
   @Column('text')
   description: string;
+
+  @Column()
+  summary?: string;
 
   @Column()
   memberCount: number;

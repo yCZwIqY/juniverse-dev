@@ -8,6 +8,7 @@ export interface ErrorResponse {
 }
 
 export interface FileData {
-  id: string;
+  key: string;
   src: string;
+  name?: string;
 }

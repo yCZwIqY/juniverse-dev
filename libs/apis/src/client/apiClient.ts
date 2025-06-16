@@ -6,9 +6,6 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 export const apiClient = ky.create({
   prefixUrl: `${apiUrl}/api`, // 기본 API URL
   timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
   hooks: {
     afterResponse: [
       async (request, options, response) => {
@@ -38,6 +35,15 @@ export const post = async <T, R = unknown>(url: string, body?: T): Promise<Succe
 
   return res.json<SuccessResponse<R>>();
 };
+
+export const postForm = async <T>(url: string, body?: FormData): Promise<SuccessResponse<T>> => {
+  const res = await apiClient.post(url, {
+    body,
+  });
+
+  return res.json<SuccessResponse<T>>();
+};
+
 export const put = async <T, R = unknown>(url: string, body?: T): Promise<SuccessResponse<R>> => {
   const res = await apiClient.put(url, {
     ...(body && { body: JSON.stringify(body) }),

@@ -35,6 +35,9 @@ export class UploadController {
           cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
         },
       }),
+      limits: {
+        fileSize: 10 * 1024 * 1024,
+      },
     }),
   )
   async uploadFiles(

@@ -7,6 +7,9 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { ConfigService } from '@nestjs/config';
 import * as fs from 'fs';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Upload } from './upload.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class S3Service {
@@ -14,7 +17,11 @@ export class S3Service {
   private bucket: string;
   private domain: string;
 
-  constructor(private readonly configService: ConfigService) {
+  constructor(
+    private readonly configService: ConfigService,
+    @InjectRepository(Upload)
+    private readonly uploadRepository: Repository<Upload>,
+  ) {
     this.s3 = new S3Client({
       region: this.configService.get<string>('AWS_REGION', 'ap-northeast-2'),
       credentials: {
@@ -50,22 +57,29 @@ export class S3Service {
       if (err) console.error('Error deleting local file', err);
     });
 
-    return {
-      id: key,
+    const newFile = {
+      name: file.filename,
+      key: key,
       src: `${this.domain}/${key}`,
     };
+
+    await this.uploadRepository.save(newFile);
+
+    return newFile;
   }
 
   async deleteFile(key: string): Promise<void> {
     try {
-      console.log(key);
       await this.s3.send(
         new DeleteObjectCommand({
           Bucket: this.bucket,
           Key: key,
         }),
       );
-      console.log(`✅ Deleted ${key}`);
+
+      await this.uploadRepository.delete({
+        key: key,
+      });
     } catch (err) {
       console.error(`❌ Failed to delete ${key}`, err);
       throw err;

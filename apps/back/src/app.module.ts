@@ -9,6 +9,7 @@ import { ProjectModule } from './project/project.module';
 import { S3Service } from './upload/s3.service';
 import { UploadController } from './upload/upload.controller';
 import { UploadModule } from './upload/upload.module';
+import { Upload } from './upload/upload.entity';
 
 @Module({
   controllers: [AppController],
@@ -27,7 +28,7 @@ import { UploadModule } from './upload/upload.module';
         password: configService.get<string>('POSTGRES_PASSWORD'),
         database: configService.get<string>('POSTGRES_DB'),
         autoLoadEntities: true,
-        synchronize: false,
+        synchronize: true,
       }),
     }),
     CareerModule,
@@ -35,6 +36,6 @@ import { UploadModule } from './upload/upload.module';
     ProjectModule,
     UploadModule,
   ],
-  providers: [AppService, S3Service],
+  providers: [AppService],
 })
 export class AppModule {}

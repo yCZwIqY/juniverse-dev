@@ -9,6 +9,7 @@ export interface Project {
   startDate: Date;
   endDate: Date;
   techs: Tech[];
+  summary: string;
   description: string;
   memberCount: number;
   githubUrl: string;
