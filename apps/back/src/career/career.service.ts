@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { TechService } from '../tech/tech.service';
 import { CareerDTO } from './dto/CareerDTO';
 import { Tech } from '../tech/tech.entity';
-import { toCareerDTO } from './career.mapper';
+import { toCareerDTO } from './dto/career.mapper';
 
 @Injectable()
 export class CareerService {
@@ -17,7 +17,7 @@ export class CareerService {
   async create(career: CareerDTO) {
     const techEntities: Tech[] = [];
     for (const name of career.techs) {
-      const tech = await this.techService.create({ name }); // 🔥 여기 활용!
+      const tech = await this.techService.create({ name });
       techEntities.push(tech);
     }
 
@@ -45,7 +45,7 @@ export class CareerService {
   async update(id: number, career: CareerDTO) {
     const techEntities: Tech[] = [];
     for (const name of career.techs) {
-      const tech = await this.techService.create({ name }); // 🔥 여기 활용!
+      const tech = await this.techService.create({ name });
       techEntities.push(tech);
     }
 

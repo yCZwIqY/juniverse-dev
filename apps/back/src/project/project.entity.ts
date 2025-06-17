@@ -38,7 +38,7 @@ export class Project {
 
   @ManyToOne(() => Upload, { nullable: true, cascade: true })
   @JoinColumn({ name: 'thumbnail_key', referencedColumnName: 'key' })
-  thumbnail?: Upload;
+  thumbnail: Upload;
 
   @Column({ type: 'date' })
   startDate: Date;
@@ -73,7 +73,7 @@ export class Project {
   gitHubUrl?: string;
 
   @Column({ nullable: true })
-  DemoUrl?: string;
+  demoUrl?: string;
 
   @Column('text', { nullable: true })
   role?: string;
@@ -84,11 +84,13 @@ export class Project {
     startDate: Date,
     description: string,
     memberCount: number,
+    thumbnail: Upload,
   ) {
     this.id = id;
     this.title = title;
     this.startDate = startDate;
     this.description = description;
     this.memberCount = memberCount;
+    this.thumbnail = thumbnail;
   }
 }

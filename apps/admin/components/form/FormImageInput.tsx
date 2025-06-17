@@ -56,26 +56,45 @@ const FormImageInput = ({ label, name, accept, multiple = true }: FormMultiImage
           <div>
             <Input type={'file'} accept={accept} multiple={multiple} value={inputValue} onChange={onUploadImage} />
             <div className={'flex flex-wrap gap-2 p-2'}>
-              {field.value?.map((item: FileData, idx: number) =>
-                item.src ? (
-                  <div key={`${item.key}_${idx}`} className="relative w-12 h-12 ">
-                    <Image
-                      className="w-12 h-12 rounded-md border"
-                      src={item.src}
-                      alt={item.name || 'uploaded image'}
-                      width={100}
-                      height={100}
-                    />
-                    <button
-                      type="button"
-                      className="w-4 h-4 text-sm flex justify-center items-center text-white opacity-0 hover:opacity-100 bg-red-500 absolute top-1 right-1 rounded-full"
-                      onClick={() => onRemoveImage(item.key)}
-                    >
-                      x
-                    </button>
-                  </div>
-                ) : null,
-              )}
+              {multiple
+                ? field.value?.map((item: FileData, idx: number) =>
+                    item.src ? (
+                      <div key={`${item.key}_${idx}`} className="relative w-12 h-12 ">
+                        <Image
+                          className="w-12 h-12 rounded-md border"
+                          src={item.src}
+                          alt={item.name || 'uploaded image'}
+                          width={100}
+                          height={100}
+                        />
+                        <button
+                          type="button"
+                          className="w-4 h-4 text-sm flex justify-center items-center text-white opacity-0 hover:opacity-100 bg-red-500 absolute top-1 right-1 rounded-full"
+                          onClick={() => onRemoveImage(item.key)}
+                        >
+                          x
+                        </button>
+                      </div>
+                    ) : null,
+                  )
+                : field?.value?.src && (
+                    <div className="relative w-12 h-12 ">
+                      <Image
+                        className="w-12 h-12 rounded-md border"
+                        src={field?.value?.src}
+                        alt={field?.value?.name || 'uploaded image'}
+                        width={100}
+                        height={100}
+                      />
+                      <button
+                        type="button"
+                        className="w-4 h-4 text-sm flex justify-center items-center text-white opacity-0 hover:opacity-100 bg-red-500 absolute top-1 right-1 rounded-full"
+                        onClick={() => onRemoveImage(field?.value?.key)}
+                      >
+                        x
+                      </button>
+                    </div>
+                  )}
             </div>
           </div>
         )}

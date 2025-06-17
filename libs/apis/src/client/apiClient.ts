@@ -30,6 +30,9 @@ export const get = async <T>(url: string, params = {}): Promise<SuccessResponse<
 };
 export const post = async <T, R = unknown>(url: string, body?: T): Promise<SuccessResponse<R>> => {
   const res = await apiClient.post(url, {
+    headers: {
+      'content-type': 'application/json',
+    },
     ...(body && { body: JSON.stringify(body) }),
   });
 
@@ -46,6 +49,9 @@ export const postForm = async <T>(url: string, body?: FormData): Promise<Success
 
 export const put = async <T, R = unknown>(url: string, body?: T): Promise<SuccessResponse<R>> => {
   const res = await apiClient.put(url, {
+    headers: {
+      'content-type': 'application/json',
+    },
     ...(body && { body: JSON.stringify(body) }),
   });
 

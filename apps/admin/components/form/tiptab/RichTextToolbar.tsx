@@ -1,7 +1,11 @@
 import { Editor } from '@tiptap/react';
 
 import {
+  AlignCenter,
+  AlignLeft,
+  AlignRight,
   Bold,
+  Code,
   CodeSquare,
   Heading1,
   Heading2,
@@ -38,10 +42,7 @@ const RichTextToolbar = ({ editor }: ToolbarProps) => {
       <div className="icon" onClick={() => editor.chain().focus().toggleStrike().run()}>
         <Strikethrough />
       </div>
-      <div className="icon" onClick={() => editor.chain().focus().toggleCode().run()}>
-        <CodeSquare />
-      </div>
-      <div className="divider"></div>
+      <div className={'border-r-2'} />
       <div className="icon" onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}>
         <Heading1 />
       </div>
@@ -60,32 +61,51 @@ const RichTextToolbar = ({ editor }: ToolbarProps) => {
       <div className="icon" onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}>
         <Heading6 />
       </div>
+      <div className={'border-r-2'} />
       <div className="icon" onClick={() => editor.chain().focus().setParagraph().run()}>
         <Pilcrow />
       </div>
+      <div className="icon" onClick={() => editor.chain().focus().toggleBlockquote().run()}>
+        <Quote />
+      </div>
+      <div className={'border-r-2'} />
       <div className="icon" onClick={() => editor.chain().focus().toggleBulletList().run()}>
         <ListOrdered />
       </div>
       <div className="icon" onClick={() => editor.chain().focus().toggleOrderedList().run()}>
         <List />
       </div>
+      <div className={'border-r-2'} />
       <div className="icon" onClick={() => editor.chain().focus().toggleCodeBlock().run()}>
         <SquareCode />
       </div>
-      <div className="icon" onClick={() => editor.chain().focus().toggleBlockquote().run()}>
-        <Quote />
+      <div className="icon" onClick={() => editor.chain().focus().toggleCode().run()}>
+        <Code />
       </div>
+      <div className={'border-r-2'} />
       <div className="icon" onClick={() => editor.chain().focus().setHorizontalRule().run()}>
         <SeparatorHorizontal />
       </div>
+      <div className={'border-r-2'} />
       <div className="icon" onClick={() => editor.chain().focus().unsetAllMarks().clearNodes().run()}>
         <RemoveFormatting />
       </div>
+      <div className={'border-r-2'} />
       <div className="icon" onClick={() => editor.chain().focus().undo().run()}>
         <Undo2 />
       </div>
       <div className="icon" onClick={() => editor.chain().focus().redo().run()}>
         <Redo2 />
+      </div>
+      <div className={'border-r-2'} />
+      <div className="icon" onClick={() => editor.chain().focus().setTextAlign('left').run()}>
+        <AlignLeft />
+      </div>
+      <div className="icon" onClick={() => editor.chain().focus().setTextAlign('center').run()}>
+        <AlignCenter />
+      </div>
+      <div className="icon" onClick={() => editor.chain().focus().setTextAlign('right').run()}>
+        <AlignRight />
       </div>
     </div>
   );

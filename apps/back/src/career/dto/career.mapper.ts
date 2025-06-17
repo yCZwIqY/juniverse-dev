@@ -1,5 +1,5 @@
-import { Career } from './career.entity';
-import { CareerDTO } from './dto/CareerDTO';
+import { Career } from '../career.entity';
+import { CareerDTO } from './CareerDTO';
 
 export function toCareerDTO(career: Career): CareerDTO {
   const dto = new CareerDTO(

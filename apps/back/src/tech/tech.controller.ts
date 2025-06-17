@@ -10,7 +10,7 @@ import {
 import { Tech } from './tech.entity';
 import { TechService } from './tech.service';
 
-@Controller('api/tech')
+@Controller('api/techs')
 export class TechController {
   constructor(private readonly techService: TechService) {}
 

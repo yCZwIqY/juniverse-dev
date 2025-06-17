@@ -1,6 +1,6 @@
 'use client';
 
-import React, { InputHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes, useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Label } from '@/components/ui/label';
 import { EditorContent, useEditor } from '@tiptap/react';
@@ -16,6 +16,7 @@ import History from '@tiptap/extension-history';
 import Image from '@tiptap/extension-image';
 import RichTextToolbar from './RichTextToolbar';
 import RichTextPopover from './RichTextPopover';
+import { TextAlign } from '@tiptap/extension-text-align';
 
 interface FormRichTextProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -26,7 +27,17 @@ const FormRichText = ({ label, name }: FormRichTextProps) => {
   const { control } = useFormContext();
   const editor = useEditor({
     extensions: [
-      StarterKit.configure({ history: false }),
+      StarterKit.configure({
+        history: false,
+        paragraph: {
+          HTMLAttributes: {
+            class: 'text-left', // 기본 왼쪽 정렬
+          },
+        },
+      }),
+      TextAlign.configure({
+        types: ['heading', 'paragraph'], // 정렬 가능한 노드 설정
+      }),
       Link,
       CodeBlock,
       HardBreak,
@@ -45,15 +56,31 @@ const FormRichText = ({ label, name }: FormRichTextProps) => {
       <Controller
         name={name}
         control={control}
-        render={({ field }) => (
-          <div>
-            <div className={'mb-2'}>
-              <RichTextToolbar editor={editor!} />
-              <RichTextPopover editor={editor!} />
+        render={({ field }) => {
+          useEffect(() => {
+            if (editor && field.value !== editor.getHTML()) {
+              editor.commands.setContent(field.value || '');
+            }
+          }, [editor, field.value]);
+
+          useEffect(() => {
+            if (!editor) return;
+
+            editor.on('update', () => {
+              field.onChange(editor.getHTML());
+            });
+          }, [editor]);
+
+          return (
+            <div>
+              <div className={'mb-2'}>
+                <RichTextToolbar editor={editor!} />
+                <RichTextPopover editor={editor!} />
+              </div>
+              <EditorContent className={'no-preflight'} editor={editor} />
             </div>
-            <EditorContent className={'no-preflight'} editor={editor} value={field.value} />
-          </div>
-        )}
+          );
+        }}
       />
     </div>
   );
