@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { Project } from '../project/project.entity';
+import { Blog } from 'src/blog/blog.entity';
 
 @Entity()
 export class Upload {
@@ -17,6 +18,12 @@ export class Upload {
 
   @OneToMany(() => Project, (project) => project.images)
   imageProjects?: Project[];
+
+  @OneToMany(() => Project, (project) => project.thumbnail)
+  thumbnailProjects?: Project;
+
+  @OneToMany(() => Blog, (blog) => blog.thumbnail)
+  thumbnailBlog?: Blog[];
 
   constructor(key: string, src: string) {
     this.key = key;

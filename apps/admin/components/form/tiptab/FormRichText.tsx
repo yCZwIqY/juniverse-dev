@@ -72,12 +72,12 @@ const FormRichText = ({ label, name }: FormRichTextProps) => {
           }, [editor]);
 
           return (
-            <div>
-              <div className={'mb-2'}>
+            <div className={'border rounded-md p-2'}>
+              <div className={'mb-2 border-b pb-2'}>
                 <RichTextToolbar editor={editor!} />
                 <RichTextPopover editor={editor!} />
               </div>
-              <EditorContent className={'no-preflight'} editor={editor} />
+              <EditorContent className={'no-preflight '} editor={editor} />
             </div>
           );
         }}

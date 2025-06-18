@@ -31,7 +31,18 @@ const FormMultiInput = ({ label, name, options, onCreate }: FormMultiInputProps)
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger>
               <div className={'flex gap-1 flex-wrap text-sm'}>
-                {field.value && field.value.length > 0 && field.value.map((item: string) => <Badge key={item}>{item}</Badge>)}
+                {field.value &&
+                  field.value.length > 0 &&
+                  field.value.map((item: string) => (
+                    <Badge
+                      key={item}
+                      onClick={() => {
+                        field.onChange([...(field.value ?? [])].filter((it) => it !== item));
+                      }}
+                    >
+                      {item}
+                    </Badge>
+                  ))}
                 <div className={'bg-muted py-1 px-2 rounded-lg'}>Add</div>
               </div>
             </PopoverTrigger>

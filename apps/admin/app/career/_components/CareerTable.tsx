@@ -43,7 +43,6 @@ const CareerTable = () => {
     {
       accessorKey: 'inOffice',
       header: '재직중',
-
       cell: ({ row }: { row: Row<Career> }) => <div>{row.getValue('inOffice') ? 'true' : 'false'}</div>,
     },
     {

@@ -1,6 +1,7 @@
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Career } from '../career/career.entity';
 import { Project } from '../project/project.entity';
+import { Blog } from '../blog/blog.entity';
 
 @Entity()
 export class Tech {
@@ -21,6 +22,9 @@ export class Tech {
 
   @ManyToMany(() => Project, (project) => project.techs)
   projects?: Project[];
+
+  @ManyToMany(() => Blog, (blog) => blog.techs)
+  blogs?: Blog[];
 
   constructor() {
     this.name = '';

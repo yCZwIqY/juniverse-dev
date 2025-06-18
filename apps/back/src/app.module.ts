@@ -10,6 +10,8 @@ import { S3Service } from './upload/s3.service';
 import { UploadController } from './upload/upload.controller';
 import { UploadModule } from './upload/upload.module';
 import { Upload } from './upload/upload.entity';
+import { BlogModule } from './blog/blog.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   controllers: [AppController],
@@ -35,6 +37,8 @@ import { Upload } from './upload/upload.entity';
     TechModule,
     ProjectModule,
     UploadModule,
+    BlogModule,
+    AuthModule,
   ],
   providers: [AppService],
 })

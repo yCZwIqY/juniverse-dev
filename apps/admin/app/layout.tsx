@@ -33,6 +33,10 @@ const ROUTES = [
     path: '/project',
     label: 'PROJECT',
   },
+  {
+    path: '/blog',
+    label: 'BLOG',
+  },
 ];
 
 export default function RootLayout({

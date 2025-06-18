@@ -52,15 +52,15 @@ const AboutMeSection = () => {
           >
             <div className={'rotate-180 flex flex-col justify-start h-full py-8 px-12'}>
               <div className={'font-bold text-xl mb-4'}>ABOUT ME</div>
-              <div>
-                <div>
-                  <div className={'flex gap-3'}>
-                    <Image src={'/img/temp.png'} alt={'프로필 사진'} width={120} height={180} />
-                    <div>
-                      <AboutMeLabelText label={'Name'} value={'이지윤'} />
-                      <AboutMeLabelText label={'MBTI'} value={'INTP/INFP'} />
-                      <AboutMeLabelText label={'Job'} value={'웹 프론트엔드 개발자'} />
-                    </div>
+              <div className={'flex-1 overflow-hidden'}>
+                <div className={'flex gap-3 h-full'}>
+                  <Image src={'/img/temp.png'} alt={'프로필 사진'} className={' w-[120px] h-[130px]'} width={120} height={180} />
+                  <div>
+                    <AboutMeLabelText label={'Name'} value={'이지윤'} />
+                    <AboutMeLabelText label={'MBTI'} value={'INTP/INFP'} />
+                    <AboutMeLabelText label={'Job'} value={'웹 프론트엔드 개발자'} />
+                  </div>
+                  <div className={'w-full h-full overflow-y-scroll'}>
                     <div>
                       3년차 웹 프론트엔드 개발자 이지윤입니다. 사용자 중심의 디자인과 사용자 경험을 중요하게 생각하며, 최신 기술을 통해
                       안정적이고 효율적인 서비스를 제공하고자 노력합니다. 견고한 기반 위에 차곡차곡 쌓아 올린 경험과 지식을 바탕으로
@@ -74,8 +74,8 @@ const AboutMeSection = () => {
         </div>
         <div className={`absolute flex justify-center items-center rounded-b-md bottom-0 w-full h-full bg-blue-950  shadow-xl `}>
           <div className={'absolute inset-0 bg-white rounded-b-md mx-[10px] mb-[10px] flex flex-col'}>
-            <div className={'font-bold text-xl mb-4 p-4 md:px-12 md:pt-8'}>CAREER</div>
-            <div className={'flex-1 overflow-y-scroll p-2 md:px-12 md:py-4'}>
+            <div className={'font-bold text-xl  p-4 md:px-12 md:pt-8'}>CAREER</div>
+            <div className={'flex-1 overflow-y-scroll p-2 md:px-12 md:py-0'}>
               <div className={'flex gap-2'}>
                 {careers.map((career: Career) => (
                   <CareerBox

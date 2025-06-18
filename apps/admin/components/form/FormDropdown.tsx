@@ -19,12 +19,12 @@ const FormDropdown = ({ label, name, options }: FormDropdownProps) => {
     <div className={'flex flex-col gap-3'}>
       <Label>{label}</Label>
       <Controller
-        {...control}
+        control={control}
         name={name}
         render={({ field }) => (
           <Select value={field.value} onValueChange={field.onChange}>
             <SelectTrigger>
-              <SelectValue>{options.find((option) => option.value === field.value)?.label}</SelectValue>
+              <SelectValue />
             </SelectTrigger>
             <SelectContent>
               {options.map(({ label, value }) => (

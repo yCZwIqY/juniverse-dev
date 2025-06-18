@@ -16,7 +16,6 @@ export class ProjectService {
   ) {}
 
   async create(data: ProjectDTO): Promise<Project> {
-    console.log(data);
     const techEntities: Tech[] = [];
     if (data.techs && data.techs.length > 0) {
       for (const name of data.techs) {
