@@ -9,11 +9,7 @@ import { Button } from '@/components/ui/button';
 import { useDeleteTech, useUpdateTech } from 'apis';
 import { useQueryClient } from '@tanstack/react-query';
 
-interface TechItemProps {
-  tech?: Tech;
-}
-
-const LEVEL = [
+export const LEVEL = [
   {
     label: 'Strong',
     value: 'STRONG',
@@ -28,7 +24,7 @@ const LEVEL = [
   },
 ];
 
-const TYPE = [
+export const TYPE = [
   {
     label: 'Front',
     value: 'FRONT',
@@ -42,6 +38,10 @@ const TYPE = [
     value: 'OTHER',
   },
 ];
+
+interface TechItemProps {
+  tech?: Tech;
+}
 
 const TechItem = ({ tech }: TechItemProps) => {
   const form = useForm<Tech>({});

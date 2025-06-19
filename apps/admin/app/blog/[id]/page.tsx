@@ -51,7 +51,8 @@ const BlogDetailPage = () => {
     } else {
       form.reset();
     }
-  }, [blog]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [blog, params.id]);
 
   const onSubmit = (data: Blog) => {
     if (isNew) {

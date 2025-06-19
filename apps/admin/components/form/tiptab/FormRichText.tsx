@@ -1,6 +1,6 @@
 'use client';
 
-import React, { InputHTMLAttributes, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Label } from '@/components/ui/label';
 import { EditorContent, useEditor } from '@tiptap/react';
@@ -18,25 +18,27 @@ import RichTextToolbar from './RichTextToolbar';
 import RichTextPopover from './RichTextPopover';
 import { TextAlign } from '@tiptap/extension-text-align';
 
-interface FormRichTextProps extends InputHTMLAttributes<HTMLInputElement> {
+interface FormRichTextProps {
   label: string;
   name: string;
 }
 
 const FormRichText = ({ label, name }: FormRichTextProps) => {
-  const { control } = useFormContext();
+  const { control, getValues, setValue } = useFormContext();
+
   const editor = useEditor({
+    content: getValues(name),
     extensions: [
       StarterKit.configure({
         history: false,
         paragraph: {
           HTMLAttributes: {
-            class: 'text-left', // 기본 왼쪽 정렬
+            class: 'text-left',
           },
         },
       }),
       TextAlign.configure({
-        types: ['heading', 'paragraph'], // 정렬 가능한 노드 설정
+        types: ['heading', 'paragraph'],
       }),
       Link,
       CodeBlock,
@@ -50,37 +52,29 @@ const FormRichText = ({ label, name }: FormRichTextProps) => {
     ],
   });
 
+  useEffect(() => {
+    if (!editor) return;
+
+    editor.on('update', () => {
+      setValue(name, editor.getHTML());
+    });
+  }, [editor, name, setValue]);
+
   return (
     <div className={'flex flex-col gap-3'}>
       <Label>{label}</Label>
       <Controller
         name={name}
         control={control}
-        render={({ field }) => {
-          useEffect(() => {
-            if (editor && field.value !== editor.getHTML()) {
-              editor.commands.setContent(field.value || '');
-            }
-          }, [editor, field.value]);
-
-          useEffect(() => {
-            if (!editor) return;
-
-            editor.on('update', () => {
-              field.onChange(editor.getHTML());
-            });
-          }, [editor]);
-
-          return (
-            <div className={'border rounded-md p-2'}>
-              <div className={'mb-2 border-b pb-2'}>
-                <RichTextToolbar editor={editor!} />
-                <RichTextPopover editor={editor!} />
-              </div>
-              <EditorContent className={'no-preflight '} editor={editor} />
+        render={() => (
+          <div className={'border rounded-md p-2'}>
+            <div className={'mb-2 border-b pb-2'}>
+              <RichTextToolbar editor={editor!} />
+              <RichTextPopover editor={editor!} />
             </div>
-          );
-        }}
+            <EditorContent className={'no-preflight'} editor={editor} />
+          </div>
+        )}
       />
     </div>
   );

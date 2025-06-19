@@ -55,7 +55,7 @@ const ProjectDialog = ({ children, id }: ProjectDialogProps) => {
 
     if (isNew) {
       createProject(request, {
-        onSuccess: (res) => {
+        onSuccess: () => {
           location.reload();
         },
       });
@@ -64,7 +64,7 @@ const ProjectDialog = ({ children, id }: ProjectDialogProps) => {
       updateProject(
         { id, project: request },
         {
-          onSuccess: (res) => {
+          onSuccess: () => {
             location.reload();
           },
         },

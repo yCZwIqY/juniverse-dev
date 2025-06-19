@@ -6,7 +6,6 @@ import {
   AlignRight,
   Bold,
   Code,
-  CodeSquare,
   Heading1,
   Heading2,
   Heading3,

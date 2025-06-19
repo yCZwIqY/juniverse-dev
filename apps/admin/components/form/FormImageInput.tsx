@@ -34,7 +34,6 @@ const FormImageInput = ({ label, name, accept, multiple = true }: FormMultiImage
         setValue(name, multiple ? [...(getValues(name) || []), ...res.result] : res.result[0]);
         setInputValue('');
       },
-      onError: (err) => {},
     });
   };
   const onRemoveImage = (targetKey: string) => {
