@@ -70,7 +70,7 @@ export class Project {
   memberCount: number;
 
   @Column({ nullable: true })
-  gitHubUrl?: string;
+  githubUrl?: string;
 
   @Column({ nullable: true })
   demoUrl?: string;

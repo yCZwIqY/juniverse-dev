@@ -1,18 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
 
-const useScrollTriggerValue = (targetValue: number) => {
+const useScrollTriggerValue = (targetValue: number, scrollContainer?: HTMLElement | null) => {
   const targetRef = useRef<HTMLDivElement>(null);
   const [value, setValue] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!targetRef.current) return;
+      if (!targetRef.current || !scrollContainer) return;
 
-      const rect = targetRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const targetCenter = rect.top + rect.height / 2;
-      const distanceFromCenter = Math.abs(windowHeight / 2 - targetCenter);
-      const maxDistance = windowHeight * 0.5;
+      const targetRect = targetRef.current.getBoundingClientRect();
+      const containerRect = scrollContainer.getBoundingClientRect();
+
+      const targetCenter = targetRect.top + targetRect.height / 2 - containerRect.top;
+      const containerHeight = containerRect.height;
+
+      const distanceFromCenter = Math.abs(containerHeight / 2 - targetCenter);
+      const maxDistance = containerHeight / 2;
 
       let progress = 1 - distanceFromCenter / maxDistance;
       progress = Math.max(0, Math.min(progress, 1));
@@ -20,10 +23,13 @@ const useScrollTriggerValue = (targetValue: number) => {
       setValue(Math.round(progress * targetValue));
     };
 
-    window.addEventListener('scroll', handleScroll);
+    scrollContainer?.addEventListener('scroll', handleScroll);
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+
+    return () => {
+      scrollContainer?.removeEventListener('scroll', handleScroll);
+    };
+  }, [scrollContainer]);
 
   return { value, targetRef };
 };

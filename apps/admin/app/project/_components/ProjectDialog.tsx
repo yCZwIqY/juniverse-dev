@@ -78,7 +78,7 @@ const ProjectDialog = ({ children, id }: ProjectDialogProps) => {
     } else {
       form.reset();
     }
-  }, [open]);
+  }, [open, project]);
 
   return (
     <div>
@@ -98,8 +98,8 @@ const ProjectDialog = ({ children, id }: ProjectDialogProps) => {
                 <FormMultiInput label={'태그'} name={'techs'} required={false} options={techOptions} onCreate={onCreateNewTech} />
                 <FormDatePicker label={'시작일'} name={'startDate'} />
                 <FormDatePicker label={'종료일'} name={'endDate'} />
-                <FormTextInput label={'깃허브 URL'} name={'gitHubUrl'} required={false} />
-                <FormTextInput label={'데모 URL'} name={'DemoUrl'} required={false} />
+                <FormTextInput label={'깃허브 URL'} name={'githubUrl'} required={false} />
+                <FormTextInput label={'데모 URL'} name={'demoUrl'} required={false} />
                 <FormTextInput label={'인원 수'} name={'memberCount'} />
                 <FormTextInput label={'역할'} name={'role'} />
                 <FormTextArea label={'요약'} name={'summary'} />

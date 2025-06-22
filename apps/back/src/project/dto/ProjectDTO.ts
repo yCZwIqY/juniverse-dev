@@ -12,7 +12,7 @@ export class ProjectDTO {
   summary?: string;
   description?: string;
   memberCount?: number;
-  gitHubUrl?: string;
+  githubUrl?: string;
   demoUrl?: string;
   role?: string;
 

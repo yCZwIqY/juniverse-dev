@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { RefObject, useEffect } from 'react';
 import useScrollTriggerValue from '@/hooks/useScrollTriggerValue';
 import Image from 'next/image';
 import AboutMeLabelText from '@/app/_components/main/aboutMe/AboutMeLabelText';
@@ -8,13 +8,18 @@ import CareerBox from '@/app/_components/main/aboutMe/CareerBox';
 import { useCareers } from 'apis';
 import { Career } from 'shared-types';
 
-const AboutMeSection = () => {
-  const { value, targetRef } = useScrollTriggerValue(180);
+const AboutMeSection = ({ scrollContainerRef }: { scrollContainerRef: RefObject<HTMLElement> }) => {
+  const { value, targetRef } = useScrollTriggerValue(180, scrollContainerRef.current);
   const { data } = useCareers();
   const careers = data?.result ?? [];
 
   return (
-    <div ref={targetRef} className={'w-dvw h-dvh flex justify-center items-center p-5 md:p-0'} id={'about-me'}>
+    <div
+      ref={targetRef}
+      className={'w-screen h-screen flex justify-center items-center p-5 md:p-0'}
+      id={'about-me'}
+      style={{ scrollSnapAlign: 'start' }}
+    >
       <div
         className={'relative w-[800px] h-[420px] mt-24 transition-all shadow-xl top-[18%]'}
         style={{ boxShadow: '3px 6px 8px 0px rgba(0, 0, 0, 0.25)' }}
@@ -53,9 +58,9 @@ const AboutMeSection = () => {
             <div className={'rotate-180 flex flex-col justify-start h-full py-8 px-12'}>
               <div className={'font-bold text-xl mb-4'}>ABOUT ME</div>
               <div className={'flex-1 overflow-hidden'}>
-                <div className={'flex gap-3 h-full'}>
+                <div className={'flex flex-col md:flex-row gap-3 h-full'}>
                   <Image src={'/img/temp.png'} alt={'프로필 사진'} className={' w-[120px] h-[130px]'} width={120} height={180} />
-                  <div>
+                  <div className={'flex gap-3 md:flex-col'}>
                     <AboutMeLabelText label={'Name'} value={'이지윤'} />
                     <AboutMeLabelText label={'MBTI'} value={'INTP/INFP'} />
                     <AboutMeLabelText label={'Job'} value={'웹 프론트엔드 개발자'} />

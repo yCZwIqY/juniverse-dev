@@ -21,7 +21,7 @@ export class ProjectController {
   }
 
   @Get()
-  findAll(): Promise<Project[]> {
+  findAll(): Promise<ProjectDTO[]> {
     return this.projectService.findAll();
   }
 

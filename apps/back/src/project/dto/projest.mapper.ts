@@ -15,7 +15,7 @@ export function toProjectDTO(project: Project): ProjectDTO {
   dto.summary = project.summary;
   dto.description = project.description;
   dto.memberCount = project.memberCount;
-  dto.gitHubUrl = project.gitHubUrl;
+  dto.githubUrl = project.githubUrl;
   dto.demoUrl = project.demoUrl;
   dto.role = project.role;
   dto.techs = (project.techs ?? []).map((tech) => tech.name);

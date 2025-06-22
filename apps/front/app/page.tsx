@@ -1,12 +1,26 @@
+'use client';
+
 import HomeSection from '@/app/_components/main/HomeSection';
 import AboutMeSection from '@/app/_components/main/aboutMe/AboutMeSection';
-import LoginButton from '@/app/_components/LoginButton';
+import SkillSection from '@/app/_components/main/skillSet/SkillSection';
+import ProjectSection from '@/app/_components/main/project/ProjectSection';
+import { RefObject, useRef } from 'react';
 
 export default function Home() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   return (
-    <div className={'overflow-y-scroll overflow-x-hidden scroll-smooth'}>
+    <div
+      ref={scrollRef}
+      className={'h-screen overflow-y-scroll overflow-x-hidden scroll-smooth'}
+      style={{
+        scrollSnapType: 'y mandatory',
+      }}
+    >
       <HomeSection />
-      <AboutMeSection />
+      <AboutMeSection scrollContainerRef={scrollRef as RefObject<HTMLElement>} />
+      <SkillSection />
+      <ProjectSection />
     </div>
   );
 }

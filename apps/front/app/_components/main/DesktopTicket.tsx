@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 
 const DesktopTicket = () => {
   const ticketRef = useRef<HTMLDivElement>(null);
@@ -305,7 +306,7 @@ const DesktopTicket = () => {
               className={'whitespace-pre text-2xl font-medium  hover:text-shadow-xs hover:font-bold cursor-pointer '}
             >
               <tspan x="0" y="23.2273">
-                <a href={'#about-me'}> ABOUT ME</a>
+                <Link href={'#about-me'}>ABOUT ME</Link>
               </tspan>
             </text>
 
@@ -316,7 +317,7 @@ const DesktopTicket = () => {
               className={'whitespace-pre text-2xl font-medium hover:text-shadow-xs hover:font-bold cursor-pointer '}
             >
               <tspan x="0" y="23.2273">
-                SKILL
+                <Link href={'#skill'}>SKILL</Link>
               </tspan>
             </text>
 
@@ -327,7 +328,7 @@ const DesktopTicket = () => {
               className={'whitespace-pre text-2xl font-medium hover:text-shadow-xs hover:font-bold cursor-pointer '}
             >
               <tspan x="0" y="23.2273">
-                PROJECT
+                <Link href={'#project'}>PROJECT</Link>
               </tspan>
             </text>
 

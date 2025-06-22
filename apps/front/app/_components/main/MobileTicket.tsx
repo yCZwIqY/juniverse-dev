@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 const MobileTicket = () => {
   return (
@@ -96,7 +97,7 @@ const MobileTicket = () => {
           xmlSpace="preserve"
           className={'whitespace-pre text-2xl font-bold  hover:text-shadow-xs hover:font-bold cursor-pointer'}
         >
-          <tspan x="47.7852" y="3.2273">
+          <tspan x="60" y="3.2273">
             MENU
           </tspan>
         </text>
@@ -107,7 +108,7 @@ const MobileTicket = () => {
           className={'whitespace-pre text-2xl font-medium  hover:text-shadow-xs hover:font-bold cursor-pointer'}
         >
           <tspan x="36.1836" y="3.2273">
-            <a href={'#about-me'}> ABOUT ME</a>
+            <Link href={'#about-me'}>ABOUT ME</Link>
           </tspan>
         </text>
         <text
@@ -116,8 +117,8 @@ const MobileTicket = () => {
           xmlSpace="preserve"
           className={'whitespace-pre text-2xl font-medium  hover:text-shadow-xs hover:font-bold cursor-pointer'}
         >
-          <tspan x="67.0273" y="3.2273">
-            SKILL
+          <tspan x="67" y="3.2273">
+            <Link href={'#skill'}>SKILL</Link>
           </tspan>
         </text>
         <text
@@ -127,7 +128,7 @@ const MobileTicket = () => {
           className={'whitespace-pre text-2xl font-medium  hover:text-shadow-xs hover:font-bold cursor-pointer'}
         >
           <tspan x="46.375" y="3.2273">
-            PROJECT
+            <Link href={'#project'}>PROJECT</Link>
           </tspan>
         </text>
         <text

@@ -61,10 +61,17 @@ export class ProjectService {
     const result = await this.projectRepository.delete(id);
   }
 
-  async findAll(): Promise<Project[]> {
-    return this.projectRepository.find({
+  async findAll(): Promise<ProjectDTO[]> {
+    const project = await this.projectRepository.find({
       relations: ['techs', 'images', 'video', 'thumbnail'],
     });
+
+    return project
+      .map(toProjectDTO)
+      .sort(
+        (a, b) =>
+          new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
+      );
   }
 
   async findOne(id: number): Promise<ProjectDTO> {

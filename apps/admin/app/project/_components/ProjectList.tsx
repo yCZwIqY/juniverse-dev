@@ -10,7 +10,7 @@ const ProjectList = () => {
   const projects = data?.result;
   return (
     <div className={'w-full h-full p-12'}>
-      <div className={'grid grid-cols-5 gap-3'}>
+      <div className={'grid grid-cols-3 gap-3'}>
         <NewProject />
         {projects && projects?.map((project: Project) => <ProjectItem key={project.id} {...project} />)}
       </div>

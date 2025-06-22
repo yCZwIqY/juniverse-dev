@@ -24,7 +24,7 @@ interface FormRichTextProps {
 }
 
 const FormRichText = ({ label, name }: FormRichTextProps) => {
-  const { control, getValues, setValue } = useFormContext();
+  const { control, getValues, setValue, formState } = useFormContext();
 
   const editor = useEditor({
     content: getValues(name),
@@ -55,10 +55,17 @@ const FormRichText = ({ label, name }: FormRichTextProps) => {
   useEffect(() => {
     if (!editor) return;
 
+    const initialContent = getValues(name);
+    if (initialContent) {
+      editor.commands.setContent(initialContent);
+    }
+
     editor.on('update', () => {
-      setValue(name, editor.getHTML());
+      setValue(name, editor.getHTML(), {
+        shouldDirty: true,
+      });
     });
-  }, [editor, name, setValue]);
+  }, [editor, getValues, name, setValue]);
 
   return (
     <div className={'flex flex-col gap-3'}>
