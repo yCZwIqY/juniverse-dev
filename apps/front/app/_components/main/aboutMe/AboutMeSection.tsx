@@ -1,15 +1,16 @@
 'use client';
 
-import React, { RefObject, useEffect } from 'react';
-import useScrollTriggerValue from '@/hooks/useScrollTriggerValue';
+import React, { RefObject } from 'react';
 import Image from 'next/image';
 import AboutMeLabelText from '@/app/_components/main/aboutMe/AboutMeLabelText';
 import CareerBox from '@/app/_components/main/aboutMe/CareerBox';
 import { useCareers } from 'apis';
 import { Career } from 'shared-types';
+import useScrollTriggerValue from '@/hooks/useScrollTriggerValue';
 
 const AboutMeSection = ({ scrollContainerRef }: { scrollContainerRef: RefObject<HTMLElement> }) => {
-  const { value, targetRef } = useScrollTriggerValue(180, scrollContainerRef.current);
+  const isReady = typeof window !== 'undefined' && scrollContainerRef.current !== null;
+  const { value, targetRef } = useScrollTriggerValue(180, isReady ? scrollContainerRef.current : null);
   const { data } = useCareers();
   const careers = data?.result ?? [];
 
@@ -21,7 +22,7 @@ const AboutMeSection = ({ scrollContainerRef }: { scrollContainerRef: RefObject<
       style={{ scrollSnapAlign: 'start' }}
     >
       <div
-        className={'relative w-[800px] h-[420px] mt-24 transition-all shadow-xl top-[18%]'}
+        className={'relative w-[70dvh] h-[40dvh] my-auto transition-all shadow-xl top-[18%]'}
         style={{ boxShadow: '3px 6px 8px 0px rgba(0, 0, 0, 0.25)' }}
       >
         <div

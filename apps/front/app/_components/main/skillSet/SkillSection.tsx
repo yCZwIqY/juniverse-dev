@@ -54,8 +54,8 @@ const SkillSection = () => {
         <Radio options={TYPE} value={selectedType} onChange={setSelectedType} />
         <Radio options={LEVEL} value={selectedLevel} onChange={setSelectedLevel} />
       </div>
-      <div className={'mx-4 rounded-lg bg-white flex-1'}>
-        <div className={'flex justify-center gap-8 p-8 md:gap-28 md:p-8'}>
+      <div className={'mx-2 rounded-lg bg-white flex-1'}>
+        <div className={'flex justify-center gap-8 p-3 md:gap-28 md:p-8'}>
           <SkillList skills={front} selectedType={selectedType} selectedLevel={selectedLevel} />
           <SkillList skills={back} selectedType={selectedType} selectedLevel={selectedLevel} />
           <SkillList skills={others} selectedType={selectedType} selectedLevel={selectedLevel} />

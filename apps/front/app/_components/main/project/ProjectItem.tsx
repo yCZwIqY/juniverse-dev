@@ -20,7 +20,7 @@ const ProjectItem = ({ project, index }: ProjectItemProps) => {
   const { isDesktop } = useMediaQuery();
 
   return (
-    <div ref={ref} className={'h-screen w-full md:h-auto flex justify-center items-center'} style={{ scrollSnapAlign: 'start' }}>
+    <div ref={ref} className={'w-full h-full md:h-auto flex flex-1 justify-center items-center shadow-sm md:shadow-none'}>
       <motion.div
         className={
           'h-[90dvh] w-full rounded-md lg:rounded-none lg:h-52 flex flex-col bg-white justify-between gap-3 lg:flex-row lg:bg-transparent perspective origin-top'
@@ -41,7 +41,11 @@ const ProjectItem = ({ project, index }: ProjectItemProps) => {
             : {}
         }
       >
-        <div className={'flex flex-col lg:flex-row gap-3 lg:flex-1 h-full bg-white rounded-md lg:rounded-none p-4 justify-between'}>
+        <div
+          className={
+            'flex flex-col lg:flex-row gap-3 lg:flex-1 h-full bg-white md:shadow-sm rounded-md lg:rounded-none p-4 justify-between'
+          }
+        >
           <div className={'flex flex-col lg:flex-row gap-3 '}>
             <div className={'mx-4 flex justify-center items-center'}>
               {project.thumbnail ? (
@@ -79,11 +83,11 @@ const ProjectItem = ({ project, index }: ProjectItemProps) => {
               <div className={'border w-5 h-5 rounded-full'} />
             </div>
             <div className={'flex justify-center mt-4'}>
-              <button className={'bg-primary text-white font-semibold px-8 py-2 rounded-md hover:bg-primary-dark'}>상세보기</button>
+              {/*<button className={'bg-primary text-white font-semibold px-8 py-2 rounded-md hover:bg-primary-dark'}>상세보기</button>*/}
             </div>
           </div>
         </div>
-        <div className={'m-6 lg:m-0 h-96 lg:w-52 lg:h-full bg-primary-light flex flex-col justify-between rounded-lg p-4'}>
+        <div className={'m-6 lg:m-0 h-96 lg:w-52 lg:h-full bg-primary-light flex flex-col md:shadow-sm justify-between rounded-lg p-4'}>
           <div className={'p-2'}>
             <table className={'w-full text-white'}>
               <colgroup>
@@ -105,6 +109,7 @@ const ProjectItem = ({ project, index }: ProjectItemProps) => {
           <div className={'flex flex-col gap-1 my-3'}>
             <Link
               href={project.githubUrl}
+              target={'_blank'}
               className={
                 'bg-primary text-white font-semibold w-full flex justify-between items-center px-6 py-3 md:py-1 rounded-full hover:bg-primary-dark'
               }
@@ -125,6 +130,7 @@ const ProjectItem = ({ project, index }: ProjectItemProps) => {
             {project.demoUrl && (
               <Link
                 href={project.demoUrl ?? ''}
+                target={'_blank'}
                 className={
                   'text-primary bg-white font-semibold w-full flex justify-between items-center px-6 py-3 md:py-1 rounded-full hover:bg-gray'
                 }

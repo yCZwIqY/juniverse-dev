@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef, useState } from 'react';
 
 const useScrollTriggerValue = (targetValue: number, scrollContainer?: HTMLElement | null) => {
@@ -6,7 +8,7 @@ const useScrollTriggerValue = (targetValue: number, scrollContainer?: HTMLElemen
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!targetRef.current || !scrollContainer) return;
+      if (typeof window === 'undefined' || !targetRef.current || !scrollContainer) return;
 
       const targetRect = targetRef.current.getBoundingClientRect();
       const containerRect = scrollContainer.getBoundingClientRect();
