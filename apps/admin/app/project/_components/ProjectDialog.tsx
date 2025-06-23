@@ -78,7 +78,7 @@ const ProjectDialog = ({ children, id }: ProjectDialogProps) => {
     } else {
       form.reset();
     }
-  }, [open, project]);
+  }, [open, project, id]);
 
   return (
     <div>

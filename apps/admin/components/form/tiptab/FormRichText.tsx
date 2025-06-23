@@ -24,7 +24,7 @@ interface FormRichTextProps {
 }
 
 const FormRichText = ({ label, name }: FormRichTextProps) => {
-  const { control, getValues, setValue, formState } = useFormContext();
+  const { control, getValues, setValue } = useFormContext();
 
   const editor = useEditor({
     content: getValues(name),
