@@ -2,10 +2,10 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { createBlog, getBlog, getBlogs, removeBlog, updateBlog } from '../blog.api';
 import { Blog } from 'shared-types';
 
-export const useBlogs = () =>
+export const useBlogs = (params?: { [key: string]: string }) =>
   useQuery({
-    queryKey: ['blog'],
-    queryFn: getBlogs,
+    queryKey: ['blog', params],
+    queryFn: () => getBlogs(params),
   });
 
 export const useBlog = (id: string, enabled: boolean) =>
@@ -13,6 +13,7 @@ export const useBlog = (id: string, enabled: boolean) =>
     queryKey: ['blog', id],
     queryFn: () => getBlog(id),
     enabled,
+    staleTime: 1000 * 60 * 5,
   });
 
 export const useCreateBlog = () =>

@@ -39,7 +39,7 @@ export const authApiClient = apiClient.create({
 });
 
 export const get = async <T>(url: string, params = {}): Promise<SuccessResponse<T>> => {
-  const res = await apiClient.get(url, params);
+  const res = await apiClient.get(url, { searchParams: params });
   return res.json<SuccessResponse<T>>();
 };
 

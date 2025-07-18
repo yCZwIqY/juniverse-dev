@@ -11,7 +11,23 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useBlog, useCreateBlog, useCreateTech, useTech, useUpdateBlog } from 'apis';
 import { DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import Prism from 'prismjs';
 import { useEffect } from 'react';
+
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-css';
+import 'prismjs/components/prism-jsx';
+import 'prismjs/components/prism-tsx';
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-kotlin';
+import 'prismjs/components/prism-sql';
+import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-dart';
+import 'prismjs/components/prism-yaml';
+import 'prismjs/components/prism-docker';
+import 'prismjs/components/prism-gradle';
 
 const BlogDetailPage = () => {
   const router = useRouter();
@@ -27,6 +43,12 @@ const BlogDetailPage = () => {
   const { data: blog } = useBlog(params.id?.toString() ?? '0', !!Number(params.id));
   const { mutate: createBlog } = useCreateBlog();
   const { mutate: updateBlog } = useUpdateBlog(params.id?.toString() ?? '0');
+
+  useEffect(() => {
+    if (blog) {
+      Prism.highlightAll();
+    }
+  }, [blog]);
 
   const onCreateNewTech = (name: string) => {
     if (techData?.result.find((it: Tech) => it.name === name)) {
@@ -76,7 +98,7 @@ const BlogDetailPage = () => {
         <FormImageInput label={'썸네일'} name={'thumbnail'} multiple={false} required={false} />
         <FormTextInput label={'제목'} name={'title'} />
         <FormTextInput label={'부제목'} name={'subtitle'} />
-        <FormRichText label={'내용'} name={'contents'} />
+        {(isNew || blog?.result.contents) && <FormRichText label={'내용'} name={'contents'} />}
         <FormMultiInput label={'태그'} name={'techs'} required={false} options={techOptions} onCreate={onCreateNewTech} />
         <DialogFooter>
           <Button onClick={form.handleSubmit(onSubmit)}>Submit</Button>

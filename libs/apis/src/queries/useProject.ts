@@ -2,10 +2,10 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { getAllProjects, getProject, postProject, removeProject, updateProject } from '../project.api';
 import { Project } from 'shared-types';
 
-export const useProjects = () => {
+export const useProjects = (params?: { [key: string]: string }) => {
   return useQuery({
-    queryKey: ['project'],
-    queryFn: getAllProjects,
+    queryKey: ['project', params],
+    queryFn: () => getAllProjects(params),
   });
 };
 

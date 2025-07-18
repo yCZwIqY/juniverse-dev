@@ -65,7 +65,13 @@ const BlogTable = () => {
       header: '',
       cell: ({ row }: { row: Row<Blog> }) => (
         <div>
-          <Button variant={'destructive'} onClick={() => onRemoveBlog(row)}>
+          <Button
+            variant={'destructive'}
+            onClick={(e) => {
+              e.stopPropagation();
+              onRemoveBlog(row);
+            }}
+          >
             삭제
           </Button>
         </div>

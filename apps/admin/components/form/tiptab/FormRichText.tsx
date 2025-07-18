@@ -4,19 +4,40 @@ import React, { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Label } from '@/components/ui/label';
 import { EditorContent, useEditor } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
-import CodeBlock from '@tiptap/extension-code-block';
 import HardBreak from '@tiptap/extension-hard-break';
 import HorizontalRule from '@tiptap/extension-horizontal-rule';
 import BulletList from '@tiptap/extension-bullet-list';
 import OrderedList from '@tiptap/extension-ordered-list';
 import ListItem from '@tiptap/extension-list-item';
 import History from '@tiptap/extension-history';
+import Blockquote from '@tiptap/extension-blockquote';
 import Image from '@tiptap/extension-image';
 import RichTextToolbar from './RichTextToolbar';
 import RichTextPopover from './RichTextPopover';
 import { TextAlign } from '@tiptap/extension-text-align';
+import Document from '@tiptap/extension-document';
+import Paragraph from '@tiptap/extension-paragraph';
+import Text from '@tiptap/extension-text';
+import Heading from '@tiptap/extension-heading';
+import Code from '@tiptap/extension-code';
+import CodeBlock from '@tiptap/extension-code-block';
+import PrismCodeBlock from './PrismCodeBlock';
+import 'prismjs/themes/prism-tomorrow.css';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-css';
+import 'prismjs/components/prism-jsx';
+import 'prismjs/components/prism-tsx';
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-kotlin';
+import 'prismjs/components/prism-sql';
+import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-dart';
+import 'prismjs/components/prism-yaml';
+import 'prismjs/components/prism-docker';
+import 'prismjs/components/prism-gradle';
 
 interface FormRichTextProps {
   label: string;
@@ -29,26 +50,30 @@ const FormRichText = ({ label, name }: FormRichTextProps) => {
   const editor = useEditor({
     content: getValues(name),
     extensions: [
-      StarterKit.configure({
-        history: false,
-        paragraph: {
-          HTMLAttributes: {
-            class: 'text-left',
-          },
+      Heading,
+      TextAlign.configure({ types: ['heading', 'paragraph'] }),
+      Paragraph.configure({
+        HTMLAttributes: {
+          class: 'text-left',
         },
       }),
       TextAlign.configure({
         types: ['heading', 'paragraph'],
       }),
       Link,
-      CodeBlock,
+      Document,
       HardBreak,
+      Text,
       HorizontalRule,
       BulletList,
       OrderedList,
       ListItem,
       History,
       Image,
+      Code,
+      CodeBlock,
+      Blockquote,
+      PrismCodeBlock,
     ],
   });
 

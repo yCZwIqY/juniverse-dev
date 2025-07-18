@@ -92,7 +92,7 @@ const ProjectDialog = ({ children, id }: ProjectDialogProps) => {
               </DialogHeader>
               <div className={'flex flex-col gap-3 h-[80dvh] overflow-y-scroll'}>
                 <FormTextInput label={'제목'} name={'title'} />
-                <FormTextInput label={'데모 영상'} name={'video'} type={'file'} accept={'video/*'} required={false} />
+                <FormImageInput label={'데모 영상'} name={'video'} type={'file'} accept={'video/*'} multiple={false} required={false} />
                 <FormImageInput label={'썸네일'} name={'thumbnail'} multiple={false} required={false} />
                 <FormImageInput label={'첨부 이미지'} name={'images'} required={false} />
                 <FormMultiInput label={'태그'} name={'techs'} required={false} options={techOptions} onCreate={onCreateNewTech} />
@@ -103,7 +103,7 @@ const ProjectDialog = ({ children, id }: ProjectDialogProps) => {
                 <FormTextInput label={'인원 수'} name={'memberCount'} />
                 <FormTextInput label={'역할'} name={'role'} />
                 <FormTextArea label={'요약'} name={'summary'} />
-                <FormRichText label={'설명'} name={'description'} />
+                {project?.result.description && <FormRichText label={'설명'} name={'description'} />}
               </div>
               <DialogFooter>
                 <Button onClick={form.handleSubmit(onSubmit)}>Submit</Button>

@@ -32,13 +32,13 @@ type ToolbarProps = {
 const RichTextToolbar = ({ editor }: ToolbarProps) => {
   return (
     <div className={'flex gap-2'}>
-      <div className="icon" onClick={() => editor.chain().focus().toggleBold().run()}>
+      <div className="icon" onClick={() => editor.chain().focus().toggleMark('bold').run()}>
         <Bold />
       </div>
-      <div className="icon" onClick={() => editor.chain().focus().toggleItalic().run()}>
+      <div className="icon" onClick={() => editor.chain().focus().toggleMark('italic').run()}>
         <Italic />
       </div>
-      <div className="icon" onClick={() => editor.chain().focus().toggleStrike().run()}>
+      <div className="icon" onClick={() => editor.chain().focus().toggleMark('strike').run()}>
         <Strikethrough />
       </div>
       <div className={'border-r-2'} />
@@ -60,6 +60,7 @@ const RichTextToolbar = ({ editor }: ToolbarProps) => {
       <div className="icon" onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}>
         <Heading6 />
       </div>
+
       <div className={'border-r-2'} />
       <div className="icon" onClick={() => editor.chain().focus().setParagraph().run()}>
         <Pilcrow />
@@ -69,10 +70,10 @@ const RichTextToolbar = ({ editor }: ToolbarProps) => {
       </div>
       <div className={'border-r-2'} />
       <div className="icon" onClick={() => editor.chain().focus().toggleBulletList().run()}>
-        <ListOrdered />
+        <List />
       </div>
       <div className="icon" onClick={() => editor.chain().focus().toggleOrderedList().run()}>
-        <List />
+        <ListOrdered />
       </div>
       <div className={'border-r-2'} />
       <div className="icon" onClick={() => editor.chain().focus().toggleCodeBlock().run()}>
