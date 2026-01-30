@@ -1,3 +1,5 @@
-export default function Home() {
-  return <div></div>;
-}
+const Page = () => {
+  return <div>admin</div>;
+};
+
+export default Page;

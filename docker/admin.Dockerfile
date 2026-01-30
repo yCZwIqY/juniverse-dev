@@ -9,12 +9,12 @@ COPY package.json ./
 COPY pnpm-lock.yaml ./
 
 COPY apps ./apps
-COPY libs ./libs
+#COPY libs ./libs
 
 RUN pnpm install --frozen-lockfile
 
 # admin 앱 빌드
 RUN pnpm --filter admin build
 
-EXPOSE 3000
+EXPOSE 3001
 CMD ["pnpm", "--filter", "admin", "start"]

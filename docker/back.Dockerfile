@@ -15,5 +15,5 @@ RUN pnpm install --frozen-lockfile
 # back 앱 빌드
 RUN pnpm --filter back build
 
-EXPOSE 3000
+EXPOSE 3002
 CMD ["pnpm", "--filter", "back", "start"]
