@@ -1,100 +1,44 @@
+version: "3.9"
+
 services:
-  postgres:
-    image: postgres:16
-    restart: always
-    env_file:
-      - .env
+  nginx:
+    image: nginx:alpine
     ports:
-      - "5432:5432"
+      - "80:80"
+      - "443:443"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./certbot/www:/var/www/certbot
+      - ./certbot/conf:/etc/letsencrypt
+    depends_on:
+      - front
+      - admin
+      - back
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certbot/www:/var/www/certbot
+      - ./certbot/conf:/etc/letsencrypt
+    entrypoint: >
+      sh -c "while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h; done"
+
   front:
-    container_name: portfolio-front
-    build:
-      context: .
-      dockerfile: docker/front.Dockerfile
-    ports:
-      - "3000:3000"
-    restart: unless-stopped
-    environment:
-      - NODE_ENV=local
-    env_file:
-      - .env
+    image: ljy014/portfolio-front:latest
+    expose:
+      - "3000"
 
   admin:
-    container_name: portfolio-admin
-    build:
-      context: .
-      dockerfile: docker/admin.Dockerfile
-    ports:
-      - "3001:3000"
-    restart: unless-stopped
-    environment:
-      - NODE_ENV=local
-    env_file:
-      - .env
+    image: ljy014/portfolio-admin:latest
+    expose:
+      - "3000"
 
   back:
-    container_name: portfolio-back
-    build:
-      context: .
-      dockerfile: docker/back.Dockerfile
+    image: ljy014/portfolio-back:latest
+    expose:
+      - "3002"
+
+  postgres:
+    image: postgres:16
     ports:
-      - "3002:3000"
-    restart: unless-stopped
-    environment:
-      - NODE_ENV=local
-    env_file:
-      - .env
-
-volumes:
-  pgdata:
-
-
-
-
-
-
-
-#version: '3.9'
-#
-#services:
-#  postgres:
-#    image: postgres:16
-#    restart: always
-#    env_file:
-#      - .env
-#    ports:
-#      - "5432:5432"
-#    volumes:
-#      - pgdata:/var/lib/postgresql/data
-#
-#  front:
-#    image: ljy014/portfolio-front:latest
-#    container_name: portfolio-front
-#    ports:
-#      - "3000:3000"
-#    restart: unless-stopped
-#    env_file:
-#      - .env
-#
-#  admin:
-#    image: ljy014/portfolio-admin:latest
-#    container_name: portfolio-admin
-#    ports:
-#      - "3001:3000"
-#    restart: unless-stopped
-#    env_file:
-#      - .env
-#
-#  back:
-#    image: ljy014/portfolio-back:latest
-#    container_name: portfolio-back
-#    ports:
-#      - "3002:3002"
-#    restart: unless-stopped
-#    env_file:
-#      - .env
-#
-#volumes:
-#  pgdata:
+      - "5432:5432"

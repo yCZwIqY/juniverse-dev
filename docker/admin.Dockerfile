@@ -16,5 +16,5 @@ RUN pnpm install --frozen-lockfile
 # admin 앱 빌드
 RUN pnpm --filter admin build
 
-EXPOSE 3001
+EXPOSE 3000
 CMD ["pnpm", "--filter", "admin", "start"]

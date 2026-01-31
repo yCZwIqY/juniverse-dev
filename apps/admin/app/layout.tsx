@@ -1,4 +1,6 @@
 import React from 'react';
+import Sidebar from '@/app/_components/Sidebar';
+import './global.css';
 
 const Layout = ({
   children,
@@ -7,7 +9,14 @@ const Layout = ({
 }>) => {
   return (
     <html lang="ko" className="dark">
-      <body className={`font-sans antialiased`}>{children}</body>
+      <body>
+        <div className={'flex'}>
+          <aside>
+            <Sidebar />
+          </aside>
+          <main className={'flex-1 p-10'}>{children}</main>
+        </div>
+      </body>
     </html>
   );
 };
