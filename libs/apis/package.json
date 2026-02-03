@@ -9,9 +9,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.80.7",
-    "ky": "1.8.1",
-    "shared-types": "workspace:*"
+    "next": "15.3.3"
   },
   "keywords": [],
   "author": "",

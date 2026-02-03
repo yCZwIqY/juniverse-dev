@@ -23,8 +23,8 @@ const Sidebar = () => {
           메뉴 관리
         </Link>
         <Link
-          href={'/blogs'}
-          data-active={pathname.startsWith('/blogs')}
+          href={'/posts'}
+          data-active={pathname.startsWith('/posts')}
           className={'hover:bg-primary-700 px-5 py-2 rounded-sm data-[active=true]:bg-primary-600'}
         >
           블로그 관리
