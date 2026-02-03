@@ -1,3 +1,5 @@
+'use server';
+
 import { revalidateTag } from 'next/cache';
 import api from './api';
 import { MenuRequest, MenusResponse } from './model';

@@ -16,6 +16,7 @@ export type PageResponse<T> = BaseResponse<
   }
 >;
 
+// MENU
 export interface MenuData {
   id: number;
   name: string;
@@ -42,4 +43,39 @@ export const defaultSelectedMenuData: SelectedMenuData = {
   name: '',
   children: [],
   parent: undefined,
+};
+
+//POST
+export interface CommentData {
+  id: number;
+  content: string;
+  authorName: string;
+  authorId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PostData {
+  id: number;
+  title: string;
+  subtitle: string;
+  content: string;
+  menuId: number;
+  menu: MenuData;
+  tags: string[];
+  comments: CommentData[];
+  viewCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type PostsResponse = PageResponse<PostData>;
+export type PostResponse = BaseResponse<PostData>;
+
+export type PostFormData = {
+  title: string;
+  subtitle: string;
+  content: string;
+  menuId: number;
+  tags: string[];
 };
