@@ -1,98 +1,212 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+﻿# NestJS GraphQL Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 📁 프로젝트 구조
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+\\\
+apps/back/
+├── src/
+│   ├── schema.gql           # 자동 생성된 GraphQL 스키마
+│   ├── app.module.ts        # 메인 모듈
+│   ├── main.ts              # 애플리케이션 진입점
+│   │
+│   ├── users/               # Users 모듈
+│   │   ├── user.entity.ts        # GraphQL 타입 정의
+│   │   ├── user.input.ts         # Input 타입
+│   │   ├── users.resolver.ts     # Resolver (엔드포인트)
+│   │   ├── users.service.ts      # Service (비즈니스 로직)
+│   │   └── users.module.ts       # Module
+│   │
+│   └── posts/               # Posts 모듈
+│       ├── post.entity.ts
+│       ├── post.input.ts
+│       ├── posts.resolver.ts
+│       ├── posts.service.ts
+│       └── posts.module.ts
+\\\
 
-## Description
+## 🔍 파일 역할
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### schema.gql (자동 생성)
+- **위치**: \src/schema.gql\
+- **역할**: 전체 GraphQL API 명세서
+- **특징**: 
+  - 자동 생성되므로 직접 수정하지 않음
+  - Entity와 Resolver에서 정의한 내용이 자동으로 반영됨
+  - Swagger 문서처럼 API 구조를 한눈에 볼 수 있음
 
-## Project setup
+### Entity (*.entity.ts)
+- **역할**: GraphQL 타입 정의
+- **데코레이터**: \@ObjectType()\, \@Field()\
+- **예시**: User, Post, Comment 등
+- **결과**: schema.gql에 \	ype User\ 생성
 
-```bash
-$ pnpm install
-```
+### Input (*.input.ts)
+- **역할**: Mutation 입력 데이터 타입
+- **데코레이터**: \@InputType()\, \@Field()\
+- **예시**: CreateUserInput, UpdateUserInput
+- **결과**: schema.gql에 \input CreateUserInput\ 생성
 
-## Compile and run the project
+### Resolver (*.resolver.ts)
+- **역할**: GraphQL 엔드포인트 (REST의 Controller)
+- **데코레이터**: \@Resolver()\, \@Query()\, \@Mutation()\, \@ResolveField()\
+- **동작**: 요청 받아서 Service 호출
+- **결과**: schema.gql에 Query/Mutation 추가
 
-```bash
-# development
-$ pnpm run start
+### Service (*.service.ts)
+- **역할**: 비즈니스 로직 처리
+- **내용**: CRUD 작업, 데이터 검증, DB 접근
+- **특징**: GraphQL과 무관하게 재사용 가능
 
-# watch mode
-$ pnpm run start:dev
+### Module (*.module.ts)
+- **역할**: NestJS 모듈 정의
+- **내용**: providers, imports, exports
 
-# production mode
-$ pnpm run start:prod
-```
+## 🚀 실행 방법
 
-## Run tests
+\\\ash
+# 개발 모드
+pnpm run start:dev
 
-```bash
-# unit tests
-$ pnpm run test
+# 빌드
+pnpm run build
 
-# e2e tests
-$ pnpm run test:e2e
+# 프로덕션 실행
+pnpm run start:prod
+\\\
 
-# test coverage
-$ pnpm run test:cov
-```
+서버 실행 후: http://localhost:4000/graphql
 
-## Deployment
+## 📝 새 API 추가 단계
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+### 1. 폴더 생성
+\\\ash
+mkdir src/comments
+\\\
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 2. 파일 생성 (순서대로)
+1. \comment.entity.ts\ - 데이터 모델
+2. \comment.input.ts\ - 입력 타입
+3. \comments.service.ts\ - 비즈니스 로직
+4. \comments.resolver.ts\ - API 엔드포인트
+5. \comments.module.ts\ - 모듈 정의
 
-```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
-```
+### 3. AppModule에 추가
+\\\	ypescript
+@Module({
+  imports: [
+    GraphQLModule.forRoot({...}),
+    UsersModule,
+    PostsModule,
+    CommentsModule,  // 추가
+  ],
+})
+\\\
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 4. 빌드
+\\\ash
+pnpm run build
+\\\
 
-## Resources
+→ \src/schema.gql\이 자동으로 업데이트됨
 
-Check out a few resources that may come in handy when working with NestJS:
+## 🎯 GraphQL 쿼리 예시
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### 모든 게시글과 작성자 조회
+\\\graphql
+query {
+  posts {
+    id
+    title
+    content
+    author {
+      name
+      email
+    }
+  }
+}
+\\\
 
-## Support
+### 게시글 생성
+\\\graphql
+mutation {
+  createPost(createPostInput: {
+    title: "My Post"
+    content: "Content here"
+    authorId: 1
+  }) {
+    id
+    title
+  }
+}
+\\\
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### 특정 사용자의 게시글 조회
+\\\graphql
+query {
+  postsByAuthor(authorId: 1) {
+    id
+    title
+    createdAt
+  }
+}
+\\\
 
-## Stay in touch
+## 💡 핵심 개념
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Schema, Resolver, Service 관계
 
-## License
+\\\
+Client Request
+     ↓
+schema.gql (API 명세서)
+     ↓
+Resolver (엔드포인트)
+     ↓
+Service (비즈니스 로직)
+     ↓
+Entity (데이터 모델)
+\\\
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### REST vs GraphQL
+
+| REST | GraphQL |
+|------|---------|
+| GET /users | Query: users |
+| GET /users/:id | Query: user(id) |
+| POST /users | Mutation: createUser |
+| PUT /users/:id | Mutation: updateUser |
+| DELETE /users/:id | Mutation: deleteUser |
+
+### 스키마 자동 생성
+
+\\\	ypescript
+// Entity 작성
+@ObjectType()
+class User {
+  @Field() name!: string;
+}
+
+// Resolver 작성
+@Query(() => [User])
+users() { ... }
+
+// 빌드 → schema.gql에 자동 추가
+type User { name: String! }
+type Query { users: [User!]! }
+\\\
+
+## 🔧 설정 정보
+
+### autoSchemaFile 경로
+- **현재**: \src/schema.gql\ (소스코드와 함께 관리)
+- **변경 가능**: \join(__dirname, '..', 'schema.gql')\ 수정
+
+### playground
+- **활성화**: \playground: true\
+- **접속**: http://localhost:4000/graphql
+
+## 📚 참고 자료
+
+- [NestJS GraphQL 문서](https://docs.nestjs.com/graphql/quick-start)
+- [Apollo Server](https://www.apollographql.com/docs/apollo-server/)
+- [GraphQL 공식 문서](https://graphql.org/)

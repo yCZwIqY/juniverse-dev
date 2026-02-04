@@ -1,30 +1,16 @@
-import type { Metadata } from 'next';
-import './globals.css';
-import localFont from 'next/font/local';
-import QueryProvider from '@/provider/QueryProvider';
+import React from 'react';
+import './global.css';
 
-const pretendard = localFont({
-  src: '../public/fonts/pretendard/PretendardVariable.woff2',
-  display: 'swap',
-  weight: '45 920',
-  variable: '--font-pretendard',
-});
-
-export const metadata: Metadata = {
-  title: 'Juniverse Dev',
-  description: 'Blog & Portfolio',
-};
-
-export default function RootLayout({
+const MainLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   return (
-    <html lang="en">
-      <body className={`${pretendard.className}`}>
-        <QueryProvider>{children}</QueryProvider>
-      </body>
+    <html lang="ko" className="dark">
+      <body className={`font-Suit antialiased bg-background`}>{children}</body>
     </html>
   );
-}
+};
+
+export default MainLayout;
