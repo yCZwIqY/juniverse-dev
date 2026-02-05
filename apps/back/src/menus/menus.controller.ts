@@ -1,11 +1,11 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
   Query,
 } from '@nestjs/common';
 import { MenusService } from './menus.service';
@@ -24,6 +24,11 @@ export class MenusController {
   @Get()
   findAll(@Query('type') type: string) {
     return this.menusService.findAll(type);
+  }
+
+  @Get(':id')
+  findOne(@Query('id') id: number) {
+    return this.menusService.findOne(id);
   }
 
   @Patch(':id')

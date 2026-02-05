@@ -26,6 +26,7 @@ export interface MenuData {
 }
 
 export type MenusResponse = BaseResponse<MenuData[]>;
+export type MenuResponse = BaseResponse<MenuData>;
 
 export interface SelectedMenuData extends MenuData {
   parent?: MenuData;
@@ -70,7 +71,13 @@ export interface PostData {
 }
 
 export type PostsResponse = PageResponse<PostData>;
-export type PostResponse = BaseResponse<PostData>;
+export type PostResponse = BaseResponse<
+  PostData & {
+    next: Partial<PostData>;
+    prev: Partial<PostData>;
+  }
+>;
+export type RecentPostResponse = BaseResponse<PostData[]>;
 
 export type PostFormData = {
   title: string;
@@ -78,4 +85,10 @@ export type PostFormData = {
   content: string;
   menuId: number;
   tags: string[];
+};
+
+export type CreateCommentRequest = {
+  content: string;
+  authorId: string;
+  authorName: string;
 };

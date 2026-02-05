@@ -10,7 +10,7 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang="ko" className="dark">
+    <html lang="ko">
       <body>
         <div className={'flex'}>
           <aside>

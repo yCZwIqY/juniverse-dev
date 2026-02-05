@@ -1,8 +1,8 @@
 'use server';
 
 import { revalidateTag } from 'next/cache';
-import api from './api';
-import { MenuRequest, MenusResponse } from './model';
+import api from '../client/api';
+import { MenuRequest, MenuResponse, MenusResponse } from '../client';
 
 export const getMenuList = async (type = 'tree') => {
   try {
@@ -14,6 +14,15 @@ export const getMenuList = async (type = 'tree') => {
         next: { tags: [`menus:${type}`] },
       },
     );
+  } catch {}
+};
+
+export const getMenu = async (menuId: number) => {
+  try {
+    if (!menuId) {
+      return null;
+    }
+    return await api.get<MenuResponse>(`/api/menus/${menuId}`);
   } catch {}
 };
 

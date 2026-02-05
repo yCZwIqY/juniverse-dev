@@ -44,7 +44,7 @@ const TagInput = () => {
               onEnter();
             }
           }}
-          onChange={(e) => setInputValue(e.target.value.trim())}
+          onChange={(e) => setInputValue(e.target.value)}
         />
       </div>
       <div className={'flex gap-2 flex-wrap pt-1 col-span-2'}>

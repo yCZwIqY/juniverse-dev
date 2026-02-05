@@ -279,7 +279,7 @@ export function isNodeTypeSelected(editor: Editor | null, nodeTypeNames: string[
 
 /**
  * Check whether the current selection is fully within nodes
- * whose type names are in the provided `types` list.
+ * whose type names are in the provided `types` posts.
  *
  * - NodeSelection → checks the selected node.
  * - Text/AllSelection → ensures all textblocks within [from, to) are allowed.

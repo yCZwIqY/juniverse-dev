@@ -1,6 +1,6 @@
 import { useController, useFormContext } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { getMenuList } from '@/app/_libs/menus';
+import { getMenuList } from 'apis';
 
 const MenuSelect = () => {
   const [options, setOptions] = useState<{ label: string; value: number }[]>([]);

@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { DataSource, ILike, Repository } from 'typeorm';
+import { ArrayContains, DataSource, ILike, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from './entities/post.entity';
 import { Menu } from '../menus/entities/menu.entity';
@@ -12,6 +12,7 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { FindPostsDto } from './dto/find-posts.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { CreateCommentDto } from '../common/dto/create-comment.dto';
+import { PostDetailDto } from './dto/post-detail.dto';
 
 @Injectable()
 export class PostsService {
@@ -50,7 +51,8 @@ export class PostsService {
     const skip = (page - 1) * limit;
 
     const where: any = {};
-    if (query.menuId) where.menuId = query.menuId;
+    if (query.menuId && String(query.menuId) !== '0')
+      where.menuId = query.menuId;
 
     if (query.q?.trim()) {
       const q = query.q?.trim();
@@ -59,8 +61,12 @@ export class PostsService {
         where: [
           { ...where, title: ILike(`%${q}%`) },
           { ...where, content: ILike(`%${q}%`) },
+          {
+            ...where,
+            tags: ArrayContains([q]),
+          },
         ],
-        relations: { menu: true },
+        relations: { menu: true, comments: true },
         order: { createdAt: 'DESC' },
         skip,
         take: limit,
@@ -71,7 +77,7 @@ export class PostsService {
 
     const [items, total] = await this.postRepo.findAndCount({
       where,
-      relations: { menu: true },
+      relations: { menu: true, comments: true },
       order: { createdAt: 'DESC' },
       skip,
       take: limit,
@@ -88,7 +94,47 @@ export class PostsService {
     });
 
     if (!post) throw new NotFoundException('post not found');
-    return post;
+
+    const prev = await this.postRepo
+      .createQueryBuilder('p')
+      .select(['p.id', 'p.title', 'p.subtitle', 'p.createdAt'])
+      .where('p.createdAt > :createdAt', { createdAt: post.createdAt })
+      .andWhere('p.menuId = :menuId', { menuId: post.menu.id })
+      .orderBy('p.createdAt', 'ASC')
+      .addOrderBy('p.id', 'ASC')
+      .getOne();
+
+    const next = await this.postRepo
+      .createQueryBuilder('p')
+      .select(['p.id', 'p.title', 'p.subtitle', 'p.createdAt'])
+      .where('p.createdAt < :createdAt', { createdAt: post.createdAt })
+      .andWhere('p.menuId = :menuId', { menuId: post.menu.id })
+      .orderBy('p.createdAt', 'DESC')
+      .addOrderBy('p.id', 'DESC')
+      .getOne();
+
+    return {
+      ...post,
+      prev: prev
+        ? { id: prev.id, title: prev.title, subtitle: prev.subtitle }
+        : null,
+      next: next
+        ? { id: next.id, title: next.title, subtitle: next.subtitle }
+        : null,
+    };
+  }
+
+  async findRecents() {
+    return await this.postRepo.find({
+      relations: {
+        menu: true,
+        comments: true,
+      },
+      order: {
+        createdAt: 'DESC',
+      },
+      take: 6,
+    });
   }
 
   async update(id: number, dto: UpdatePostDto) {

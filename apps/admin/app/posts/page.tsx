@@ -1,7 +1,7 @@
 import PostTable from '@/app/posts/_components/PostTable';
 import Button from '@/app/_components/common/Button';
 import Link from 'next/link';
-import { getPosts } from '@/app/_libs/posts';
+import { getPosts } from 'apis';
 
 interface PostPageProps {
   searchParams: Promise<{
@@ -12,7 +12,7 @@ interface PostPageProps {
 
 const PostPage = async ({ searchParams }: PostPageProps) => {
   const { page, limit } = await searchParams;
-  const data = await getPosts(page ?? 1, limit ?? 10);
+  const data = await getPosts(page ?? 1, limit ?? 10, 0, '');
 
   return (
     <div className={'py-10 flex flex-col gap-10'}>

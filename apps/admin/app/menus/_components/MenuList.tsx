@@ -1,7 +1,7 @@
 import { MenuData } from '@/app/menus/_models/menu';
 import MenuItem from '@/app/menus/_components/MenuItem';
 import MenuAddButton from '@/app/menus/_components/MenuAddButton';
-import { getMenuList } from '@/app/_libs/menus';
+import { getMenuList } from 'apis';
 
 const MenuList = async () => {
   const data = await getMenuList();

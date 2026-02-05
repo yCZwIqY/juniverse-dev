@@ -1,3 +1,2 @@
-export * from './menus';
-export * from './model';
-export * from './api';
+export * from './client';
+export * from './server';

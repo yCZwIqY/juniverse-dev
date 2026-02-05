@@ -1,22 +1,7 @@
 'use server';
 import api from '@/utils/api';
-import { PostFormData, PostResponse, PostsResponse } from '@/app/posts/_models/posts';
+import { PostFormData, PostResponse } from '@/app/posts/_models/posts';
 import { revalidateTag } from 'next/cache';
-
-export const getPosts = async (page: number, limit: number) => {
-  try {
-    const { data } = await api.get<PostsResponse>(
-      `/api/posts?page=${page}&limit=${limit}`,
-      {},
-      {
-        next: {
-          tags: ['posts'],
-        },
-      },
-    );
-    return data;
-  } catch {}
-};
 
 export const getPost = async (id: string) => {
   try {

@@ -9,7 +9,7 @@ COPY package.json ./
 COPY pnpm-lock.yaml ./
 
 COPY apps ./apps
-#COPY libs ./libs
+COPY libs ./libs
 
 RUN pnpm install --frozen-lockfile
 

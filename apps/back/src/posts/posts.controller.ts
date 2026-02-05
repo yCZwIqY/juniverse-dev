@@ -28,6 +28,11 @@ export class PostsController {
     return this.postsService.findAll(query);
   }
 
+  @Get('recent')
+  findRecents() {
+    return this.postsService.findRecents();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.postsService.findOne(+id);

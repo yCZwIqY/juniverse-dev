@@ -4,12 +4,12 @@
     "rootDir": "src",
     "declaration": true,
     "emitDeclarationOnly": false,
+    "target": "ES2022",
     "module": "ESNext",
-    "target": "ES6",
     "moduleResolution": "node",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true
   },
-  "include": ["src"]
+  "include": ["./src/*"]
 }
