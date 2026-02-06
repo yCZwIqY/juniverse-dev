@@ -11,7 +11,7 @@ const MainLayout = ({
   return (
     <html lang="ko" className="">
       <body
-        className={`font-Suit antialiased bg-background w-dvw min-h-dvh !h-fit lg:w-[1120px] m-auto relative overflow-x-hidden overflow-y-auto p-5 flex flex-col`}
+        className={`font-Suit antialiased bg-background w-dvw min-h-dvh !h-fit lg:w-[1120px] m-auto relative overflow-x-hidden overflow-y-auto !p-5 flex flex-col`}
       >
         <Header />
         <main>{children}</main>

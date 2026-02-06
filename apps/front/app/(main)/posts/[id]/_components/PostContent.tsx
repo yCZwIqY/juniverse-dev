@@ -25,7 +25,7 @@ const PostContent = ({ content }: PostContentProps) => {
   });
 
   return (
-    <div className={'p-10'}>
+    <div className={'p-1 lg:p-10'}>
       <EditorContent editor={editor} />
     </div>
   );

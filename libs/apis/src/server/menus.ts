@@ -11,7 +11,7 @@ export const getMenuList = async (type = 'tree') => {
       {},
       {
         cache: 'force-cache',
-        next: { tags: [`menus:${type}`] },
+        next: { tags: [`menus:${type}`], revalidate: 60 * 60 * 24 },
       },
     );
   } catch {}

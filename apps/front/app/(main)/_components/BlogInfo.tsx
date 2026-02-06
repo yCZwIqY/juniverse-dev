@@ -36,7 +36,7 @@ const BlogInfo = async ({ lastPostId }: BlogInfoProps) => {
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M4 12.6666V3.33331L13.3333 7.99998L4 12.6666Z"
-                stroke="#0C1223"
+                stroke='var(--tt-theme-text)'
                 strokeOpacity="0.92"
                 strokeWidth="1.33333"
                 strokeLinejoin="round"

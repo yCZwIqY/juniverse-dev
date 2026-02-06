@@ -18,7 +18,7 @@ const PostListPage = async ({ searchParams }: ListPageProps) => {
   console.log('posts', posts);
 
   return (
-    <div className={'py-4 flex flex-col gap-4'}>
+    <div className={'py-4 flex flex-col gap-4 relative'}>
       <PostTop search={search} category={category} />
       <div className={'lg:grid grid-cols-[5fr_2fr] flex flex-col gap-4'}>
         <PostList posts={posts?.items ?? []} page={posts?.page ?? 1} total={posts?.total ?? 0} />

@@ -23,7 +23,7 @@ const PostButtons = ({ title, subtitle }: PostButtonsProps) => {
         className={'flex items-center justify-center gap-2 font-bold border-border rounded-sm border px-3 py-1'}
         onClick={() => router.push('/posts')}
       >
-        <svg fill="#000000" width="18px" height="18px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+        <svg fill="var(--tt-theme-text)" width="18px" height="18px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
           <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
           <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
           <g id="SVGRepo_iconCarrier">

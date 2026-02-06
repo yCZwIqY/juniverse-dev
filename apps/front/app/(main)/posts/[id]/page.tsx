@@ -4,6 +4,7 @@ import PostButtons from '@/app/(main)/posts/[id]/_components/PostButtons';
 import { Metadata } from 'next';
 import PostContent from '@/app/(main)/posts/[id]/_components/PostContent';
 import PostComments from '@/app/(main)/posts/[id]/_components/PostComments';
+import QuickMenus from '@/app/(main)/posts/[id]/_components/QuickMenus';
 
 interface PostDetailPageProps {
   params: Promise<{ id: number }>;
@@ -35,6 +36,7 @@ const PostDetailPage = async ({ params }: PostDetailPageProps) => {
       <div className={'border border-border rounded-lg p-8 bg-card mt-4'}>
         <PostComments comments={post.data.comments} />
       </div>
+      <QuickMenus content={post.data.content ?? ''} />
     </div>
   );
 };

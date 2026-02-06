@@ -3,15 +3,34 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import ThemeSwitch from '@/app/_components/header/ThemeSwitch';
 
 const Header = () => {
   const router = useRouter();
   const [searchText, setSearchText] = useState('');
+  const [showInput, setShowInput] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onSearch = (e: FormEvent) => {
     e.preventDefault();
     router.push(`/posts?search=${searchText}&page=1`);
+    setSearchText('');
+  };
+
+  const onClickSearch = () => {
+    if (searchText) {
+      router.push(`/posts?search=${searchText}&page=1`);
+      setSearchText('');
+      return;
+    }
+    setShowInput(true);
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 500);
+  };
+
+  const onBlur = () => {
+    setShowInput(false);
   };
 
   useEffect(() => {
@@ -34,34 +53,49 @@ const Header = () => {
     <div className={'sticky top-5 w-full mt-5 py-3 px-5 flex items-center justify-between border border-border rounded-xl bg-card z-10'}>
       <div className={'flex gap-4'}>
         <Link href={'/'}>로고가 들어갈 자리</Link>
-        <div>
+        <div className={`${showInput ? 'hidden lg:block' : 'block'}`}>
           <Link href={'/posts'} className={'font-semibold hover:underline'}>
             Posts
           </Link>
         </div>
       </div>
-      <form onSubmit={onSearch}>
-        <div className={'border rounded-full border-border py-[10px] px-3 flex gap-2 items-center'}>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g opacity="0.55">
-              <path
-                d="M7 12C5.67392 12 4.40215 11.4732 3.46447 10.5355C2.52678 9.59785 2 8.32608 2 7C2 5.67392 2.52678 4.40215 3.46447 3.46447C4.40215 2.52678 5.67392 2 7 2C8.32608 2 9.59785 2.52678 10.5355 3.46447C11.4732 4.40215 12 5.67392 12 7C12 8.32608 11.4732 9.59785 10.5355 10.5355C9.59785 11.4732 8.32608 12 7 12Z"
-                stroke="var(--border)"
-                strokeOpacity="0.72"
-                strokeWidth="1.33333"
-              />
-              <path d="M11 11L14 14" stroke="var(--border)" strokeOpacity="0.72" strokeWidth="1.33333" strokeLinecap="round" />
-            </g>
-          </svg>
-          <input
-            ref={inputRef}
-            className={'placeholder:text-border outline-none border-none'}
-            placeholder={'검색'}
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-        </div>
-      </form>
+      <div className={'flex gap-4 items-center'}>
+        <form onSubmit={onSearch}>
+          <div className={`border rounded-full border-border py-2 px-3 ${showInput ? 'flex' : 'lg:flex'} gap-2 items-center`}>
+            <button type={'button'}
+                    onClick={onClickSearch}>
+              <svg width='16'
+                   height='16'
+                   viewBox='0 0 16 16'
+                   fill='none'
+                   xmlns='http://www.w3.org/2000/svg'>
+                <g opacity='0.55'>
+                  <path
+                    d='M7 12C5.67392 12 4.40215 11.4732 3.46447 10.5355C2.52678 9.59785 2 8.32608 2 7C2 5.67392 2.52678 4.40215 3.46447 3.46447C4.40215 2.52678 5.67392 2 7 2C8.32608 2 9.59785 2.52678 10.5355 3.46447C11.4732 4.40215 12 5.67392 12 7C12 8.32608 11.4732 9.59785 10.5355 10.5355C9.59785 11.4732 8.32608 12 7 12Z'
+                    stroke='var(--color-gray-400)'
+                    strokeOpacity='0.72'
+                    strokeWidth='1.33333'
+                  />
+                  <path d='M11 11L14 14'
+                        stroke='var(--color-gray-400)'
+                        strokeOpacity='0.72'
+                        strokeWidth='1.33333'
+                        strokeLinecap='round' />
+                </g>
+              </svg>
+            </button>
+            <input
+              ref={inputRef}
+              className={`placeholder:text-border outline-none border-none transition-all ${showInput ? 'w-[50dvw]' : '!w-0'} lg:!w-auto`}
+              placeholder={'검색'}
+              value={searchText}
+              onBlur={onBlur}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+          </div>
+        </form>
+        <ThemeSwitch />
+      </div>
     </div>
   );
 };
