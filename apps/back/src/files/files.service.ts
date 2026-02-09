@@ -7,7 +7,7 @@ import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import { DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { Upload } from '@aws-sdk/lib-storage';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -127,6 +127,22 @@ export class FilesService {
     );
 
     return saved;
+  }
+
+  async uploadList(
+    files: Express.Multer.File[],
+    refType: string,
+    refId: number,
+  ) {
+    return Promise.all(
+      files.map((file) =>
+        this.uploadOne({
+          refType,
+          refId,
+          file,
+        }),
+      ),
+    );
   }
 
   async list(refType: string, refId: number) {

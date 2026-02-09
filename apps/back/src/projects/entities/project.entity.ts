@@ -11,6 +11,12 @@ export class Project {
   @Column()
   description!: string;
 
+  @Column()
+  content!: string;
+
+  @Column()
+  sourceCode?: string;
+
   @Column('text', { array: true, default: '{}' })
   tags?: string[];
 
