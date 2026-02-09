@@ -32,7 +32,7 @@ const PostAddComment = () => {
         </div>
         <textarea
           placeholder={'댓글을 작성해 주세요'}
-          className={'w-full h-[150px] resize-none border border-border rounded-md bg-gray-100 p-4'}
+          className={'w-full h-[150px] resize-none border border-border rounded-md bg-background p-4'}
           value={comment}
           onChange={(e) => {
             if (e.target.value.length >= 500) return;

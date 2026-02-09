@@ -24,9 +24,11 @@ const PostPage = async ({ searchParams }: PostPageProps) => {
         </Button>
       </div>
       <PostTable data={data?.items ?? []} page={data?.page ?? 1} limit={data?.limit ?? 10} total={data?.total ?? 0} />
-      <Pagination page={data?.page ?? 1}
-                  total={data?.total ?? 0}
-                  limit={data?.limit ?? 10} />
+      <div className={'flex justify-center'}>
+        <Pagination page={data?.page ?? 1}
+                    total={data?.total ?? 0}
+                    limit={data?.limit ?? 10} />
+      </div>
     </div>
   );
 };

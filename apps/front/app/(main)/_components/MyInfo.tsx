@@ -9,7 +9,7 @@ interface MyInfoProps {
 }
 
 const MyInfo = ({ posts }: MyInfoProps) => {
-  const updateSearchParams = useUpdateSearchParams();
+  const updateSearchParams = useUpdateSearchParams('posts');
   const tags = useMemo(() => {
     const set = new Set<string>();
     posts

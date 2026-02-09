@@ -12,17 +12,15 @@ const CommentItem = ({ postId, data }: CommentItemProps) => {
     await deleteComment(postId, data.id);
   };
   return (
-    <div>
+    <div className={'flex flex-col gap-2 p-2 border border-gray-300 rounded-lg'}>
       <div>
-        <div>{data.authorName}({data.authorId})</div>
-        <div>{data.createdAt}</div>
+        <div className={'font-bold'}>{data.authorName}({data.authorId})</div>
+        <div className={'text-sm text-gray-700'}>{data.createdAt}</div>
       </div>
       <div>
         {data.content.split('\n').map((line, index) => (<p key={`${data.id}-${index}`}>{line}</p>))}
       </div>
-      <div>
-        <button>삭제</button>
-      </div>
+      <button className={'text-red-600 border border-red-500 py-1 px-3 text-sm rounded-lg self-end'}>삭제</button>
     </div>
   );
 };

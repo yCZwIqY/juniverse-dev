@@ -14,7 +14,7 @@ const MenuGroup = ({ menu }: MenuItemProps) => {
 
   return (
     <div>
-      <div className={'flex justify-between items-center min-w-[220px] border border-border px-3 py-1 rounded-sm'}>
+      <div className={`${open ? 'max-h-[1000px]' : 'max-h-[34px] overflow-hidden'} transition-all flex justify-between items-center min-w-[220px] border border-border px-3 py-1 rounded-sm`}>
         <button
           type="button"
           className={'flex-1 text-left'}
@@ -36,8 +36,8 @@ const MenuGroup = ({ menu }: MenuItemProps) => {
           </button>
         )}
       </div>
-      <div className={'pl-10'}>
-        {menu.children.map((child) => (
+      <div className={'pl-10 flex flex-col gap-0.5 mt-1'}>
+        {open && menu.children.map((child) => (
           <MenuGroup key={`${menu.id}-${child.id}`} menu={child} />
         ))}
       </div>

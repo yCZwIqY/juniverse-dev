@@ -57,7 +57,7 @@ const Pagination = ({ page, total, limit }: PaginationProps) => {
           key={i}
           type={'button'}
           onClick={() => onPageChange(startIndex + i)}
-          className={`border border-border size-7 rounded-md ${Number(startIndex + i) === Number(page) ? 'bg-accent border-none text-white opacity-50 hover:opacity-70 active:opacity-100' : ''}`}
+          className={`border border-gray-700 size-7 rounded-md ${Number(startIndex + i) === Number(page) ? 'bg-primary-500 border-none text-white opacity-50 hover:primary-300 active:primary-700' : ''}`}
         >
           {startIndex + i}
         </button>

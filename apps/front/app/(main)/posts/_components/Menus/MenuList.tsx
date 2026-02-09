@@ -8,7 +8,7 @@ const MenuList = async () => {
       <div className={'flex justify-between items-center pb-[10px] border-b-2 border-border'}>
         <span className={'font-bold'}>Categories</span>
       </div>
-      <div className={'py-3 w-full overflow-x-auto'}>
+      <div className={'py-3 w-full overflow-x-auto flex flex-col gap-1'}>
         {(menus?.data ?? []).map((menu) => (
           <MenuGroup key={menu.id} menu={menu} />
         ))}

@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ThemeSwitch from '@/app/_components/header/ThemeSwitch';
+import Image from 'next/image';
 
 const Header = () => {
   const router = useRouter();
@@ -51,8 +52,14 @@ const Header = () => {
 
   return (
     <div className={'sticky top-5 w-full mt-5 py-3 px-5 flex items-center justify-between border border-border rounded-xl bg-card z-10'}>
-      <div className={'flex gap-4'}>
-        <Link href={'/'}>로고가 들어갈 자리</Link>
+      <div className={'flex items-center gap-4'}>
+        <Link href={'/'}>
+          <Image src={'/images/logo.png'}
+                 className={'size-6 lg:size-8'}
+                 alt={'로고'}
+                 width={24}
+                 height={24} />
+        </Link>
         <div className={`${showInput ? 'hidden lg:block' : 'block'}`}>
           <Link href={'/posts'} className={'font-semibold hover:underline'}>
             Posts

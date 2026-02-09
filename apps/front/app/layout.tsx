@@ -10,6 +10,15 @@ const MainLayout = ({
 }>) => {
   return (
     <html lang="ko" className="">
+    <head>
+      <link rel='icon'
+            href='/images/logo.png'
+            type='image/png'
+            sizes='32x32' />
+      <title>
+        Juniverse Dev
+      </title>
+    </head>
       <body
         className={`font-Suit antialiased bg-background w-dvw min-h-dvh !h-fit lg:w-[1120px] m-auto relative overflow-x-hidden overflow-y-auto !p-5 flex flex-col`}
       >
