@@ -27,7 +27,14 @@ const Sidebar = () => {
           data-active={pathname.startsWith('/posts')}
           className={'hover:bg-primary-700 px-5 py-2 rounded-sm data-[active=true]:bg-primary-600'}
         >
-          블로그 관리
+          포스트 관리
+        </Link>
+        <Link
+          href={'/comments'}
+          data-active={pathname.startsWith('/comments')}
+          className={'hover:bg-primary-700 px-5 py-2 rounded-sm data-[active=true]:bg-primary-600'}
+        >
+          댓글 관리
         </Link>
         <Link
           href={'/projects'}

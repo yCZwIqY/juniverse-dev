@@ -2,6 +2,7 @@ import PostTable from '@/app/posts/_components/PostTable';
 import Button from '@/app/_components/common/Button';
 import Link from 'next/link';
 import { getPosts } from 'apis';
+import Pagination from '@/app/_components/common/Pagination';
 
 interface PostPageProps {
   searchParams: Promise<{
@@ -23,6 +24,9 @@ const PostPage = async ({ searchParams }: PostPageProps) => {
         </Button>
       </div>
       <PostTable data={data?.items ?? []} page={data?.page ?? 1} limit={data?.limit ?? 10} total={data?.total ?? 0} />
+      <Pagination page={data?.page ?? 1}
+                  total={data?.total ?? 0}
+                  limit={data?.limit ?? 10} />
     </div>
   );
 };
