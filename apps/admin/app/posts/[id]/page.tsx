@@ -5,11 +5,10 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import { createPost, getPost, updatePost } from '@/app/_libs/posts';
 import { PostFormData } from '@/app/posts/_models/posts';
-import TitleInput from '@/app/posts/[id]/_component/TitleInput';
-import ContentEditor from '@/app/posts/[id]/_component/ContentEditor';
+import TextInput from '@/app/_components/form/TextInput';
+import ContentEditor from '@/app/_components/form/ContentEditor';
 import MenuSelect from '@/app/posts/[id]/_component/MenuSelect';
-import SubTitleInput from '@/app/posts/[id]/_component/SubTitleInput';
-import TagInput from '@/app/posts/[id]/_component/TagInput';
+import TagInput from '@/app/_components/form/TagInput';
 import Button from '@/app/_components/common/Button';
 
 const PostDetailPage = () => {
@@ -62,8 +61,12 @@ const PostDetailPage = () => {
             </Button>
           </div>
           <div className={'p-10 flex flex-col gap-3'}>
-            <TitleInput />
-            <SubTitleInput />
+            <TextInput name={'title'}
+                       label={'제목'}
+                       maxLength={200} />
+            <TextInput name={'subtitle'}
+                       label={'부제목'}
+                       maxLength={300} />
             <MenuSelect />
             <ContentEditor />
             <TagInput />

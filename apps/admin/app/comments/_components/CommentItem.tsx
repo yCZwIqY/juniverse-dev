@@ -8,7 +8,7 @@ interface CommentItemProps {
 }
 
 const CommentItem = ({ postId, data }: CommentItemProps) => {
-  const onDelete = async (id: string) => {
+  const onDelete = async () => {
     await deleteComment(postId, data.id);
   };
   return (
@@ -20,7 +20,10 @@ const CommentItem = ({ postId, data }: CommentItemProps) => {
       <div>
         {data.content.split('\n').map((line, index) => (<p key={`${data.id}-${index}`}>{line}</p>))}
       </div>
-      <button className={'text-red-600 border border-red-500 py-1 px-3 text-sm rounded-lg self-end'}>삭제</button>
+      <button type={'button'}
+              className={'text-red-600 border border-red-500 py-1 px-3 text-sm rounded-lg self-end'}
+              onClick={onDelete}>삭제
+      </button>
     </div>
   );
 };

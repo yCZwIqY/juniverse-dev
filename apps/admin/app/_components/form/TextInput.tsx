@@ -1,18 +1,24 @@
 import { useController, useFormContext } from 'react-hook-form';
 
-const SubTitleInput = () => {
+interface TextInputProps {
+  name: string;
+  maxLength?: number;
+  label: string;
+}
+
+const TextInput = ({ name, maxLength, label }: TextInputProps) => {
   const { control } = useFormContext();
   const {
     field: { value, onChange },
   } = useController({
-    name: 'subtitle',
+    name,
     control,
-    rules: { maxLength: 300 },
+    rules: { maxLength },
   });
   return (
     <div className={'grid grid-cols-[120px_1fr] gap-4'}>
       <label htmlFor="title" className={'font-bold text-lg block pb-2 text-center border-b-2 border-primary-300'}>
-        부제목
+        {label}
       </label>
       <div className={'border rounded-lg border-gray-200'}>
         <input value={value} className={'h-10 px-2 py-1 w-full'} onChange={onChange} />
@@ -21,4 +27,4 @@ const SubTitleInput = () => {
   );
 };
 
-export default SubTitleInput;
+export default TextInput;
