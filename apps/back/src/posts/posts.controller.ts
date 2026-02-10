@@ -7,7 +7,10 @@ import {
   Patch,
   Post,
   Query,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
+import { createHash } from 'crypto';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -49,8 +52,12 @@ export class PostsController {
   }
 
   @Post(':id/views')
-  increaseViews(@Param('id') id: number) {
-    return this.postsService.increaseViewCount(Number(id));
+  increaseViews(@Param('id') id: number, @Req() req: Request) {
+    const forwarded = (req.headers['x-forwarded-for'] as string | undefined)?.split(',')[0]?.trim();
+    const ip = forwarded || req.ip || req.socket.remoteAddress || 'unknown';
+    const ua = req.headers['user-agent'] ?? 'unknown';
+    const viewerKey = createHash('sha1').update(`${ip}|${ua}`).digest('hex');
+    return this.postsService.increaseViewCount(Number(id), viewerKey);
   }
 
   @Post(':id/comments')

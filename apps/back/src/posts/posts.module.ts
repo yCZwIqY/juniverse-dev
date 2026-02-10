@@ -5,10 +5,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Menu } from '../menus/entities/menu.entity';
 import { Comment } from '../comments/entities/comment.entity';
 import { Post } from './entities/post.entity';
+import { RedisService } from '../common/redis/redis.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Post, Comment, Menu])],
   controllers: [PostsController],
-  providers: [PostsService],
+  providers: [PostsService, RedisService],
 })
 export class PostsModule {}

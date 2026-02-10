@@ -8,6 +8,7 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { FindPostsDto } from './dto/find-posts.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { CreateCommentDto } from '../common/dto/create-comment.dto';
+import { RedisService } from '../common/redis/redis.service';
 
 @Injectable()
 export class PostsService {
@@ -17,6 +18,7 @@ export class PostsService {
     @InjectRepository(Comment)
     private readonly commentRepo: Repository<Comment>,
     @InjectRepository(Menu) private readonly menuRepo: Repository<Menu>,
+    private readonly redisService: RedisService,
   ) {}
 
   private async ensureMenu(menuId: number, children: boolean = false) {
@@ -171,7 +173,18 @@ export class PostsService {
     return { ok: true };
   }
 
-  async increaseViewCount(id: number) {
+  async increaseViewCount(id: number, viewerKey: string) {
+    const dedupeKey = `post:${id}:viewed:${viewerKey}`;
+    const isNew = await this.redisService.setIfNotExists(
+      dedupeKey,
+      '1',
+      60 * 60 * 24,
+    );
+    if (!isNew) return { ok: true, duplicated: true };
+    const todayKey = new Date().toISOString().slice(0, 10);
+    const todayCompact = todayKey.replace(/-/g, '');
+    await this.redisService.zincrby(`popular:${todayCompact}`, 1, String(id));
+    await this.redisService.zincrby(`popular:all`, 1, String(id));
     const result = await this.postRepo.increment({ id }, 'viewCount', 1);
     if (!result.affected) throw new NotFoundException('post not found');
     return { ok: true };

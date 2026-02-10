@@ -37,8 +37,19 @@ services:
     image: ljy014/portfolio-back:latest
     expose:
       - "3002"
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
 
   postgres:
     image: postgres:16
     ports:
       - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
