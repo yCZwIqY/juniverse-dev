@@ -1,6 +1,6 @@
 'use server';
 import api from '@/utils/api';
-import { PostFormData, PostResponse } from '@/app/posts/_models/posts';
+import { PostFormData, PostResponse } from 'apis';
 import { revalidateTag } from 'next/cache';
 
 export const getPost = async (id: string) => {

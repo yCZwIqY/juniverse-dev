@@ -442,7 +442,7 @@ importers:
         specifier: 15.3.3
         version: 15.3.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.97.3)
 
-  libs/shared-types: {}
+  libs/components: {}
 
 packages:
 

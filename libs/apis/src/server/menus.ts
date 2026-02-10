@@ -22,18 +22,34 @@ export const getMenu = async (menuId: number) => {
     if (!menuId) {
       return null;
     }
-    return await api.get<MenuResponse>(`/api/menus/${menuId}`);
+    return await api.get<MenuResponse>(`/api/menus/${menuId}`, {}, {
+      next: {
+        tags: [`menus:${menuId}`],
+        revalidate: 60 * 60 * 24,
+      },
+    });
   } catch {}
 };
 
 export const updateMenu = async (id: number, request: MenuRequest) => {
   const res = await api.patch(`/api/menus/${id}`, request);
-  revalidateTag('menus');
+  revalidateTag('menus:tree');
+  revalidateTag('menus:flat');
+  revalidateTag(`menus:${id}`);
   return res;
 };
 
 export const createMenu = async (request: MenuRequest) => {
   const res = api.post('/api/menus', request);
-  revalidateTag('menus');
+  revalidateTag('menus:tree');
+  revalidateTag('menus:flat');
+  return res;
+};
+
+export const deleteMenu = async (id: number) => {
+  const res = api.del(`/api/menus/${id}`);
+  revalidateTag('menus:tree');
+  revalidateTag('menus:flat');
+  revalidateTag(`menus:${id}`);
   return res;
 };

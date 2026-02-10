@@ -67,15 +67,97 @@
     font-family: 'Suit', sans-serif;
 }
 
-@theme {
-    --color-primary-100: #F3E0E4;
-    --color-primary-200: #E8C1C8;
-    --color-primary-300: #DCA1AD;
-    --color-primary-400: #D18291;
-    --color-primary-500: #C56376;
-    --color-primary-600: #944F5D;
-    --color-primary-700: #6D3C45;
-    --color-primary-800: #45282D;
-    --color-primary-900: #1E1416;
+/* Admin editor overrides (prevent 100vw/100vh breakage) */
+.admin-editor .simple-editor-wrapper {
+    width: 100%;
+    height: auto;
+    min-height: 360px;
+}
 
+.admin-editor .simple-editor-content {
+    width: 100%;
+    height: auto;
+    min-height: 360px;
+}
+
+.admin-editor .simple-editor-content .tiptap.ProseMirror.simple-editor {
+    padding: 1.5rem 1.5rem 8rem;
+    color: #f5f7fb;
+}
+
+.admin-editor {
+    --tt-toolbar-bg-color: rgba(12, 18, 32, 0.6);
+    --tt-toolbar-border-color: rgba(255, 255, 255, 0.08);
+    --tt-button-default-bg-color: rgba(255, 255, 255, 0.08);
+    --tt-button-hover-bg-color: rgba(255, 255, 255, 0.12);
+    --tt-button-active-bg-color: rgba(34, 211, 238, 0.25);
+    --tt-button-active-hover-bg-color: rgba(34, 211, 238, 0.35);
+    --tt-button-active-bg-color-emphasized: rgba(34, 211, 238, 0.35);
+    --tt-button-default-text-color: rgba(255, 255, 255, 0.95);
+    --tt-button-hover-text-color: #ffffff;
+    --tt-button-active-text-color: #ffffff;
+    --tt-button-default-icon-color: var(--white);
+    --tt-button-default-icon-sub-color: rgba(255, 255, 255, 0.85);
+    --tt-button-default-dropdown-arrows-color: rgba(255, 255, 255, 0.85);
+    --tt-button-hover-icon-color: #ffffff;
+    --tt-button-hover-icon-sub-color: rgba(255, 255, 255, 0.9);
+    --tt-button-hover-dropdown-arrows-color: rgba(255, 255, 255, 0.9);
+    --tt-button-active-icon-color: #67e8f9;
+    --tt-popover-bg-color: rgba(14, 20, 36, 0.9);
+    --tt-popover-border-color: rgba(255, 255, 255, 0.08);
+    --tt-popover-text-color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 768px) {
+    .admin-editor .simple-editor-wrapper,
+    .admin-editor .simple-editor-content {
+        min-height: 280px;
+    }
+}
+
+/* Glass checkbox */
+.glass-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 0.4rem;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.08);
+    display: inline-grid;
+    place-items: center;
+    cursor: pointer;
+    transition: background 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.glass-checkbox:checked {
+    background: rgba(34, 211, 238, 0.35);
+    border-color: rgba(34, 211, 238, 0.6);
+    box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.2);
+}
+
+.glass-checkbox::after {
+    content: '';
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 0.18rem;
+    background: rgba(255, 255, 255, 0.95);
+    transform: scale(0);
+    transition: transform 120ms ease;
+}
+
+.glass-checkbox:checked::after {
+    transform: scale(1);
+}
+
+@theme {
+    --color-primary-100: #D8F3F7;
+    --color-primary-200: #B6E4EE;
+    --color-primary-300: #8CD2E3;
+    --color-primary-400: #5FBAD3;
+    --color-primary-500: #3B9BB7;
+    --color-primary-600: #2E7A91;
+    --color-primary-700: #235F71;
+    --color-primary-800: #1A4551;
+    --color-primary-900: #102C35;
 }

@@ -51,6 +51,15 @@ const postFormdata = <T>(url: string, body?: FormData, params?: Record<string, a
   }).then((res) => res.json());
 };
 
+const patchFormdata = <T>(url: string, body?: FormData, params?: Record<string, any>, options?: FetchOptions): Promise<T> => {
+  const query = buildQuery(params);
+  return fetch(`${BASE_URL}${url}${query}`, {
+    method: 'PATCH',
+    body,
+    ...options,
+  }).then((res) => res.json());
+};
+
 /** PATCH */
 const patch = <T>(url: string, body?: Record<string, any>, params?: Record<string, any>, options?: FetchOptions): Promise<T> => {
   const query = buildQuery(params);
@@ -90,6 +99,7 @@ const api = {
   post,
   del,
   postFormdata,
+  patchFormdata,
 };
 
 export default api;

@@ -6,10 +6,14 @@ import CommentItem from '@/app/comments/_components/CommentItem';
 const CommentList = () => {
   const { selectedPost } = useSelectedPost();
   return (
-    <div className={'flex h-full overflow-y-auto flex-col gap-1 border border-gray-300 rounded-lg p-2'}>
-      {selectedPost?.comments.map((comment) => (<CommentItem postId={selectedPost.id}
-                                                             key={`${selectedPost.id}-${comment.id}`}
-                                                             data={comment} />))}
+    <div className={'flex h-full overflow-y-auto flex-col gap-2 border border-white/10 bg-white/5 rounded-xl p-2 text-white'}>
+      {selectedPost?.comments.map((comment) => (
+        <CommentItem
+          postId={selectedPost.id}
+          key={`${selectedPost.id}-${comment.id}`}
+          data={comment}
+        />
+      ))}
     </div>
   );
 };

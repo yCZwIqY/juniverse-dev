@@ -12,10 +12,19 @@ export class Project {
   description!: string;
 
   @Column()
+  position!: string;
+
+  @Column()
+  contribution!: string;
+
+  @Column()
   content!: string;
 
   @Column()
-  sourceCode?: string;
+  startDate?: string;
+
+  @Column()
+  endDate?: string;
 
   @Column('text', { array: true, default: '{}' })
   tags?: string[];
@@ -31,4 +40,11 @@ export class Project {
 
   @Column()
   isToy!: boolean;
+
+  @Column({
+    type: 'jsonb',
+    nullable: true,
+    default: () => "'{}'",
+  })
+  sourceCode?: Record<string, string>;
 }

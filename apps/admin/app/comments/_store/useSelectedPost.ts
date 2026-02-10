@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { PostData } from '@/app/posts/_models/posts';
+import { PostData } from 'apis';
 
 interface UseSelectedPostStore {
   selectedPost: PostData | null;

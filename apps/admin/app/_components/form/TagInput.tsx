@@ -29,14 +29,14 @@ const TagInput = () => {
   };
 
   return (
-    <div className={'grid grid-cols-[120px_1fr] gap-4'}>
-      <label htmlFor="title" className={'font-bold text-lg block pb-2 text-center border-b-2 border-primary-300'}>
+    <div className={'grid grid-cols-1 md:grid-cols-[120px_1fr] gap-4'}>
+      <label htmlFor="title" className={'font-bold text-base md:text-lg block pb-2 text-left md:text-center border-b border-white/20 text-gray-200'}>
         태그
       </label>
-      <div className={'border rounded-lg border-gray-200'}>
+      <div className={'border rounded-xl border-white/10 bg-white/5 backdrop-blur-md'}>
         <input
           value={inputValue}
-          className={'h-10 px-2 py-1 w-full'}
+          className={'h-10 px-3 py-2 w-full bg-transparent text-white placeholder:text-gray-400'}
           onBlur={onEnter}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
@@ -47,11 +47,11 @@ const TagInput = () => {
           onChange={(e) => setInputValue(e.target.value)}
         />
       </div>
-      <div className={'flex gap-2 flex-wrap pt-1 col-span-2'}>
+      <div className={'flex gap-2 flex-wrap pt-1 col-span-1 md:col-span-2'}>
         {value?.map((tag: string) => (
           <span
             key={tag}
-            className={'px-3 py-1 bg-primary-300 rounded-full cursor-pointer text-white'}
+            className={'px-3 py-1 bg-cyan-400/20 border border-cyan-300/40 rounded-full cursor-pointer text-cyan-100'}
             onClick={() => {
               const filterValue = value.filter((it: string) => it !== tag);
               onChange(filterValue);

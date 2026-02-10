@@ -7,7 +7,7 @@ import CommentIcon from '@/app/_components/icon/CommentIcon';
 import ViewIcon from '@/app/_components/icon/ViewIcon';
 
 const PostItem = ({ id, title, subtitle, menu, createdAt, tags, viewCount, comments }: PostData) => {
-  const updateSearchParams = useUpdateSearchParams();
+  const updateSearchParams = useUpdateSearchParams('posts');
   const router = useRouter();
   return (
     <div

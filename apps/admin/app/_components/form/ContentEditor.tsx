@@ -15,11 +15,11 @@ const ContentEditor = () => {
   });
 
   return (
-    <div className={'grid grid-cols-[120px_1fr] gap-4'}>
-      <label htmlFor="content" className={'self-start font-bold text-lg pb-2 text-center border-b-2 border-primary-300'}>
+    <div className={'grid grid-cols-1 md:grid-cols-[120px_1fr] gap-4 admin-editor'}>
+      <label htmlFor="content" className={'self-start font-bold text-base md:text-lg pb-2 text-left md:text-center border-b border-white/20 text-gray-200'}>
         내용
       </label>
-      <div className={'border rounded-lg border-gray-200'}>
+      <div className={'rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl'}>
         <SimpleEditor key={'content'} value={value} onChange={onChange} postId={id ? id.toString() : '0'} />
       </div>
     </div>

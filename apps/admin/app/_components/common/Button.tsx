@@ -6,7 +6,7 @@ const Button = ({ ...props }: ButtonProps) => {
     <button
       type={'button'}
       {...props}
-      className={` text-white  font-bold bg-primary-500 hover:bg-primary-600 active:bg-primary-700  ${props.className}`}
+      className={`text-white font-bold bg-white/10 border border-white/15 hover:bg-white/20 active:bg-white/30 ${props.className}`}
     />
   );
 };

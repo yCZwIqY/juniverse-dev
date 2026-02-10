@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
 import { DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { Upload } from '@aws-sdk/lib-storage';
@@ -20,7 +20,7 @@ export class FilesService {
   private domain: string;
 
   // ✅ 허용할 refType 목록 (원하는 것만 추가)
-  private readonly allowedRefTypes = new Set(['post', 'user', 'comment']);
+  private readonly allowedRefTypes = new Set(['post', 'user', 'comment', 'project']);
 
   constructor(
     private readonly config: ConfigService,
@@ -166,5 +166,47 @@ export class FilesService {
 
     await this.fileRepo.delete({ id: fileId });
     return { ok: true };
+  }
+
+  async removeByUrls(refType: string, refId: number, urls: string[]) {
+    if (!urls.length) return { ok: true, deleted: 0 };
+    this.assertAllowedRefType(refType);
+    const files = await this.fileRepo.find({
+      where: { refType, refId, url: In(urls) },
+    });
+    if (!files.length) return { ok: true, deleted: 0 };
+
+    await Promise.all(
+      files.map((file) =>
+        this.s3.send(
+          new DeleteObjectCommand({
+            Bucket: this.bucket,
+            Key: file.key,
+          }),
+        ),
+      ),
+    );
+
+    await this.fileRepo.delete({ id: In(files.map((f) => f.id)) });
+    return { ok: true, deleted: files.length };
+  }
+
+  async removeByRef(refType: string, refId: number) {
+    this.assertAllowedRefType(refType);
+    const files = await this.fileRepo.find({ where: { refType, refId } });
+    if (!files.length) return { ok: true, deleted: 0 };
+
+    await Promise.all(
+      files.map((file) =>
+        this.s3.send(
+          new DeleteObjectCommand({
+            Bucket: this.bucket,
+            Key: file.key,
+          }),
+        ),
+      ),
+    );
+    await this.fileRepo.delete({ id: In(files.map((f) => f.id)) });
+    return { ok: true, deleted: files.length };
   }
 }

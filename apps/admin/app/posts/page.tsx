@@ -18,7 +18,7 @@ const PostPage = async ({ searchParams }: PostPageProps) => {
   return (
     <div className={'py-10 flex flex-col gap-10'}>
       <div className={'flex justify-between items-center'}>
-        <div className={'font-bold text-xl'}>{data?.total ?? 0} 개의 포스트</div>
+        <div className={'font-bold text-xl  text-white'}>{data?.total ?? 0} 개의 포스트</div>
         <Button className={'py-2 px-4 rounded-lg'}>
           <Link href={'/posts/0'}>작성하기</Link>
         </Button>

@@ -1,8 +1,6 @@
 'use client';
 
-import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { PostData } from '@/app/posts/_models/posts';
-import { Pagination } from '@/app/_models/common';
+import { Pagination, PostData } from 'apis';
 import { useRouter } from 'next/navigation';
 import { deletePost } from '@/app/_libs/posts';
 
@@ -12,76 +10,37 @@ interface PostTableProps extends Pagination {
 
 const PostTable = ({ data }: PostTableProps) => {
   const router = useRouter();
-  const columns: ColumnDef<PostData>[] = [
-    {
-      accessorKey: 'id',
-      header: 'ID',
-    },
-    {
-      accessorKey: 'title',
-      header: '제목',
-    },
-    {
-      accessorKey: 'menu',
-      header: '메뉴',
-      cell: ({ row }) => <div>{row.original.menu?.name ?? '-'}</div>,
-    },
-    {
-      accessorKey: 'viewCount',
-      header: '조회수',
-    },
-    {
-      id: 'manage', // ✅ accessor 대신 id
-      header: '삭제',
-      cell: ({ row }) => (
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            deletePost(row.original.id.toString());
-          }}
-          className="text-red-600 border border-red-600 px-4 py-1 rounded-lg hover:bg-red-100 active:bg-red-200"
-        >
-          삭제
-        </button>
-      ),
-    },
-  ];
-  const table = useReactTable({ columns, data, getCoreRowModel: getCoreRowModel() });
+
   return (
-    <table className={'w-full'}>
-      <colgroup>
-        <col className={'w-[5%]'} />
-        <col className={'w-[30%]'} />
-        <col className={'w-[10%]'} />
-        <col className={'w-[5%]'} />
-        <col className={'w-[20%]'} />
-      </colgroup>
-      <thead className={'border-b-2 border-primary-300'}>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr className={'h-10'} key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <th key={header.id}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {table.getRowModel().rows.map((row) => (
-          <tr
-            key={row.id}
-            className={'h-6 border-b border-primary-100 hover:bg-primary-100/20 active:bg-primary-100/50'}
-            onClick={() => router.push(`/posts/${row.original.id}`)}
-          >
-            {row.getVisibleCells().map((cell) => (
-              <td className={'p-2 text-center'} key={cell.id}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div className="flex flex-col gap-3">
+      {data.map((post) => (
+        <div
+          key={post.id}
+          className="rounded-2xl border border-white/10 bg-[linear-gradient(160deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] backdrop-blur-2xl shadow-[0_16px_50px_rgba(0,0,0,0.35)] p-4 text-white hover:shadow-[0_22px_60px_rgba(0,0,0,0.45)] transition-shadow"
+          onClick={() => router.push(`/posts/${post.id}`)}
+        >
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex-1">
+              <div className="text-sm text-cyan-200/80">#{post.id}</div>
+              <div className="text-lg font-semibold tracking-tight">{post.title}</div>
+              <div className="mt-1 text-sm text-gray-200/80">
+                {post.menu?.name ?? '-'} • 조회수 {post.viewCount}
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                deletePost(post.id.toString());
+              }}
+              className="text-red-200 border border-red-400/70 px-3 py-1 rounded-lg hover:bg-red-500/20"
+            >
+              삭제
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
   );
 };
 

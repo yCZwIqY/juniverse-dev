@@ -1,9 +1,5 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
-import { ArrayContains, DataSource, ILike, Repository } from 'typeorm';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { ArrayContains, DataSource, ILike, In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from './entities/post.entity';
 import { Menu } from '../menus/entities/menu.entity';
@@ -12,7 +8,6 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { FindPostsDto } from './dto/find-posts.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { CreateCommentDto } from '../common/dto/create-comment.dto';
-import { PostDetailDto } from './dto/post-detail.dto';
 
 @Injectable()
 export class PostsService {
@@ -24,8 +19,8 @@ export class PostsService {
     @InjectRepository(Menu) private readonly menuRepo: Repository<Menu>,
   ) {}
 
-  private async ensureMenu(menuId: number) {
-    const menu = await this.menuRepo.findOne({ where: { id: menuId } });
+  private async ensureMenu(menuId: number, children: boolean = false) {
+    const menu = await this.menuRepo.findOne({ where: { id: menuId }, relations: { children } });
     if (!menu) throw new BadRequestException('menuId가 유효하지 않습니다.');
     return menu;
   }
@@ -45,14 +40,31 @@ export class PostsService {
     return await this.postRepo.save(post);
   }
 
+  collectMenuIds(menu: Menu): number[] {
+    const ids = [menu.id];
+
+    if (menu.children?.length) {
+      for (const child of menu.children) {
+        ids.push(...this.collectMenuIds(child));
+      }
+    }
+
+    return ids;
+  }
+
   async findAll(query: FindPostsDto) {
     const page = query.page ?? 1;
     const limit = Math.min(query.limit ?? 10, 50);
     const skip = (page - 1) * limit;
 
     const where: any = {};
-    if (query.menuId && String(query.menuId) !== '0')
-      where.menuId = query.menuId;
+    if (query.menuId && String(query.menuId) !== '0') {
+      const menu = await this.ensureMenu(query.menuId, true);
+      const menuIds = this.collectMenuIds(menu);
+
+      console.log('menuIds: ', menuIds);
+      where.menuId = In(menuIds);
+    }
 
     if (query.q?.trim()) {
       const q = query.q?.trim();

@@ -1,87 +1,88 @@
 'use client';
 
-import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { PostData } from '@/app/posts/_models/posts';
-import { Pagination } from '@/app/_models/common';
+import type { ProjectData } from 'apis';
 import { useRouter } from 'next/navigation';
-import { deletePost } from '@/app/_libs/posts';
 
-interface ProjectTableProps extends Pagination {
-  data: PostData[];
+interface ProjectTableProps {
+  data: ProjectData[];
+  onDelete: (id: number) => Promise<unknown>;
 }
 
-const ProjectTable = ({ data }: ProjectTableProps) => {
+const ProjectTable = ({ data, onDelete }: ProjectTableProps) => {
   const router = useRouter();
-  const columns: ColumnDef<PostData>[] = [
-    {
-      accessorKey: 'id',
-      header: 'ID',
-    },
-    {
-      accessorKey: 'title',
-      header: '제목',
-    },
-    {
-      accessorKey: 'menu',
-      header: '메뉴',
-      cell: ({ row }) => <div>{row.original.menu?.name ?? '-'}</div>,
-    },
-    {
-      accessorKey: 'viewCount',
-      header: '조회수',
-    },
-    {
-      id: 'manage', // ✅ accessor 대신 id
-      header: '삭제',
-      cell: ({ row }) => (
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            deletePost(row.original.id.toString());
-          }}
-          className="text-red-600 border border-red-600 px-4 py-1 rounded-lg hover:bg-red-100 active:bg-red-200"
-        >
-          삭제
-        </button>
-      ),
-    },
-  ];
-  const table = useReactTable({ columns, data, getCoreRowModel: getCoreRowModel() });
   return (
-    <table className={'w-full'}>
-      <colgroup>
-        <col className={'w-[5%]'} />
-        <col className={'w-[30%]'} />
-        <col className={'w-[10%]'} />
-        <col className={'w-[5%]'} />
-        <col className={'w-[20%]'} />
-      </colgroup>
-      <thead className={'border-b-2 border-primary-300'}>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr className={'h-10'} key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <th key={header.id}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {table.getRowModel().rows.map((row) => (
-          <tr
-            key={row.id}
-            className={'h-6 border-b border-primary-100 hover:bg-primary-100/20 active:bg-primary-100/50'}
-            onClick={() => router.push(`/posts/${row.original.id}`)}
-          >
-            {row.getVisibleCells().map((cell) => (
-              <td className={'p-2 text-center'} key={cell.id}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div className='flex flex-col gap-3'>
+      {data.map((project) => (
+        <div
+          onClick={() => router.push(`/projects/${project.id}`)}
+          key={project.id}
+          className='rounded-2xl border border-white/10 bg-[linear-gradient(160deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] backdrop-blur-2xl shadow-[0_16px_50px_rgba(0,0,0,0.35)] p-4 text-white'
+        >
+          <div className='flex flex-col md:flex-row gap-4'>
+            <div className='w-full md:w-[160px]'>
+              {project.imageUrls?.[0] ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={project.imageUrls[0]}
+                  alt={`${project.title} thumbnail`}
+                  className='h-28 w-full object-cover rounded-xl'
+                />
+              ) : (
+                <div className='h-28 w-full rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-sm text-gray-300'>
+                  No Image
+                </div>
+              )}
+            </div>
+            <div className='flex-1'>
+              <div className='text-sm text-cyan-200/80'>#{project.id}</div>
+              <div className='text-lg font-semibold tracking-tight'>{project.title}</div>
+              <div className='mt-1 text-sm text-gray-200/80 line-clamp-2'>{project.description ?? '-'}</div>
+              <div className='mt-2 flex items-center gap-2 text-xs'>
+                <span className='px-2 py-1 rounded-full border border-cyan-300/40 text-cyan-200'>
+                  {project.isToy ? 'Toy' : 'Project'}
+                </span>
+              </div>
+            </div>
+            <div className='flex flex-col items-start md:items-end gap-2'>
+              <div className='flex items-center gap-2'>
+                {project.gitHubUrl ? (
+                  <a
+                    href={project.gitHubUrl}
+                    target='_blank'
+                    rel='noreferrer'
+                    className='text-cyan-200 border border-cyan-300/50 px-3 py-1 rounded-lg hover:bg-cyan-400/10'
+                  >
+                    GitHub
+                  </a>
+                ) : (
+                  <span className='text-gray-400'>GitHub -</span>
+                )}
+                {project.demoUrl ? (
+                  <a
+                    href={project.demoUrl}
+                    target='_blank'
+                    rel='noreferrer'
+                    className='text-emerald-200 border border-emerald-300/50 px-3 py-1 rounded-lg hover:bg-emerald-400/10'
+                  >
+                    Demo
+                  </a>
+                ) : (
+                  <span className='text-gray-400'>Demo -</span>
+                )}
+              </div>
+              <form action={onDelete.bind(null, project.id)}>
+                <button
+                  type='submit'
+                  className='text-red-200 border border-red-400/70 px-3 py-1 rounded-lg hover:bg-red-500/20'
+                >
+                  삭제
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
   );
 };
 

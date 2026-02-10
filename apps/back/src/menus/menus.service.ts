@@ -3,7 +3,8 @@ import { CreateMenuDto } from './dto/create-menu.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Menu } from './entities/menu.entity';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, In, Repository } from 'typeorm';
+import { Post } from '../posts/entities/post.entity';
 
 @Injectable()
 export class MenusService {
@@ -71,7 +72,17 @@ export class MenusService {
 
   async remove(id: number) {
     const menu = await this.findOne(id);
-    await this.menuRepo.remove(menu);
+    const treeRepo = this.menuRepo.manager.getTreeRepository(Menu);
+    const descendants = await treeRepo.findDescendants(menu);
+    const menuIds = descendants.map((m) => m.id);
+
+    await this.dataSource.transaction(async (manager) => {
+      if (menuIds.length > 0) {
+        await manager.getRepository(Post).delete({ menuId: In(menuIds) });
+        await manager.getRepository(Menu).delete({ id: In(menuIds) });
+      }
+    });
+
     return { deleted: true };
   }
 }

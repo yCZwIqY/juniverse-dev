@@ -4,7 +4,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import { createPost, getPost, updatePost } from '@/app/_libs/posts';
-import { PostFormData } from '@/app/posts/_models/posts';
+import { PostFormData } from 'apis';
 import TextInput from '@/app/_components/form/TextInput';
 import ContentEditor from '@/app/_components/form/ContentEditor';
 import MenuSelect from '@/app/posts/[id]/_component/MenuSelect';
@@ -51,16 +51,16 @@ const PostDetailPage = () => {
   };
 
   return (
-    <div>
+    <div className="max-w-[1100px] mx-auto w-full">
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className={'text-xl font-bold flex justify-between'}>
+          <div className={'text-xl font-bold flex justify-between items-center text-white'}>
             <span>{isNew ? '작성' : '수정'}</span>
-            <Button className={'px-4 py-2 rounded-lg'} type={'submit'}>
+            <Button className={'px-4 py-2 rounded-lg bg-cyan-500/80 hover:bg-cyan-400 border border-cyan-300/50'} type={'submit'}>
               작성완료
             </Button>
           </div>
-          <div className={'p-10 flex flex-col gap-3'}>
+          <div className={'mt-6 rounded-2xl border border-white/10 bg-[linear-gradient(160deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.45)] p-4 md:p-8 flex flex-col gap-4'}>
             <TextInput name={'title'}
                        label={'제목'}
                        maxLength={200} />

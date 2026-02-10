@@ -27,7 +27,7 @@ export class MenusController {
   }
 
   @Get(':id')
-  findOne(@Query('id') id: number) {
+  findOne(@Param('id') id: number) {
     return this.menusService.findOne(id);
   }
 

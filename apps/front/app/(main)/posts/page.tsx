@@ -15,7 +15,6 @@ const PostListPage = async ({ searchParams }: ListPageProps) => {
   const { search, category, page } = await searchParams;
   const posts = await getPosts(page ?? 1, 5, category ?? 0, search ?? '');
 
-  console.log('posts', posts);
 
   return (
     <div className={'py-4 flex flex-col gap-4 relative'}>

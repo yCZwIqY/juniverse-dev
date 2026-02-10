@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar from '@/app/_components/Sidebar';
+import ClientShell from '@/app/_components/ClientShell';
 import './global.css';
 import '../styles/_variables.scss';
 import '../styles/_keyframe-animations.scss';
@@ -11,13 +11,8 @@ const Layout = ({
 }>) => {
   return (
     <html lang="ko">
-      <body>
-        <div className={'flex'}>
-          <aside>
-            <Sidebar />
-          </aside>
-          <main className={'flex-1 p-10 max-h-dvh overflow-y-auto'}>{children}</main>
-        </div>
+      <body className="h-fit min-h-dvh bg-[radial-gradient(900px_circle_at_20%_10%,rgba(20,120,160,0.25),rgba(10,10,30,0.1)),radial-gradient(1200px_circle_at_80%_90%,rgba(40,60,140,0.25),rgba(10,10,30,0.1)),linear-gradient(135deg,#0b0f1f_0%,#101727_45%,#0b0f1f_100%)] text-gray-100">
+        <ClientShell>{children}</ClientShell>
       </body>
     </html>
   );

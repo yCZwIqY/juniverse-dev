@@ -1,5 +1,5 @@
 'use client';
-import { MenuData } from '@/app/menus/_models/menu';
+import { MenuData } from 'apis';
 import Button from '@/app/_components/common/Button';
 import { Plus } from 'lucide-react';
 import { useMenuStore } from '@/app/menus/_store';
@@ -9,11 +9,13 @@ const MenuItem = (data: MenuData) => {
   const { name, children } = data;
   return (
     <>
-      <div className={'my-px'}>
+      <div className={'my-[2px]'}>
         <div className={'flex gap-1 items-center'}>
           <button
             type={'button'}
-            className={`p-3 rounded-md hover:bg-primary-100 w-full text-left ${selectedMenu?.id === data.id && 'bg-primary-200'}`}
+            className={`p-3 rounded-md w-full text-left border transition-colors border-white/10 bg-white/5 text-gray-100 hover:bg-white/15 hover:text-white ${
+              selectedMenu?.id === data.id ? 'bg-cyan-400/20 border-cyan-300/40 text-white' : ''
+            }`}
             onClick={() => select(data)}
           >
             {name}

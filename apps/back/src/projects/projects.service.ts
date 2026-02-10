@@ -73,10 +73,21 @@ export class ProjectsService {
       where: { id },
     });
     if (!project) throw new NotFoundException('project not found');
+    const requestedImageUrls =
+      updateProjectDto.imageUrls ?? project.imageUrls ?? [];
+    const removedUrls = (project.imageUrls ?? []).filter(
+      (url) => !requestedImageUrls.includes(url),
+    );
+    if (removedUrls.length > 0) {
+      await this.fileService.removeByUrls('project', id, removedUrls);
+    }
     const updatedProject = {
       ...project,
       ...updateProjectDto,
-      imageUrls: [...(updateProjectDto.imageUrls ?? []), ...saveImages],
+      imageUrls: [
+        ...requestedImageUrls,
+        ...saveImages,
+      ],
     };
     return await this.projectRepo.save(updatedProject);
   }
@@ -86,6 +97,7 @@ export class ProjectsService {
       where: { id },
     });
     if (!project) throw new NotFoundException('project not found');
+    await this.fileService.removeByRef('project', id);
     await this.projectRepo.delete({ id });
     return { ok: true };
   }

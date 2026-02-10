@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { defaultSelectedMenuData, MenuData, SelectedMenuData } from '@/app/menus/_models/menu';
+import { defaultSelectedMenuData, MenuData, SelectedMenuData } from 'apis';
 
 interface UseMenuStore {
   selectedMenu?: SelectedMenuData;
