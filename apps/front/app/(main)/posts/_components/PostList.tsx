@@ -10,7 +10,7 @@ interface PostListProps {
 
 const PostList = ({ posts, page, total }: PostListProps) => {
   return (
-    <section className={'border border-border rounded-xl p-4 bg-card flex flex-col'}>
+    <section className={'glass-card p-4 flex flex-col'}>
       <div className={'flex justify-between items-center pb-[10px] border-b-2 border-border'}>
         <span className={'font-bold'}>Posts</span>
         <span className={'text-sm'}>총 {total}개의 포스트</span>

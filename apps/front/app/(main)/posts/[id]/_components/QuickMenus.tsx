@@ -50,7 +50,7 @@ const QuickMenus = ({ content }: QuickMenusProps) => {
   };
 
   return (
-    <div className={'border border-border bg-card rounded-lg p-10 hidden lg:block fixed top-32 right-2 max-w-[400px] w-[calc((100dvw_-_1200px)_/_2)] overflow-auto break-words max-h-[calc(100vh_-_10rem)]'}>
+    <div className={'glass-card rounded-lg p-10 hidden lg:block !fixed top-32 right-2 max-w-[400px] w-[calc((100dvw_-_1200px)_/_2)] overflow-auto break-words max-h-[calc(100vh_-_10rem)]'}>
       <ul className={'flex flex-col gap-2'}>
         {heading.map((el, index) => (<li className={`font-bold ${HEADING_STYLE_MAP[el.heading]} cursor-pointer`}
                                          onClick={() => onClick(el)}

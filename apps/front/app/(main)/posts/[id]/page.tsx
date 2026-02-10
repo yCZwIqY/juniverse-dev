@@ -28,7 +28,7 @@ const PostDetailPage = async ({ params }: PostDetailPageProps) => {
   await increaseView(id);
   return (
     <div>
-      <div className={'border border-border rounded-lg p-8 bg-card mt-4'}>
+      <div className={'glass-card p-8 mt-4'}>
         <PostTitle post={post.data} />
         <PostButtons title={post.data.title} subtitle={post.data.subtitle} />
         <PostContent content={post.data.content} />

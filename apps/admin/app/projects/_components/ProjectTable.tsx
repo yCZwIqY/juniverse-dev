@@ -70,14 +70,13 @@ const ProjectTable = ({ data, onDelete }: ProjectTableProps) => {
                   <span className='text-gray-400'>Demo -</span>
                 )}
               </div>
-              <form action={onDelete.bind(null, project.id)}>
-                <button
-                  type='submit'
-                  className='text-red-200 border border-red-400/70 px-3 py-1 rounded-lg hover:bg-red-500/20'
-                >
-                  삭제
-                </button>
-              </form>
+              <button
+                type='button'
+                onClick={() => onDelete(project.id)}
+                className='text-red-200 border border-red-400/70 px-3 py-1 rounded-lg hover:bg-red-500/20'
+              >
+                삭제
+              </button>
             </div>
           </div>
         </div>

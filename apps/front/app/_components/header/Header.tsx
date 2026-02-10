@@ -51,7 +51,7 @@ const Header = () => {
   }, [inputRef]);
 
   return (
-    <div className={'sticky top-5 w-full mt-5 py-3 px-5 flex items-center justify-between border border-border rounded-xl bg-card z-10'}>
+    <div className={'!sticky top-5 w-full mt-5 py-3 px-5 flex items-center justify-between glass-card z-10'}>
       <div className={'flex items-center gap-4'}>
         <Link href={'/'}>
           <Image src={'/images/logo.png'}
