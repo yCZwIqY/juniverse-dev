@@ -9,7 +9,9 @@
     "dev:admin": "pnpm --filter admin dev",
     "build:front": "pnpm --filter front build",
     "build:back": "pnpm --filter back build",
-    "build:admin": "pnpm --filter admin build"
+    "build:admin": "pnpm --filter admin build",
+
+    "build:apis": "pnpm --filter apis build"
   },
   "keywords": [],
   "author": "",
