@@ -2,7 +2,7 @@ import React from 'react';
 
 const Loading = () => {
   return <div className={'py-4 flex flex-col gap-4'}>
-    <section className={'w-full border border-white/10 bg-white/5 rounded-2xl flex flex-col gap-4 min-h-[300px] justify-center items-center backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.45)]'}>
+    <section className={'w-full flex flex-col gap-4 min-h-dvh justify-center items-center backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.45)]'}>
       <svg
         className={'animate-spin'}
         width={'64px'}

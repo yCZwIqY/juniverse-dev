@@ -40,7 +40,7 @@ const PostTable = ({ data }: PostTableProps) => {
               <div className="text-sm text-cyan-200/80">#{post.id}</div>
               <div className="text-lg font-semibold tracking-tight">{post.title}</div>
               <div className="mt-1 text-sm text-gray-200/80">
-                {post.menu?.name ?? '-'} • 조회수 {post.viewCount}
+                {post.menu?.name ?? '-'} • 조회수 {post.viewCount} • {new Date(post.createdAt).toLocaleDateString('ko-KR', { hour: '2-digit', minute: '2-digit' })}
               </div>
             </div>
             <div className={'flex gap-1'}>
@@ -56,7 +56,10 @@ const PostTable = ({ data }: PostTableProps) => {
               </button>
               <button
                 disabled={loading}
-                onClick={() => requestIndexing(post.id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  requestIndexing(post.id);
+                }}
                 className={'text-emerald-200 border border-emerald-300/50 px-3 py-1 rounded-lg hover:bg-emerald-400/10'}>
                 색인 생성 요청
               </button>

@@ -53,7 +53,7 @@ const MenuForm = () => {
         <Button className={'flex-1 flex justify-center rounded-md text-center py-2 bg-cyan-500/80 hover:bg-cyan-400 text-white border border-cyan-300/50'} onClick={onSubmit}>
           {selectedMenu?.id ? '수정하기' : '추가하기'}
         </Button>
-        {selectedMenu?.id && (
+        {!!selectedMenu?.id && (
           <Button
             className={'flex-1 flex justify-center rounded-md text-center py-2 bg-transparent text-red-200 border border-red-400/70 hover:bg-red-500/20'}
             onClick={() => setIsDeleteOpen(true)}

@@ -63,6 +63,6 @@ jobs:
             echo "▶ Up"
             docker compose up -d front admin back
             docker compose restart nginx
-  
+                     
             echo "▶ Cleanup"
             docker system prune -f
