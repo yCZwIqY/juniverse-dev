@@ -14,7 +14,7 @@ COPY libs ./libs
 RUN pnpm install --frozen-lockfile
 
 # front 앱 빌드
-RUN pnpm --filter front build --reporter=append-only
+RUN pnpm --filter front build
 
 EXPOSE 3000
 CMD ["pnpm", "--filter", "front", "start"]

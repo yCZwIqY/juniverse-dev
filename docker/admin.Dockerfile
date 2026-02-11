@@ -1,4 +1,4 @@
-FROM node:24
+FROM node:22
 
 RUN corepack enable && corepack prepare pnpm@10.12.1 --activate
 
@@ -15,7 +15,7 @@ COPY libs ./libs
 RUN pnpm install --frozen-lockfile
 
 # admin 앱 빌드
-RUN pnpm --filter admin build --reporter=append-only
+RUN pnpm --filter admin build
 
 EXPOSE 3000
 CMD ["pnpm", "--filter", "admin", "start"]

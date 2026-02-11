@@ -13,7 +13,7 @@ COPY apps ./apps
 RUN pnpm install --frozen-lockfile
 
 # back 앱 빌드
-RUN pnpm --filter back build --reporter=append-only
+RUN pnpm --filter back build
 
 EXPOSE 3002
 CMD ["pnpm", "--filter", "back", "start"]
