@@ -29,17 +29,17 @@ jobs:
 
       - name: Build and push Admin image
         run: |
-          docker build -t $DOCKER_USER/admin:latest -f docker/admin.Dockerfile .
+          docker build --progress=plain -t $DOCKER_USER/admin:latest -f docker/admin.Dockerfile .
           docker push $DOCKER_USER/portfolio-admin:latest
 
       - name: Build and push Front image
         run: |
-          docker build -t $DOCKER_USER/front:latest -f docker/front.Dockerfile .
+          docker build --progress=plain -t $DOCKER_USER/front:latest -f docker/front.Dockerfile .
           docker push $DOCKER_USER/portfolio-front:latest
 
       - name: Build and push API image
         run: |
-          docker build -t $DOCKER_USER/back:latest -f docker/back.Dockerfile .
+          docker build --progress=plain -t $DOCKER_USER/back:latest -f docker/back.Dockerfile .
           docker push $DOCKER_USER/portfolio-back:latest
 
       - name: SSH into Lightsail and update containers

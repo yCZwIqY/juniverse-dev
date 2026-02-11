@@ -15,7 +15,7 @@ COPY libs ./libs
 RUN pnpm install --frozen-lockfile
 
 # admin 앱 빌드
-RUN pnpm --filter admin build
+RUN pnpm --filter admin build --reporter=append-only
 
 EXPOSE 3000
 CMD ["pnpm", "--filter", "admin", "start"]
