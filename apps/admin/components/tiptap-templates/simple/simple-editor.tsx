@@ -23,7 +23,7 @@ import { Toolbar, ToolbarGroup, ToolbarSeparator } from '@/components/tiptap-ui-
 import { ImageUploadNode } from '@/components/tiptap-node/image-upload-node/image-upload-node-extension';
 import { HorizontalRule } from '@/components/tiptap-node/horizontal-rule-node/horizontal-rule-node-extension';
 import '@/components/tiptap-node/blockquote-node/blockquote-node.scss';
-import '@/components/tiptap-node/code-block-node/code-block-node.scss';
+// import '@/components/tiptap-node/code-block-node/code-block-node.scss';
 import '@/components/tiptap-node/horizontal-rule-node/horizontal-rule-node.scss';
 import '@/components/tiptap-node/list-node/list-node.scss';
 import '@/components/tiptap-node/image-node/image-node.scss';
@@ -57,13 +57,27 @@ import { useWindowSize } from '@/hooks/use-window-size';
 import { useCursorVisibility } from '@/hooks/use-cursor-visibility';
 
 // --- Components ---
-import { ThemeToggle } from '@/components/tiptap-templates/simple/theme-toggle';
-
 // --- Lib ---
 import { handleImageUpload, MAX_FILE_SIZE } from '@/lib/tiptap-utils';
 
 // --- Styles ---
 import '@/components/tiptap-templates/simple/simple-editor.scss';
+import PrismCodeBlock from '@/components/tiptap-ui/code-block-prism-button/code-block-prism-button';
+import 'prismjs/themes/prism-tomorrow.css';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-css';
+import 'prismjs/components/prism-jsx';
+import 'prismjs/components/prism-tsx';
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-kotlin';
+import 'prismjs/components/prism-sql';
+import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-dart';
+import 'prismjs/components/prism-yaml';
+import 'prismjs/components/prism-docker';
+import 'prismjs/components/prism-gradle';
 
 const MainToolbarContent = ({
   onHighlighterClick,
@@ -131,7 +145,6 @@ const MainToolbarContent = ({
       {isMobile && <ToolbarSeparator />}
 
       <ToolbarGroup>
-        <ThemeToggle />
       </ToolbarGroup>
     </>
   );
@@ -182,6 +195,7 @@ export function SimpleEditor({ value, onChange, postId }: SimpleEditorProps) {
           openOnClick: false,
           enableClickSelection: true,
         },
+        codeBlock: false,
       }),
       HorizontalRule,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
@@ -200,6 +214,7 @@ export function SimpleEditor({ value, onChange, postId }: SimpleEditorProps) {
         upload: (file) => handleImageUpload(postId, file),
         onError: (error) => console.error('Upload failed:', error),
       }),
+      PrismCodeBlock,
     ],
     content: value,
     onUpdate({ editor }) {

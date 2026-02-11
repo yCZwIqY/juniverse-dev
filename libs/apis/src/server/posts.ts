@@ -5,7 +5,7 @@ import api from '../client/api';
 import { CreateCommentRequest, PostFormData, PostResponse, PostsResponse, RecentPostResponse } from '../client/model';
 import { revalidateTag } from 'next/cache';
 
-export const getPosts = async (page: number, limit: number, menuId?: number, search?: string) => {
+export const getPosts = async (page: number, limit: number, menuId: number = 0, search: string = '') => {
   try {
     const { data } = await api.get<PostsResponse>(
       `/api/posts?page=${page}&limit=${limit}&menuId=${menuId}&q=${search}`,

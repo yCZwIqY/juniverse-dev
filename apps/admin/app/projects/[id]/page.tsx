@@ -22,7 +22,56 @@ const ProjectDetailPage = () => {
       description: '',
       position: '',
       contribution: '',
-      content: '',
+      content: '<h1>프로젝트 소개</h1>\n' +
+        '<p>\n' +
+        '  이 프로젝트는 어떤 문제를 해결하기 위해 시작되었으며,\n' +
+        '  어떤 사용자에게 어떤 가치를 제공하는지 설명합니다.\n' +
+        '</p>\n' +
+        '\n' +
+        '<h2>기획 배경 및 목적</h2>\n' +
+        '<p>\n' +
+        '  프로젝트를 시작하게 된 계기와\n' +
+        '  기존 방식의 문제점, 이를 어떻게 개선하고자 했는지를 작성합니다.\n' +
+        '</p>\n' +
+        '\n' +
+        '<h2>주요 기능</h2>\n' +
+        '<ul>\n' +
+        '  <li>핵심 기능 1</li>\n' +
+        '  <li>핵심 기능 2</li>\n' +
+        '  <li>핵심 기능 3</li>\n' +
+        '</ul>\n' +
+        '\n' +
+        '<h2>기술 스택</h2>\n' +
+        '<ul>\n' +
+        '  <li>Frontend: React / Next.js / TypeScript</li>\n' +
+        '  <li>Backend: NestJS / Node.js</li>\n' +
+        '  <li>Database: PostgreSQL / Redis</li>\n' +
+        '  <li>Infra: Docker / Nginx / AWS</li>\n' +
+        '</ul>\n' +
+        '\n' +
+        '<h2>담당 역할 및 기여도</h2>\n' +
+        '<p>\n' +
+        '  개인 프로젝트의 경우 전체 구조 설계부터 개발, 배포까지 담당한 내용을,\n' +
+        '  팀 프로젝트의 경우 본인이 기여한 부분을 중심으로 작성합니다.\n' +
+        '</p>\n' +
+        '\n' +
+        '<h2>문제 해결 및 기술적 고민</h2>\n' +
+        '<ul>\n' +
+        '  <li>\n' +
+        '    <strong>문제</strong> – 발생한 이슈 또는 기술적 한계<br />\n' +
+        '    <strong>원인</strong> – 문제의 근본 원인 분석<br />\n' +
+        '    <strong>해결</strong> – 적용한 해결 방법과 선택 이유<br />\n' +
+        '    <strong>결과</strong> – 개선된 점과 얻은 인사이트\n' +
+        '  </li>\n' +
+        '</ul>\n' +
+        '\n' +
+        '<h2>아쉬운 점 및 개선 방향</h2>\n' +
+        '<p>\n' +
+        '  시간, 기술적 제약 등으로 구현하지 못한 부분과\n' +
+        '  추후 개선하고 싶은 방향을 정리합니다.\n' +
+        '</p>\n' +
+        '\n' +
+        '<h2>소스 코드</h2>\n',
       startDate: '',
       endDate: '',
       tags: [],

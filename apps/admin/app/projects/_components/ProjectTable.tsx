@@ -10,6 +10,7 @@ interface ProjectTableProps {
 
 const ProjectTable = ({ data, onDelete }: ProjectTableProps) => {
   const router = useRouter();
+
   return (
     <div className='flex flex-col gap-3'>
       {data.map((project) => (
@@ -45,7 +46,7 @@ const ProjectTable = ({ data, onDelete }: ProjectTableProps) => {
             </div>
             <div className='flex flex-col items-start md:items-end gap-2'>
               <div className='flex items-center gap-2'>
-                {project.gitHubUrl ? (
+                {project.gitHubUrl && (
                   <a
                     href={project.gitHubUrl}
                     target='_blank'
@@ -54,10 +55,8 @@ const ProjectTable = ({ data, onDelete }: ProjectTableProps) => {
                   >
                     GitHub
                   </a>
-                ) : (
-                  <span className='text-gray-400'>GitHub -</span>
                 )}
-                {project.demoUrl ? (
+                {project.demoUrl && (
                   <a
                     href={project.demoUrl}
                     target='_blank'
@@ -66,8 +65,6 @@ const ProjectTable = ({ data, onDelete }: ProjectTableProps) => {
                   >
                     Demo
                   </a>
-                ) : (
-                  <span className='text-gray-400'>Demo -</span>
                 )}
               </div>
               <button

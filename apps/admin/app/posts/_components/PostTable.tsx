@@ -3,6 +3,7 @@
 import { Pagination, PostData } from 'apis';
 import { useRouter } from 'next/navigation';
 import { deletePost } from '@/app/_libs/posts';
+import { useState } from 'react';
 
 interface PostTableProps extends Pagination {
   data: PostData[];
@@ -10,6 +11,21 @@ interface PostTableProps extends Pagination {
 
 const PostTable = ({ data }: PostTableProps) => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+
+  const requestIndexing = async (id: number) => {
+    try {
+      setLoading(true);
+      await fetch('/api/search-console/inspect', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: `${process.env.FRONT_URL}/posts/${id}` }),
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-3">
@@ -27,16 +43,24 @@ const PostTable = ({ data }: PostTableProps) => {
                 {post.menu?.name ?? '-'} • 조회수 {post.viewCount}
               </div>
             </div>
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                deletePost(post.id.toString());
-              }}
-              className="text-red-200 border border-red-400/70 px-3 py-1 rounded-lg hover:bg-red-500/20"
-            >
-              삭제
-            </button>
+            <div className={'flex gap-1'}>
+              <button
+                type='button'
+                onClick={(e) => {
+                  e.stopPropagation();
+                  deletePost(post.id.toString());
+                }}
+                className='text-red-200 border border-red-400/70 px-3 py-1 rounded-lg hover:bg-red-500/20'
+              >
+                삭제
+              </button>
+              <button
+                disabled={loading}
+                onClick={() => requestIndexing(post.id)}
+                className={'text-emerald-200 border border-emerald-300/50 px-3 py-1 rounded-lg hover:bg-emerald-400/10'}>
+                색인 생성 요청
+              </button>
+            </div>
           </div>
         </div>
       ))}

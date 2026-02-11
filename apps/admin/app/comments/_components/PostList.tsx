@@ -14,7 +14,7 @@ interface PostListProps {
 const PostList = ({ page, limit, total, data }: PostListProps) => {
   return (
     <div className={'h-full flex flex-col items-center gap-2 text-white'}>
-      <div className={'border border-white/10 bg-white/5 rounded-xl flex flex-col gap-2 p-2 flex-1 w-full'}>
+      <div className={'flex flex-col gap-2 p-2 flex-1 w-full'}>
         {data.map((post: PostData) => (
           <PostItem data={post} key={post.id} />
         ))}

@@ -2,7 +2,7 @@ import { getPost, increaseView } from 'apis';
 import PostTitle from '@/app/(main)/posts/[id]/_components/PostTitle';
 import PostButtons from '@/app/(main)/posts/[id]/_components/PostButtons';
 import { Metadata } from 'next';
-import PostContent from '@/app/(main)/posts/[id]/_components/PostContent';
+import EditorViewer from '@/app/(main)/_components/EditorViewer';
 import PostComments from '@/app/(main)/posts/[id]/_components/PostComments';
 import QuickMenus from '@/app/(main)/posts/[id]/_components/QuickMenus';
 
@@ -31,7 +31,7 @@ const PostDetailPage = async ({ params }: PostDetailPageProps) => {
       <div className={'glass-card p-8 mt-4'}>
         <PostTitle post={post.data} />
         <PostButtons title={post.data.title} subtitle={post.data.subtitle} />
-        <PostContent content={post.data.content} />
+        <EditorViewer content={post.data.content} />
       </div>
       <div className={'border border-border rounded-lg p-8 bg-card mt-4'}>
         <PostComments comments={post.data.comments} />

@@ -7,6 +7,7 @@ on:
 
 jobs:
   deploy:
+    environment: prod
     runs-on: ubuntu-latest
 
     env:
@@ -21,24 +22,24 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3LI
 
       - name: Log in to DockerHub
         run: echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
 
       - name: Build and push Admin image
         run: |
-          docker build -t $DOCKER_USER/admin:latest ./apps/admin
+          docker build -t $DOCKER_USER/admin:latest -f docker/admin.Dockerfile .
           docker push $DOCKER_USER/portfolio-admin:latest
 
       - name: Build and push Front image
         run: |
-          docker build -t $DOCKER_USER/front:latest ./apps/front
+          docker build -t $DOCKER_USER/front:latest -f docker/front.Dockerfile .
           docker push $DOCKER_USER/portfolio-front:latest
 
       - name: Build and push API image
         run: |
-          docker build -t $DOCKER_USER/back:latest ./apps/back
+          docker build -t $DOCKER_USER/back:latest -f docker/back.Dockerfile .
           docker push $DOCKER_USER/portfolio-back:latest
 
       - name: SSH into Lightsail and update containers
@@ -48,17 +49,10 @@ jobs:
           username: ${{ env.LIGHTSAIL_USER }}
           key: ${{ env.SSH_KEY }}
           script: |
-            docker pull $DOCKER_USER/admin:latest
-            docker pull $DOCKER_USER/front:latest
-            docker pull $DOCKER_USER/back:latest
-
-            docker stop portfolio-admin || true
-            docker rm portfolio-admin || true
-            docker stop portfolio-front || true
-            docker rm portfolio-front || true
-            docker stop portfolio-back || true
-            docker rm portfolio-back || true
-
-            cd ~/portfolio-docker
-
-            docker compose up -d admin front back
+            cd portfolio-deploy
+            
+            docker compose pull front admin back
+            docker compose up -d front admin back
+            docker compose restart nginx
+            
+            docker system prune
