@@ -48,13 +48,21 @@ jobs:
           host: ${{ env.LIGHTSAIL_HOST }}
           username: ${{ env.LIGHTSAIL_USER }}
           key: ${{ env.SSH_KEY }}
-          command_timeout: 20m
+          command_timeout: 60m
           script: |
             set -e
             cd ~/portfolio-deploy
             
-            docker compose pull front admin back
+            echo "▶ Pull front"
+            docker compose pull front
+            echo "▶ Pull admin"
+            docker compose pull admin
+            echo "▶ Pull back"
+            docker compose pull back
+            
+            echo "▶ Up"
             docker compose up -d front admin back
             docker compose restart nginx
-            
+  
+            echo "▶ Cleanup"
             docker system prune -f
