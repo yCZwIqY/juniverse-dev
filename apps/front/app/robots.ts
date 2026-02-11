@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.FRONT_URL!;
+  const baseUrl = process.env.FRONT_URL ?? 'https://juniverse-dev.com';
   if (!baseUrl) throw new Error('FRONT_URL is not set');
 
   return {
