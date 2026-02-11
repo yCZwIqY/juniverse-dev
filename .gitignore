@@ -67,3 +67,6 @@ report.*.json
 **/.temp/
 **/.tmp/
 apps/**/next-env.d.ts
+
+github_actions_lightsail
+github_actions_lightsail.pub
