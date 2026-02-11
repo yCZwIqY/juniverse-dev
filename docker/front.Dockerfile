@@ -14,6 +14,7 @@ COPY libs ./libs
 RUN pnpm install --frozen-lockfile
 
 # front 앱 빌드
+RUN pnpm --filter apis build
 RUN pnpm --filter front build
 
 EXPOSE 3000

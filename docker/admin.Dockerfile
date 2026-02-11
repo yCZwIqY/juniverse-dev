@@ -15,6 +15,7 @@ COPY libs ./libs
 RUN pnpm install --frozen-lockfile
 
 # admin 앱 빌드
+RUN pnpm --filter apis build
 RUN pnpm --filter admin build
 
 EXPOSE 3000
