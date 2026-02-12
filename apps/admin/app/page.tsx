@@ -10,6 +10,8 @@ import DashboardSectionCard from '@/app/_components/dashboard/DashboardSectionCa
 import DashboardStatCard from '@/app/_components/dashboard/DashboardStatCard';
 import TrafficChart from '@/app/_components/dashboard/TrafficChart';
 
+export const dynamic = 'force-dynamic';
+
 const Page = async () => {
   const [
     summary,

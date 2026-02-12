@@ -1,6 +1,8 @@
 import MenuList from '@/app/menus/_components/MenuList';
 import MenuForm from '@/app/menus/_components/MenuForm';
 
+export const dynamic = 'force-dynamic';
+
 const MenuPage = () => {
   return (
     <div className={'flex flex-col gap-6 md:gap-10 h-full overflow-hidden'}>
