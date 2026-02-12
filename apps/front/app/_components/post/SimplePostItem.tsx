@@ -19,7 +19,7 @@ const SimplePostItem = ({ id, title, menu, createdAt }: PostData) => {
     >
       <div className={'flex-1 flex gap-2 items-center'}>
         <Tag
-          className={'!text-base'}
+          className={'lg:!text-base'}
           onClick={(e) => {
             e.stopPropagation();
             updateSearchParams('category', menu.id.toString());

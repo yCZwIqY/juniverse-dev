@@ -21,48 +21,104 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Detect changed paths
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            front:
+              - 'apps/front/**'
+              - 'docker/front.Dockerfile'
+              - 'libs/apis/**'
+              - 'libs/components/**'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+              - 'tsconfig.json'
+            admin:
+              - 'apps/admin/**'
+              - 'docker/admin.Dockerfile'
+              - 'libs/apis/**'
+              - 'libs/components/**'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+              - 'tsconfig.json'
+            back:
+              - 'apps/back/**'
+              - 'docker/back.Dockerfile'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+              - 'tsconfig.json'
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
       - name: Log in to DockerHub
+        if: steps.changes.outputs.front == 'true' || steps.changes.outputs.admin == 'true' || steps.changes.outputs.back == 'true'
         run: echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
 
       - name: Build and push Admin image
+        if: steps.changes.outputs.admin == 'true'
         run: |
           docker build --progress=plain -t $DOCKER_USER/portfolio-admin:latest -f docker/admin.Dockerfile .
           docker push $DOCKER_USER/portfolio-admin:latest
 
       - name: Build and push Front image
+        if: steps.changes.outputs.front == 'true'
         run: |
           docker build --progress=plain -t $DOCKER_USER/portfolio-front:latest -f docker/front.Dockerfile .
           docker push $DOCKER_USER/portfolio-front:latest
 
       - name: Build and push API image
+        if: steps.changes.outputs.back == 'true'
         run: |
           docker build --progress=plain -t $DOCKER_USER/portfolio-back:latest -f docker/back.Dockerfile .
           docker push $DOCKER_USER/portfolio-back:latest
 
-      - name: SSH into Lightsail and update containers
+      - name: SSH into Lightsail and update changed containers
+        if: steps.changes.outputs.front == 'true' || steps.changes.outputs.admin == 'true' || steps.changes.outputs.back == 'true'
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          FRONT_CHANGED: ${{ steps.changes.outputs.front }}
+          ADMIN_CHANGED: ${{ steps.changes.outputs.admin }}
+          BACK_CHANGED: ${{ steps.changes.outputs.back }}
         with:
           host: ${{ env.LIGHTSAIL_HOST }}
           username: ${{ env.LIGHTSAIL_USER }}
           key: ${{ env.SSH_KEY }}
+          envs: FRONT_CHANGED,ADMIN_CHANGED,BACK_CHANGED
           command_timeout: 60m
           script: |
             set -e
             cd ~/portfolio-deploy
             
-            echo "▶ Pull front"
-            docker compose pull front
-            echo "▶ Pull admin"
-            docker compose pull admin
-            echo "▶ Pull back"
-            docker compose pull back
+            if [ "$FRONT_CHANGED" = "true" ]; then
+              echo "▶ Pull front"
+              docker compose pull front
+            fi
+            if [ "$ADMIN_CHANGED" = "true" ]; then
+              echo "▶ Pull admin"
+              docker compose pull admin
+            fi
+            if [ "$BACK_CHANGED" = "true" ]; then
+              echo "▶ Pull back"
+              docker compose pull back
+            fi
             
             echo "▶ Up"
-            docker compose up -d front admin back
+            if [ "$FRONT_CHANGED" = "true" ]; then
+              docker compose up -d front
+            fi
+            if [ "$ADMIN_CHANGED" = "true" ]; then
+              docker compose up -d admin
+            fi
+            if [ "$BACK_CHANGED" = "true" ]; then
+              docker compose up -d back
+            fi
             docker compose restart nginx
                      
             echo "▶ Cleanup"
-            docker system prune -f
+            docker image prune -f
+            docker builder prune -f --filter "until=168h"

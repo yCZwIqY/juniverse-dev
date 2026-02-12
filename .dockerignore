@@ -2,14 +2,21 @@
 node_modules
 **/node_modules
 
-# pnpm 관련 캐시 및 잠금 파일 제외
+# pnpm 캐시 제외
 .pnpm
+.pnpm-store
 
 # 빌드 산출물 제외
 .next
+**/.next
 dist
+**/dist
 build
+**/build
 coverage
+**/coverage
+.turbo
+**/.turbo
 
 # OS / Editor 파일 제외
 .DS_Store
@@ -22,10 +29,14 @@ Thumbs.db
 .env
 .env.local
 .env.*.local
+**/.env
+**/.env.local
+**/.env.*.local
 
 # Git 관련 제외
 .git
 .gitignore
+.github
 
 # Docker 관련 (필요 시)
 docker/
