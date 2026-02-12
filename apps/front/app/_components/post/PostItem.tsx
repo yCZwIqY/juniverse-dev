@@ -35,7 +35,7 @@ const PostItem = ({ id, title, subtitle, menu, createdAt, tags, viewCount, comme
         <div className={'flex flex-col lg:flex-row gap-2 items-center text-gray-600'}>
           <span>{new Date(createdAt).toLocaleDateString('ko-KR', { hour: '2-digit', minute: '2-digit' })}</span>
           <span className={'hidden lg:block'}>•</span>
-          <div className={'flex gap-2'}>
+          <div className={'flex gap-2 flex-wrap'}>
             {tags.slice(0, 5).map((tag) => (
               <Tag
                 key={tag}

@@ -25,7 +25,7 @@ const RecentTags = () => {
     })();
   }, []);
   return (
-    <section className={'glass-card w-full p-8 md:p-10 flex flex-col gap-6 reveal'}>
+    <section className={'glass-card w-full p-4 lg:p-8 flex flex-col gap-6 reveal'}>
       <div className={'flex justify-between'}>
         <div className={'text-xl font-bold'}>최근에 사용된 태그</div>
       </div>

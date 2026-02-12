@@ -3,6 +3,12 @@ import ClientShell from '@/app/_components/ClientShell';
 import './global.css';
 import '../styles/_variables.scss';
 import '../styles/_keyframe-animations.scss';
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Juniverse Dev 관리자 사이트',
+  description: '...',
+}
 
 const Layout = ({
   children,

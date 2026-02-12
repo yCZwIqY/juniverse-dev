@@ -2,10 +2,10 @@ import { NextResponse } from 'next/server';
 import { JWT } from 'google-auth-library';
 
 export async function POST(req: Request) {
-  const { url } = await req.json();
+  const { path } = await req.json();
 
-  if (!url) {
-    return NextResponse.json({ error: 'url is required' }, { status: 400 });
+  if (!path) {
+    return NextResponse.json({ error: 'path is required' }, { status: 400 });
   }
 
   const auth = new JWT({
@@ -25,17 +25,22 @@ export async function POST(req: Request) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        inspectionUrl: url,
-        siteUrl: process.env.FRONT_URL,
+        inspectionUrl: `${process.env.FRONT_URL}${path}`,
+        siteUrl: process.env.FRONT_URL!.replace('https://', 'sc-domain:'),
       }),
     },
   );
 
-  const data = await res.json();
+  const data = await res.json().catch(() => null);
 
-  return NextResponse.json({
-    success: true,
-    requestUrl: url,
-    result: data,
-  });
+  return NextResponse.json(
+    {
+      success: res.ok,
+      status: res.status,
+      requestUrl: `${process.env.FRONT_URL}${path}`,
+      result: data,
+      error: res.ok ? undefined : data,
+    },
+    { status: res.ok ? 200 : res.status },
+  );
 }

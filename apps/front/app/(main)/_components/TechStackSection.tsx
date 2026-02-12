@@ -41,7 +41,7 @@ const stackGroups = [
 
 const TechStackSection = () => {
   return (
-    <section className={'glass-card w-full p-8 md:p-10 flex flex-col gap-6 reveal'}>
+    <section className={'glass-card w-full p-4 lg:p-8 flex flex-col gap-6 reveal'}>
       <div className={'flex flex-col gap-2'}>
         <div className={'text-xl font-bold'}>Tech Stack</div>
         {/*<div className={'text-sm text-muted-foreground'}>실무에서 바로 적용 가능한 기술 목록</div>*/}
