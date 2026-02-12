@@ -10,8 +10,8 @@ async function bootstrap() {
     origin: '*',
   });
 
-  app.use(express.json({ limit: '10mb' }));
-  app.use(express.urlencoded({ limit: '10mb', extended: true }));
+  app.use(express.json({ limit: '20mb' }));
+  app.use(express.urlencoded({ limit: '20mb', extended: true }));
   app.useGlobalInterceptors(new ResponseInterceptor());
 
   await app.listen(process.env.NEST_PORT ?? 3002);

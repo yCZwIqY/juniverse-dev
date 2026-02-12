@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: PostDetailPageProps): Promise
   return {
     title: post?.data?.title,
     description: post?.data.subtitle,
+    keywords: post?.data.tags,
   };
 }
 

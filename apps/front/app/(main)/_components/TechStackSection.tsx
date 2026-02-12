@@ -51,12 +51,14 @@ const TechStackSection = () => {
           <div key={group.category} className={'rounded-xl border border-border p-4 flex flex-col gap-3 bg-background/40'}>
             <div className={'text-base font-bold'}>{group.category}</div>
             <div className={'stack-grid'}>
-              {group.stacks.length > 0 ? group.stacks.map((s) => (
-                <div key={s.label} className={'stack-card'}>
-                  <div className={'stack-title'}>{s.label}</div>
-                  <div className={'stack-detail'}>{s.detail}</div>
-                </div>
-              )) : (
+              {group.stacks.length > 0 ? (
+                group.stacks.map((s) => (
+                  <div key={s.label} className={'stack-card'}>
+                    <div className={'stack-title'}>{s.label}</div>
+                    <div className={'stack-detail'}>{s.detail}</div>
+                  </div>
+                ))
+              ) : (
                 <div className={'stack-detail'}>추가 예정</div>
               )}
             </div>

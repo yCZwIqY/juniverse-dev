@@ -111,7 +111,7 @@ export interface ProjectData {
   sourceCode?: Record<string, string>;
 }
 
-export type ProjectsResponse = PageResponse<ProjectData>;
+export type ProjectsResponse = BaseResponse<ProjectData[]>;
 export type ProjectResponse = BaseResponse<ProjectData>;
 
 export type ProjectFormData = {
