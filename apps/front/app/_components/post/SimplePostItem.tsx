@@ -3,14 +3,19 @@ import { useRouter } from 'next/navigation';
 import Tag from '@/app/_components/tag/Tag';
 import { useUpdateSearchParams } from '@/app/_hooks/useUpdateSearchParams';
 import { PostData } from 'apis';
+import { useNavigationLoading } from '@/app/_components/navigation/NavigationLoadingProvider';
 
 const SimplePostItem = ({ id, title, menu, createdAt }: PostData) => {
   const updateSearchParams = useUpdateSearchParams('posts');
   const router = useRouter();
+  const { startNavigation } = useNavigationLoading();
   return (
     <div
       className={'border border-border rounded-full p-4 flex justify-between items-center gap-2 hover:shadow-sm shadow-accent'}
-      onClick={() => router.push(`/posts/${id}`)}
+      onClick={() => {
+        startNavigation();
+        router.push(`/posts/${id}`);
+      }}
     >
       <div className={'flex-1 flex gap-2 items-center'}>
         <Tag

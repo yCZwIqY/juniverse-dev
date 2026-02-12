@@ -1,9 +1,10 @@
-import { Injectable, OnModuleDestroy } from '@nestjs/common';
+import { Injectable, Logger, OnModuleDestroy } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import Redis from 'ioredis';
 
 @Injectable()
 export class RedisService implements OnModuleDestroy {
+  private readonly logger = new Logger(RedisService.name);
   private readonly client: Redis | null;
   private readonly enabled: boolean;
 
@@ -17,48 +18,74 @@ export class RedisService implements OnModuleDestroy {
     const host = this.config.get<string>('REDIS_HOST') ?? '127.0.0.1';
     const port = this.config.get<number>('REDIS_PORT') ?? 6379;
     const password = this.config.get<string>('REDIS_PASSWORD') ?? undefined;
-    this.client = new Redis({ host, port, password });
+    const connectTimeout = this.config.get<number>('REDIS_CONNECT_TIMEOUT_MS') ?? 800;
+    const commandTimeout = this.config.get<number>('REDIS_COMMAND_TIMEOUT_MS') ?? 1200;
+    const maxRetriesPerRequest = this.config.get<number>('REDIS_MAX_RETRIES_PER_REQUEST') ?? 1;
+    const retryDelay = this.config.get<number>('REDIS_RETRY_DELAY_MS') ?? 100;
+
+    this.client = new Redis({
+      host,
+      port,
+      password,
+      connectTimeout,
+      commandTimeout,
+      maxRetriesPerRequest,
+      enableOfflineQueue: false,
+      retryStrategy: (times) => (times <= 2 ? retryDelay : null),
+    });
   }
 
   async setIfNotExists(key: string, value: string, ttlSeconds: number) {
     if (!this.client) return 'OK';
-    return this.client.set(key, value, 'EX', ttlSeconds, 'NX');
+    return this.safe(
+      () => this.client!.set(key, value, 'EX', ttlSeconds, 'NX'),
+      null,
+      'setIfNotExists',
+    );
   }
 
   async incr(key: string) {
     if (!this.client) return 0;
-    return this.client.incr(key);
+    return this.safe(() => this.client!.incr(key), 0, 'incr');
   }
 
   async expire(key: string, ttlSeconds: number) {
     if (!this.client) return 0;
-    return this.client.expire(key, ttlSeconds);
+    return this.safe(() => this.client!.expire(key, ttlSeconds), 0, 'expire');
   }
 
   async get(key: string) {
     if (!this.client) return null;
-    return this.client.get(key);
+    return this.safe(() => this.client!.get(key), null, 'get');
   }
 
   async zincrby(key: string, score: number, member: string) {
     if (!this.client) return '0';
-    return this.client.zincrby(key, score, member);
+    return this.safe(() => this.client!.zincrby(key, score, member), '0', 'zincrby');
   }
 
   async zrevrangeWithScores(key: string, limit: number) {
     if (!this.client) return [];
-    return this.client.zrevrange(key, 0, limit - 1, 'WITHSCORES');
+    return this.safe(
+      () => this.client!.zrevrange(key, 0, limit - 1, 'WITHSCORES'),
+      [],
+      'zrevrangeWithScores',
+    );
   }
 
   async zunionstore(tempKey: string, keys: string[]) {
     if (!keys.length) return 0;
     if (!this.client) return 0;
-    return this.client.zunionstore(tempKey, keys.length, ...keys);
+    return this.safe(
+      () => this.client!.zunionstore(tempKey, keys.length, ...keys),
+      0,
+      'zunionstore',
+    );
   }
 
   async del(key: string) {
     if (!this.client) return 0;
-    return this.client.del(key);
+    return this.safe(() => this.client!.del(key), 0, 'del');
   }
 
   getPopularKeys(days: number) {
@@ -92,6 +119,19 @@ export class RedisService implements OnModuleDestroy {
       list.push({ id: raw[i], score: Number(raw[i + 1]) });
     }
     return list;
+  }
+
+  private async safe<T>(
+    task: () => Promise<T>,
+    fallback: T,
+    operation: string,
+  ): Promise<T> {
+    try {
+      return await task();
+    } catch (error) {
+      this.logger.warn(`Redis ${operation} failed: ${(error as Error)?.message ?? 'unknown error'}`);
+      return fallback;
+    }
   }
 
   async onModuleDestroy() {

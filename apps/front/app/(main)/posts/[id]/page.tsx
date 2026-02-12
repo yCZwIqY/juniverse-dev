@@ -25,7 +25,7 @@ const PostDetailPage = async ({ params }: PostDetailPageProps) => {
   const post = await getPost(id);
   if (!post) return <div className={'border border-border rounded-lg p-4 bg-card mt-5'}>존재하지 않는 포스트입니다.</div>;
 
-  await increaseView(id);
+  void increaseView(id);
   return (
     <div>
       <div className={'glass-card p-8 mt-4'}>

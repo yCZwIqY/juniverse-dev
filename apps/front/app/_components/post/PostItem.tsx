@@ -5,14 +5,19 @@ import { useUpdateSearchParams } from '@/app/_hooks/useUpdateSearchParams';
 import { useRouter } from 'next/navigation';
 import CommentIcon from '@/app/_components/icon/CommentIcon';
 import ViewIcon from '@/app/_components/icon/ViewIcon';
+import { useNavigationLoading } from '@/app/_components/navigation/NavigationLoadingProvider';
 
 const PostItem = ({ id, title, subtitle, menu, createdAt, tags, viewCount, comments }: PostData) => {
   const updateSearchParams = useUpdateSearchParams('posts');
   const router = useRouter();
+  const { startNavigation } = useNavigationLoading();
   return (
     <div
       className={'border border-border rounded-lg p-4 flex flex-col gap-2 hover:shadow-sm shadow-accent'}
-      onClick={() => router.push(`/posts/${id}`)}
+      onClick={() => {
+        startNavigation();
+        router.push(`/posts/${id}`);
+      }}
     >
       <div className={'flex flex-col items-center lg:items-start gap-2 text-center lg:text-left'}>
         <Tag

@@ -24,17 +24,17 @@ services:
       sh -c "while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h; done"
 
   front:
-    image: ljy014/portfolio-front:latest
+    image: ${DOCKER_USER:-ljy014}/portfolio-front:latest
     expose:
       - "3000"
 
   admin:
-    image: ljy014/portfolio-admin:latest
+    image: ${DOCKER_USER:-ljy014}/portfolio-admin:latest
     expose:
       - "3000"
 
   back:
-    image: ljy014/portfolio-back:latest
+    image: ${DOCKER_USER:-ljy014}/portfolio-back:latest
     expose:
       - "3002"
     depends_on:

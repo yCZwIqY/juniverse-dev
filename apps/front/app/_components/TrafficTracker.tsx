@@ -4,7 +4,8 @@ import { useEffect } from 'react';
 
 const TrafficTracker = () => {
   useEffect(() => {
-    fetch('/api/traffic/visit', { method: 'POST' }).catch(() => {});
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/traffic/visit`, { method: 'POST' }).catch(() => {
+    });
   }, []);
 
   return null;

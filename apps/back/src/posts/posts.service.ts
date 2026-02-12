@@ -181,10 +181,13 @@ export class PostsService {
       60 * 60 * 24,
     );
     if (!isNew) return { ok: true, duplicated: true };
-    const todayKey = new Date().toISOString().slice(0, 10);
-    const todayCompact = todayKey.replace(/-/g, '');
-    await this.redisService.zincrby(`popular:${todayCompact}`, 1, String(id));
-    await this.redisService.zincrby(`popular:all`, 1, String(id));
+
+    const todayCompact = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+    void Promise.allSettled([
+      this.redisService.zincrby(`popular:${todayCompact}`, 1, String(id)),
+      this.redisService.zincrby(`popular:all`, 1, String(id)),
+    ]);
+
     const result = await this.postRepo.increment({ id }, 'viewCount', 1);
     if (!result.affected) throw new NotFoundException('post not found');
     return { ok: true };

@@ -15,14 +15,24 @@ export class TrafficService {
       60 * 60 * 24,
     );
 
-    await this.redisService.incr(`traffic:pv:${todayCompact}`);
-    await this.redisService.expire(`traffic:pv:${todayCompact}`, 60 * 60 * 24 * 40);
-
-    if (isNew) {
-      await this.redisService.incr(`traffic:uv:${todayCompact}`);
-      await this.redisService.expire(`traffic:uv:${todayCompact}`, 60 * 60 * 24 * 40);
-    }
+    void this.persistDailyTraffic(todayCompact, Boolean(isNew));
 
     return { ok: true, duplicated: !isNew };
+  }
+
+  private async persistDailyTraffic(todayCompact: string, isNew: boolean) {
+    const jobs: Array<Promise<unknown>> = [
+      this.redisService.incr(`traffic:pv:${todayCompact}`),
+      this.redisService.expire(`traffic:pv:${todayCompact}`, 60 * 60 * 24 * 40),
+    ];
+
+    if (isNew) {
+      jobs.push(
+        this.redisService.incr(`traffic:uv:${todayCompact}`),
+        this.redisService.expire(`traffic:uv:${todayCompact}`, 60 * 60 * 24 * 40),
+      );
+    }
+
+    await Promise.allSettled(jobs);
   }
 }

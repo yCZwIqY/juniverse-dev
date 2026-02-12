@@ -35,8 +35,8 @@ export class DashboardService {
   ) {
   }
 
-  async getTraffic(range: 'day' | 'week' | 'month') {
-    const days = range === 'day' ? 1 : range === 'week' ? 7 : 30;
+  async getTraffic(range: 'day' | 'week' | 'month' | 'year') {
+    const days = range === 'day' ? 1 : range === 'week' ? 7 : range === 'year' ? 365 : 30;
     const { start, end } = getDateRange(days);
     const stats = await this.trafficRepo.find({
       where: { date: Between(dateToKey(start), dateToKey(end)) },
@@ -45,18 +45,29 @@ export class DashboardService {
 
     const map = new Map(stats.map((s) => [s.date, s]));
     const items: { date: string, pageViews: number; uniqueVisitors: number }[] = [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayKey = dateToKey(today);
+    const todayCompact = todayKey.replace(/-/g, '');
+    const [todayPvRaw, todayUvRaw] = await Promise.all([
+      this.redisService.get(`traffic:pv:${todayCompact}`),
+      this.redisService.get(`traffic:uv:${todayCompact}`),
+    ]);
+    const todayPv = todayPvRaw ? Number(todayPvRaw) : undefined;
+    const todayUv = todayUvRaw ? Number(todayUvRaw) : undefined;
     for (let i = 0; i < days; i++) {
       const d = new Date(start);
       d.setDate(start.getDate() + i);
       const key = dateToKey(d);
       const row = map.get(key);
-      const compact = key.replace(/-/g, '');
-      const [pvRaw, uvRaw] = await Promise.all([
-        this.redisService.get(`traffic:pv:${compact}`),
-        this.redisService.get(`traffic:uv:${compact}`),
-      ]);
-      const pv = pvRaw ? Number(pvRaw) : row?.pageViews ?? 0;
-      const uv = uvRaw ? Number(uvRaw) : row?.uniqueVisitors ?? 0;
+      const pv =
+        key === todayKey
+          ? todayPv ?? row?.pageViews ?? 0
+          : row?.pageViews ?? 0;
+      const uv =
+        key === todayKey
+          ? todayUv ?? row?.uniqueVisitors ?? 0
+          : row?.uniqueVisitors ?? 0;
       items.push({
         date: key,
         pageViews: pv,
@@ -75,8 +86,8 @@ export class DashboardService {
     return { range, items, total };
   }
 
-  async getPopularPosts(range: 'day' | 'week' | 'month', limit = 10) {
-    const days = range === 'day' ? 1 : range === 'week' ? 7 : 30;
+  async getPopularPosts(range: 'day' | 'week' | 'month' | 'year', limit = 10) {
+    const days = range === 'day' ? 1 : range === 'week' ? 7 : range === 'year' ? 365 : 30;
     const keys = this.redisService.getPopularKeys(days);
     const popular = await this.redisService.getPopularPosts(keys, limit);
     const ids = popular.map((p) => Number(p.id));
@@ -105,6 +116,64 @@ export class DashboardService {
       this.projectRepo.count(),
       this.menuRepo.count(),
     ]);
-    return { posts, comments, projects, menus };
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayKey = dateToKey(today);
+    const todayCompact = todayKey.replace(/-/g, '');
+    const [todayPvRaw, todayUvRaw, todayRow] = await Promise.all([
+      this.redisService.get(`traffic:pv:${todayCompact}`),
+      this.redisService.get(`traffic:uv:${todayCompact}`),
+      this.trafficRepo.findOne({ where: { date: todayKey } }),
+    ]);
+    const todayPageViews = todayPvRaw ? Number(todayPvRaw) : todayRow?.pageViews ?? 0;
+    const todayUniqueVisitors = todayUvRaw ? Number(todayUvRaw) : todayRow?.uniqueVisitors ?? 0;
+
+    const totals = await this.trafficRepo
+      .createQueryBuilder('traffic')
+      .select('SUM(traffic.pageViews)', 'pageViews')
+      .addSelect('SUM(traffic.uniqueVisitors)', 'uniqueVisitors')
+      .getRawOne<{ pageViews: string | null; uniqueVisitors: string | null }>();
+
+    const totalPageViewsBase = totals?.pageViews ? Number(totals.pageViews) : 0;
+    const totalUniqueVisitorsBase = totals?.uniqueVisitors ? Number(totals.uniqueVisitors) : 0;
+
+    const totalPageViews =
+      totalPageViewsBase - (todayRow?.pageViews ?? 0) + todayPageViews;
+    const totalUniqueVisitors =
+      totalUniqueVisitorsBase - (todayRow?.uniqueVisitors ?? 0) + todayUniqueVisitors;
+
+    return {
+      posts,
+      comments,
+      projects,
+      menus,
+      traffic: {
+        today: {
+          pageViews: todayPageViews,
+          uniqueVisitors: todayUniqueVisitors,
+        },
+        total: {
+          pageViews: totalPageViews,
+          uniqueVisitors: totalUniqueVisitors,
+        },
+      },
+    };
+  }
+
+  async getRecentComments(limit = 5) {
+    const comments = await this.commentRepo.find({
+      take: limit,
+      order: { createdAt: 'DESC' },
+      relations: ['post'],
+    });
+
+    return comments.map((comment) => ({
+      id: comment.id,
+      postId: comment.postId,
+      postTitle: comment.post?.title ?? '',
+      authorName: comment.authorName,
+      content: comment.content,
+      createdAt: comment.createdAt,
+    }));
   }
 }

@@ -3,22 +3,30 @@ import CommentIcon from '@/app/_components/icon/CommentIcon';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { createComment } from '@/app/_libs/comment';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 const PostAddComment = () => {
   const { id } = useParams();
+  const router = useRouter();
   const { data: session } = useSession();
   const [comment, setComment] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = async () => {
-    if (!session || !session.user || !id) return;
+    if (!session || !session.user || !id || !comment.trim() || isSubmitting) return;
 
-    setComment('');
-    await createComment(id.toString(), {
-      content: comment,
-      authorId: session.user.email!,
-      authorName: session.user.name!,
-    });
+    try {
+      setIsSubmitting(true);
+      await createComment(id.toString(), {
+        content: comment,
+        authorId: session.user.email!,
+        authorName: session.user.name!,
+      });
+      setComment('');
+      router.refresh();
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (session) {
@@ -34,6 +42,7 @@ const PostAddComment = () => {
           placeholder={'댓글을 작성해 주세요'}
           className={'w-full h-[150px] resize-none border border-border rounded-md bg-background p-4'}
           value={comment}
+          disabled={isSubmitting}
           onChange={(e) => {
             if (e.target.value.length >= 500) return;
             setComment(e.target.value);
@@ -41,10 +50,17 @@ const PostAddComment = () => {
         />
         <button
           onClick={onSubmit}
-          disabled={!comment}
-          className={`bg-accent px-3 py-1 text-white font-bold self-end rounded-sm ${comment ? 'hover:opacity-70 active:opacity-50' : 'opacity-30'}`}
+          disabled={!comment.trim() || isSubmitting}
+          className={`bg-accent px-3 py-1 text-white font-bold self-end rounded-sm ${!comment.trim() || isSubmitting ? 'opacity-30' : 'hover:opacity-70 active:opacity-50'}`}
         >
-          등록하기
+          {isSubmitting ? (
+            <span
+              className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white align-middle"
+              aria-label="댓글 등록 중"
+            />
+          ) : (
+            '등록하기'
+          )}
         </button>
       </div>
     );

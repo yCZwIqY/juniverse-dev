@@ -5,21 +5,25 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ThemeSwitch from '@/app/_components/header/ThemeSwitch';
 import Image from 'next/image';
+import { useNavigationLoading } from '@/app/_components/navigation/NavigationLoadingProvider';
 
 const Header = () => {
   const router = useRouter();
+  const { startNavigation } = useNavigationLoading();
   const [searchText, setSearchText] = useState('');
   const [showInput, setShowInput] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onSearch = (e: FormEvent) => {
     e.preventDefault();
+    startNavigation();
     router.push(`/posts?search=${searchText}&page=1`);
     setSearchText('');
   };
 
   const onClickSearch = () => {
     if (searchText) {
+      startNavigation();
       router.push(`/posts?search=${searchText}&page=1`);
       setSearchText('');
       return;
@@ -53,7 +57,7 @@ const Header = () => {
   return (
     <div className={'!sticky top-5 w-full mt-5 py-3 px-5 flex items-center justify-between glass-card z-10'}>
       <div className={'flex items-center gap-4'}>
-        <Link href={'/'}>
+        <Link href={'/'} prefetch={false} onClick={startNavigation}>
           <Image src={'/images/logo.png'}
                  className={'size-6 lg:size-8'}
                  alt={'로고'}
@@ -61,7 +65,7 @@ const Header = () => {
                  height={24} />
         </Link>
         <div className={`${showInput ? 'hidden lg:block' : 'block'}`}>
-          <Link href={'/posts'} className={'font-semibold hover:underline'}>
+          <Link href={'/posts'} prefetch={false} onClick={startNavigation} className={'font-semibold hover:underline'}>
             Posts
           </Link>
         </div>

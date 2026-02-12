@@ -3,6 +3,7 @@ import './global.css';
 import Header from '@/app/_components/header/Header';
 import Footer from '@/app/_components/footer/Footer';
 import TrafficTracker from '@/app/_components/TrafficTracker';
+import { NavigationLoadingProvider } from '@/app/_components/navigation/NavigationLoadingProvider';
 
 const MainLayout = ({
   children,
@@ -23,10 +24,12 @@ const MainLayout = ({
       <body
         className={`font-Suit antialiased bg-background w-dvw min-h-dvh !h-fit lg:w-[1120px] m-auto relative overflow-x-hidden overflow-y-auto !p-5 flex flex-col`}
       >
-        <TrafficTracker />
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <NavigationLoadingProvider>
+          <TrafficTracker />
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </NavigationLoadingProvider>
       </body>
     </html>
   );

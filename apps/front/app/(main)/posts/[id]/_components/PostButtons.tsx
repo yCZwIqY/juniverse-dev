@@ -1,5 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
+import { useNavigationLoading } from '@/app/_components/navigation/NavigationLoadingProvider';
 
 interface PostButtonsProps {
   title: string;
@@ -8,6 +9,7 @@ interface PostButtonsProps {
 
 const PostButtons = ({ title, subtitle }: PostButtonsProps) => {
   const router = useRouter();
+  const { startNavigation } = useNavigationLoading();
 
   const onShare = () => {
     navigator.share({
@@ -21,7 +23,10 @@ const PostButtons = ({ title, subtitle }: PostButtonsProps) => {
     <div className={'flex lg:justify-start justify-center gap-2 py-2'}>
       <button
         className={'flex items-center justify-center gap-2 font-bold border-border rounded-sm border px-3 py-1'}
-        onClick={() => router.push('/posts')}
+        onClick={() => {
+          startNavigation();
+          router.push('/posts');
+        }}
       >
         <svg fill="var(--tt-theme-text)" width="18px" height="18px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
           <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>

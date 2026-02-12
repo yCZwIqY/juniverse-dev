@@ -29,6 +29,7 @@ const BlogInfo = async ({ lastPostId }: BlogInfoProps) => {
         {lastPostId && (
           <Link
             href={`/posts/${lastPostId}`}
+            prefetch={false}
             className={
               'font-bold border border-primary bg-linear-to-b from-primary/18 to-white/52 p-3 rounded-lg flex items-center justify-center gap-[10px] hover:opacity-70 active:opacity-50'
             }

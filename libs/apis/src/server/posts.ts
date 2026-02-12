@@ -43,7 +43,6 @@ export const getPost = async (id: string | number) => {
       `/api/posts/${id}`,
       {},
       {
-        cache: 'force-cache',
         next: { revalidate: 60, tags: [`post:${id ?? 0}`] },
       },
     );
