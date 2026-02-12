@@ -7,6 +7,7 @@ on:
 
 jobs:
   deploy:
+    timeout-minutes: 90
     environment: prod
     runs-on: ubuntu-latest
 
@@ -93,18 +94,37 @@ jobs:
           script: |
             set -e
             cd ~/portfolio-deploy
+
+            pull_with_retry() {
+              service="$1"
+              max_retries=3
+              retry_delay=15
+              count=1
+
+              while [ "$count" -le "$max_retries" ]; do
+                echo "▶ Pull $service (try $count/$max_retries)"
+                if docker compose pull "$service"; then
+                  return 0
+                fi
+                if [ "$count" -lt "$max_retries" ]; then
+                  echo "Pull failed for $service. retry in ${retry_delay}s..."
+                  sleep "$retry_delay"
+                fi
+                count=$((count + 1))
+              done
+
+              echo "Pull failed for $service after $max_retries attempts."
+              return 1
+            }
             
             if [ "$FRONT_CHANGED" = "true" ]; then
-              echo "▶ Pull front"
-              docker compose pull front
+              pull_with_retry front
             fi
             if [ "$ADMIN_CHANGED" = "true" ]; then
-              echo "▶ Pull admin"
-              docker compose pull admin
+              pull_with_retry admin
             fi
             if [ "$BACK_CHANGED" = "true" ]; then
-              echo "▶ Pull back"
-              docker compose pull back
+              pull_with_retry back
             fi
             
             echo "▶ Up"
