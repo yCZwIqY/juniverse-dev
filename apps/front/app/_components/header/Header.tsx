@@ -1,7 +1,7 @@
 'use client';
 
-import { FormEvent, useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { FormEvent, MouseEvent, useEffect, useRef, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ThemeSwitch from '@/app/_components/header/ThemeSwitch';
 import Image from 'next/image';
@@ -9,7 +9,8 @@ import { useNavigationLoading } from '@/app/_components/navigation/NavigationLoa
 
 const Header = () => {
   const router = useRouter();
-  const { startNavigation } = useNavigationLoading();
+  const pathname = usePathname();
+  const { startNavigation, stopNavigation } = useNavigationLoading();
   const [searchText, setSearchText] = useState('');
   const [showInput, setShowInput] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -38,6 +39,16 @@ const Header = () => {
     setShowInput(false);
   };
 
+  const onClickTo = (targetPathname: string, targetQuery = '') => (e: MouseEvent<HTMLAnchorElement>) => {
+    const currentQuery = typeof window !== 'undefined' ? window.location.search.replace(/^\?/, '') : '';
+    if (pathname === targetPathname && currentQuery === targetQuery) {
+      e.preventDefault();
+      stopNavigation();
+      return;
+    }
+    startNavigation();
+  };
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       const isMac = navigator.userAgent.includes('Mac');
@@ -57,7 +68,7 @@ const Header = () => {
   return (
     <div className={'!sticky top-5 w-full mt-5 py-3 px-5 flex items-center justify-between glass-card z-10'}>
       <div className={'flex items-center gap-4'}>
-        <Link href={'/'} prefetch={false} onClick={startNavigation}>
+        <Link href={'/'} prefetch={false} onClick={onClickTo('/')}>
           <Image src={'/images/logo.png'}
                  className={'size-6 lg:size-8'}
                  alt={'로고'}
@@ -65,7 +76,7 @@ const Header = () => {
                  height={24} />
         </Link>
         <div className={`${showInput ? 'hidden lg:block' : 'block'}`}>
-          <Link href={'/posts'} prefetch={false} onClick={startNavigation} className={'font-semibold hover:underline'}>
+          <Link href={'/posts'} prefetch={false} onClick={onClickTo('/posts')} className={'font-semibold hover:underline'}>
             Posts
           </Link>
         </div>

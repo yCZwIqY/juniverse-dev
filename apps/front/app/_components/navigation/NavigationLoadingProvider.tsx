@@ -73,7 +73,6 @@ export const NavigationLoadingProvider = ({ children }: { children: ReactNode })
               </g>
             </g>
           </svg>
-          <span className="inline-block h-10 w-10 animate-spin rounded-full border-4 border-white/35 border-t-white" aria-label="페이지 이동 중" />
         </div>
       ) : null}
     </NavigationLoadingContext.Provider>

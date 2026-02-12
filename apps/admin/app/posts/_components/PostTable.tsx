@@ -20,7 +20,7 @@ const PostTable = ({ data }: PostTableProps) => {
       await fetch('/api/search-console/inspect', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: `${process.env.FRONT_URL}/posts/${id}` }),
+        body: JSON.stringify({ url: `${process.env.NEXT_PUBLIC_FRONT_URL ?? 'https://juniverse-dev.com'}/posts/${id}` }),
       });
     } finally {
       setLoading(false);
@@ -35,7 +35,7 @@ const PostTable = ({ data }: PostTableProps) => {
           className="rounded-2xl border border-white/10 bg-[linear-gradient(160deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] backdrop-blur-2xl shadow-[0_16px_50px_rgba(0,0,0,0.35)] p-4 text-white hover:shadow-[0_22px_60px_rgba(0,0,0,0.45)] transition-shadow"
           onClick={() => router.push(`/posts/${post.id}`)}
         >
-          <div className="flex items-start justify-between gap-4">
+          <div className="flex flex-col lg:flex-row items-start justify-between gap-4">
             <div className="flex-1">
               <div className="text-sm text-cyan-200/80">#{post.id}</div>
               <div className="text-lg font-semibold tracking-tight">{post.title}</div>
