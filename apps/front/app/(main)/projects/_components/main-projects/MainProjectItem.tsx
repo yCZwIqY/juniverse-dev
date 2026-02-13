@@ -1,7 +1,10 @@
+'use client';
 import { ProjectData } from 'apis';
 import Image from 'next/image';
 import Tag from '@/app/_components/tag/Tag';
+import { useRouter } from 'next/navigation';
 import { ReactNode } from 'react';
+import Link from 'next/link';
 
 interface MainProjectItemProps {
   project: ProjectData;
@@ -41,15 +44,22 @@ const LinkButton = ({ href, label, variant, icon }: LinkButtonProps) => {
 };
 
 const MainProjectItem = ({ project }: MainProjectItemProps) => {
+  const router = useRouter();
   const thumbnail = project.imageUrls[0];
+  const detailHref = `/projects/${project.id}`;
 
   return (
     <div
+      onClick={(e) => {
+        e.stopPropagation();
+        router.push(detailHref);
+      }}
       className={
-        'w-full bg-white border border-border rounded-lg p-4 lg:p-6 grid grid-cols-1 lg:grid-cols-12 gap-5 transition-all hover:!border-accent'
+        'w-full bg-background border border-border rounded-lg p-4 lg:p-6 grid grid-cols-1 lg:grid-cols-12 gap-5 transition-all hover:!border-accent'
       }
     >
-      <div className={'lg:col-span-6 w-full overflow-hidden rounded-md'}>
+      <Link href={detailHref}
+            className={'lg:col-span-6 w-full overflow-hidden rounded-md block'}>
         {thumbnail ? (
           <Image
             src={thumbnail}
@@ -67,11 +77,14 @@ const MainProjectItem = ({ project }: MainProjectItemProps) => {
             NO IMAGE
           </div>
         )}
-      </div>
+      </Link>
 
       <div className={'lg:col-span-4 flex flex-col justify-between gap-3'}>
         <div className={'flex flex-col gap-2'}>
-          <h4 className={'text-xl font-bold text-foreground'}>{project.title}</h4>
+          <Link href={detailHref}
+                className={'text-xl font-bold text-foreground hover:underline underline-offset-4 w-fit'}>
+            {project.title}
+          </Link>
           <p className={'text-sm text-gray-500 whitespace-pre-line break-keep'}>{project.description}</p>
         </div>
 

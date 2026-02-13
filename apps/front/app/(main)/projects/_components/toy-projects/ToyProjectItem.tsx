@@ -1,6 +1,8 @@
+'use client';
 import { ProjectData } from 'apis';
 import Tag from '@/app/_components/tag/Tag';
 import { ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface ToyProjectItemProps {
   project: ProjectData;
@@ -32,10 +34,19 @@ const TinyIconLink = ({ href, label, children }: TinyIconLinkProps) => {
 };
 
 const ToyProjectItem = ({ project }: ToyProjectItemProps) => {
+  const detailHref = `/projects/${project.id}`;
+  const router = useRouter();
+
   return (
-    <div className={'glass-card p-4 lg:p-5 flex flex-col justify-between gap-3 transition-all hover:!border-accent cursor-pointer'}>
+    <div onClick={e => {
+      e.stopPropagation();
+      router.push(detailHref);
+    }}
+         className={'glass-card p-4 lg:p-5 flex flex-col justify-between gap-3 transition-all hover:!border-accent'}>
       <div className={'flex flex-col items-center lg:items-start gap-1'}>
-        <div className={'text-lg font-bold text-none text-foreground'}>{project.title}</div>
+        <h3 className={'text-lg font-bold text-none text-foreground hover:underline underline-offset-4'}>
+          {project.title}
+        </h3>
         <div className={'text-gray-500 text-sm text-center lg:text-left break-keep'}>{project.description}</div>
       </div>
 

@@ -1,11 +1,6 @@
 import { format } from 'date-fns';
 import Link from 'next/link';
-import {
-  getDashboardPopularPosts,
-  getDashboardRecentComments,
-  getDashboardSummary,
-  getDashboardTraffic,
-} from 'apis';
+import { getDashboardPopularPosts, getDashboardRecentComments, getDashboardSummary, getDashboardTraffic } from 'apis';
 import DashboardSectionCard from '@/app/_components/dashboard/DashboardSectionCard';
 import DashboardStatCard from '@/app/_components/dashboard/DashboardStatCard';
 import TrafficChart from '@/app/_components/dashboard/TrafficChart';
@@ -100,7 +95,7 @@ const Page = async () => {
                   <div className="text-sm text-gray-400">#{index + 1}</div>
                   <div className="text-sm font-medium">{post.title}</div>
                 </div>
-                <div className="text-sm text-emerald-200">{post.views.toLocaleString()}회</div>
+                <div className='text-sm text-emerald-200 break-keep whitespace-nowrap p-2'>{post.views.toLocaleString()}회</div>
               </div>
             ))
           ) : (
