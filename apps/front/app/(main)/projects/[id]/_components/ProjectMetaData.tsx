@@ -16,10 +16,7 @@ const LinkText = ({ href, children }: { href?: string; children: ReactNode }) =>
   }
 
   return (
-    <a href={href}
-       target={'_blank'}
-       rel={'noreferrer'}
-       className={'text-accent hover:underline break-all'}>
+    <a href={href} target={'_blank'} rel={'noreferrer'} className={'text-accent hover:underline break-all'}>
       {children}
     </a>
   );
@@ -45,20 +42,13 @@ const formatPeriod = (startDate?: string, endDate?: string) => {
 };
 
 const ProjectMetaData = ({ project }: ProjectMetaDataProps) => {
-  const sourceCodeEntries = Object.entries(project.sourceCode ?? {}).filter(([, url]) => Boolean(url));
-
   return (
     <div className={'grid grid-cols-1 gap-3 rounded-lg border border-border bg-card p-4 lg:p-5'}>
-      <MetaRow label={'포지션'}
-               value={project.position} />
-      <MetaRow label={'기여도'}
-               value={project.contribution} />
-      <MetaRow label={'기간'}
-               value={formatPeriod(project.startDate, project.endDate)} />
-      <MetaRow label={'데모'}
-               value={<LinkText href={project.demoUrl}>{project.demoUrl || '링크 이동'}</LinkText>} />
-      <MetaRow label={'GitHub'}
-               value={<LinkText href={project.gitHubUrl}>{project.gitHubUrl || '링크 이동'}</LinkText>} />
+      <MetaRow label={'포지션'} value={project.position} />
+      <MetaRow label={'기여도'} value={project.contribution} />
+      <MetaRow label={'기간'} value={formatPeriod(project.startDate, project.endDate)} />
+      <MetaRow label={'데모'} value={<LinkText href={project.demoUrl}>{project.demoUrl || '링크 이동'}</LinkText>} />
+      <MetaRow label={'GitHub'} value={<LinkText href={project.gitHubUrl}>{project.gitHubUrl || '링크 이동'}</LinkText>} />
     </div>
   );
 };
