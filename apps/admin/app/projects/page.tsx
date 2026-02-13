@@ -4,6 +4,8 @@ import Button from '@/app/_components/common/Button';
 import Link from 'next/link';
 import { deleteProject, getProjects } from 'apis';
 
+export const dynamic = 'force-dynamic';
+
 const ProjectPage = async () => {
   const response = await getProjects();
   const items = response?.items ?? [];
@@ -17,10 +19,7 @@ const ProjectPage = async () => {
           <Link href={'/projects/0'}>작성하기</Link>
         </Button>
       </div>
-      <ProjectTable
-        data={items}
-        onDelete={deleteProject}
-      />
+      <ProjectTable data={items} onDelete={deleteProject} />
     </div>
   );
 };
