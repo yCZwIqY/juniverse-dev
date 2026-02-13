@@ -58,15 +58,14 @@ const MainProjectItem = ({ project }: MainProjectItemProps) => {
         'w-full bg-background border border-border rounded-lg p-4 lg:p-6 grid grid-cols-1 lg:grid-cols-12 gap-5 transition-all hover:!border-accent'
       }
     >
-      <Link href={detailHref}
-            className={'lg:col-span-6 w-full overflow-hidden rounded-md block'}>
+      <Link href={detailHref} className={'lg:col-span-6 w-full overflow-hidden rounded-md block'}>
         {thumbnail ? (
           <Image
             src={thumbnail}
             alt={`${project.title} 썸네일`}
             width={1400}
             height={900}
-            className={'h-full min-h-[260px] w-full object-cover lg:min-h-[320px]'}
+            className={'h-full aspect-[16/9] min-h-[260px] w-full object-cover lg:min-h-[320px]'}
           />
         ) : (
           <div
@@ -81,8 +80,7 @@ const MainProjectItem = ({ project }: MainProjectItemProps) => {
 
       <div className={'lg:col-span-4 flex flex-col justify-between gap-3'}>
         <div className={'flex flex-col gap-2'}>
-          <Link href={detailHref}
-                className={'text-xl font-bold text-foreground hover:underline underline-offset-4 w-fit'}>
+          <Link href={detailHref} className={'text-xl font-bold text-foreground hover:underline underline-offset-4 w-fit'}>
             {project.title}
           </Link>
           <p className={'text-sm text-gray-500 whitespace-pre-line break-keep'}>{project.description}</p>

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -9,6 +9,7 @@ const toKey = (date: Date) => date.toISOString().slice(0, 10);
 
 @Injectable()
 export class TrafficSyncService {
+  private readonly logger = new Logger(TrafficSyncService.name);
   constructor(
     private readonly redisService: RedisService,
     @InjectRepository(TrafficStat)
@@ -30,7 +31,16 @@ export class TrafficSyncService {
       ]);
       const pageViews = pvRaw ? Number(pvRaw) : 0;
       const uniqueVisitors = uvRaw ? Number(uvRaw) : 0;
-      await this.trafficRepo.save({ date: key, pageViews, uniqueVisitors });
+      try {
+        await this.trafficRepo.upsert(
+          { date: key, pageViews, uniqueVisitors },
+          ['date'],
+        );
+      } catch (error) {
+        this.logger.warn(
+          `Traffic sync failed for ${key}: ${(error as Error)?.message ?? 'unknown error'}`,
+        );
+      }
     }
   }
 }

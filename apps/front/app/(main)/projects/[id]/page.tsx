@@ -6,6 +6,8 @@ import ProjectScreenshots from '@/app/(main)/projects/[id]/_components/ProjectSc
 import ProjectContent from '@/app/(main)/projects/[id]/_components/ProjectContent';
 import { Metadata } from 'next';
 
+export const dynamic = 'force-dynamic';
+
 interface ProjectPageProps {
   params: Promise<{ id: string }>;
 }
@@ -33,8 +35,7 @@ const ProjectPage = async ({ params }: ProjectPageProps) => {
       <div className={'glass-card p-6 lg:p-8 mt-4 flex flex-col gap-8'}>
         <ProjectTitle project={project} />
         <ProjectMetaData project={project} />
-        <ProjectScreenshots imageUrls={project.imageUrls}
-                            title={project.title} />
+        <ProjectScreenshots imageUrls={project.imageUrls} title={project.title} />
         <ProjectContent content={project.content} />
       </div>
     </div>

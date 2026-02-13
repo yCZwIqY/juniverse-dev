@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect } from 'react';
+import { trackVisit } from 'apis';
 
 const TrafficTracker = () => {
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/traffic/visit`, { method: 'POST' }).catch(() => {
-    });
+    trackVisit();
   }, []);
 
   return null;
