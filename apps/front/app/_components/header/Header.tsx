@@ -77,7 +77,7 @@ const Header = () => {
           <Link href={'/posts'} prefetch={false} onClick={onClickTo('/posts')} className={'font-semibold hover:underline'}>
             Posts
           </Link>
-          <Link href={'/projects'} prefetch={false} onClick={onClickTo('/posts')} className={'font-semibold hover:underline'}>
+          <Link href={'/projects'} prefetch={false} onClick={onClickTo('/projects')} className={'font-semibold hover:underline'}>
             Projects
           </Link>
         </div>
