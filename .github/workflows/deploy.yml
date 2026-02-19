@@ -1,0 +1,168 @@
+name: Deploy to Lightsail
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    timeout-minutes: 90
+    environment: prod
+    runs-on: ubuntu-latest
+
+    env:
+      DOCKER_USER: ${{ secrets.DOCKER_USER }}
+      DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
+      LIGHTSAIL_HOST: ${{ secrets.LIGHTSAIL_HOST }}
+      LIGHTSAIL_USER: ${{ secrets.LIGHTSAIL_USER }}
+      SSH_KEY: ${{ secrets.SSH_KEY }}
+      NEXT_API_URL: ${{ secrets.NEXT_API_URL }}
+      NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+      FRONT_URL: ${{ secrets.FRONT_URL }}
+      NEXT_PUBLIC_FRONT_URL: ${{ secrets.NEXT_PUBLIC_FRONT_URL }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Detect changed paths
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            front:
+              - 'apps/front/**'
+              - 'docker/front.Dockerfile'
+              - '.github/workflows/**'
+              - 'libs/apis/**'
+              - 'libs/components/**'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+              - 'tsconfig.json'
+            admin:
+              - 'apps/admin/**'
+              - 'docker/admin.Dockerfile'
+              - '.github/workflows/**'
+              - 'libs/apis/**'
+              - 'libs/components/**'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+              - 'tsconfig.json'
+            back:
+              - 'apps/back/**'
+              - 'docker/back.Dockerfile'
+              - '.github/workflows/**'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+              - 'tsconfig.json'
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Create env files for Next build
+        if: steps.changes.outputs.front == 'true' || steps.changes.outputs.admin == 'true'
+        run: |
+          {
+            printf 'NEXT_API_URL=%s\n' "$NEXT_API_URL"
+            printf 'NEXT_PUBLIC_API_URL=%s\n' "$NEXT_PUBLIC_API_URL"
+            printf 'FRONT_URL=%s\n' "$FRONT_URL"
+            printf 'NEXT_PUBLIC_FRONT_URL=%s\n' "$NEXT_PUBLIC_FRONT_URL"
+          } > apps/front/.env.production
+
+          {
+            printf 'NEXT_API_URL=%s\n' "$NEXT_API_URL"
+            printf 'NEXT_PUBLIC_API_URL=%s\n' "$NEXT_PUBLIC_API_URL"
+            printf 'FRONT_URL=%s\n' "$FRONT_URL"
+            printf 'NEXT_PUBLIC_FRONT_URL=%s\n' "$NEXT_PUBLIC_FRONT_URL"
+          } > apps/admin/.env.production
+
+      - name: Log in to DockerHub
+        if: steps.changes.outputs.front == 'true' || steps.changes.outputs.admin == 'true' || steps.changes.outputs.back == 'true'
+        run: echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+
+      - name: Build and push Admin image
+        if: steps.changes.outputs.admin == 'true'
+        run: |
+          docker build --progress=plain -t $DOCKER_USER/portfolio-admin:latest -f docker/admin.Dockerfile .
+          docker push $DOCKER_USER/portfolio-admin:latest
+
+      - name: Build and push Front image
+        if: steps.changes.outputs.front == 'true'
+        run: |
+          docker build --progress=plain -t $DOCKER_USER/portfolio-front:latest -f docker/front.Dockerfile .
+          docker push $DOCKER_USER/portfolio-front:latest
+
+      - name: Build and push API image
+        if: steps.changes.outputs.back == 'true'
+        run: |
+          docker build --progress=plain -t $DOCKER_USER/portfolio-back:latest -f docker/back.Dockerfile .
+          docker push $DOCKER_USER/portfolio-back:latest
+
+      - name: SSH into Lightsail and update changed containers
+        if: steps.changes.outputs.front == 'true' || steps.changes.outputs.admin == 'true' || steps.changes.outputs.back == 'true'
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          FRONT_CHANGED: ${{ steps.changes.outputs.front }}
+          ADMIN_CHANGED: ${{ steps.changes.outputs.admin }}
+          BACK_CHANGED: ${{ steps.changes.outputs.back }}
+        with:
+          host: ${{ env.LIGHTSAIL_HOST }}
+          username: ${{ env.LIGHTSAIL_USER }}
+          key: ${{ env.SSH_KEY }}
+          envs: FRONT_CHANGED,ADMIN_CHANGED,BACK_CHANGED
+          command_timeout: 60m
+          script: |
+            set -e
+            cd ~/portfolio-deploy
+
+            pull_with_retry() {
+              service="$1"
+              max_retries=3
+              retry_delay=15
+              count=1
+
+              while [ "$count" -le "$max_retries" ]; do
+                echo "▶ Pull $service (try $count/$max_retries)"
+                if docker compose pull "$service"; then
+                  return 0
+                fi
+                if [ "$count" -lt "$max_retries" ]; then
+                  echo "Pull failed for $service. retry in ${retry_delay}s..."
+                  sleep "$retry_delay"
+                fi
+                count=$((count + 1))
+              done
+
+              echo "Pull failed for $service after $max_retries attempts."
+              return 1
+            }
+            
+            if [ "$FRONT_CHANGED" = "true" ]; then
+              pull_with_retry front
+            fi
+            if [ "$ADMIN_CHANGED" = "true" ]; then
+              pull_with_retry admin
+            fi
+            if [ "$BACK_CHANGED" = "true" ]; then
+              pull_with_retry back
+            fi
+            
+            echo "▶ Up"
+            if [ "$FRONT_CHANGED" = "true" ]; then
+              docker compose up -d front
+            fi
+            if [ "$ADMIN_CHANGED" = "true" ]; then
+              docker compose up -d admin
+            fi
+            if [ "$BACK_CHANGED" = "true" ]; then
+              docker compose up -d back
+            fi
+            docker compose restart nginx
+                     
+            echo "▶ Cleanup"
+            docker image prune -f
+            docker builder prune -f --filter "until=168h"
