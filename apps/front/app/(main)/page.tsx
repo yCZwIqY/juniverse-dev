@@ -4,7 +4,7 @@ import ContactSection from '@/app/(main)/_components/ContactSection';
 import LatestPosts from '@/app/(main)/_components/LatestPosts';
 import RecentTags from '@/app/(main)/_components/RecentTags';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 const MainPage = async () => {
   return (

@@ -6,6 +6,8 @@ import EditorViewer from '@/app/(main)/_components/EditorViewer';
 import PostComments from '@/app/(main)/posts/[id]/_components/PostComments';
 import QuickMenus from '@/app/(main)/posts/[id]/_components/QuickMenus';
 
+export const revalidate = 60;
+
 interface PostDetailPageProps {
   params: Promise<{ id: number }>;
 }
