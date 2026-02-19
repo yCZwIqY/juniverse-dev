@@ -140,6 +140,18 @@ jobs:
               echo "Pull failed for $service after $max_retries attempts."
               return 1
             }
+
+            remove_name_conflicts() {
+              service="$1"
+              conflict_ids="$(
+                docker ps -a --format '{{.ID}} {{.Names}}' \
+                  | awk -v svc="$service" '$2 == "portfolio-"svc || $2 ~ ("_portfolio-"svc"$") { print $1 }'
+              )"
+              if [ -n "$conflict_ids" ]; then
+                echo "▶ Remove name conflicts for $service"
+                echo "$conflict_ids" | xargs -r docker rm -f
+              fi
+            }
             
             if [ "$FRONT_CHANGED" = "true" ]; then
               pull_with_retry front
@@ -153,12 +165,15 @@ jobs:
             
             echo "▶ Up"
             if [ "$FRONT_CHANGED" = "true" ]; then
+              remove_name_conflicts front
               docker compose up -d front
             fi
             if [ "$ADMIN_CHANGED" = "true" ]; then
+              remove_name_conflicts admin
               docker compose up -d admin
             fi
             if [ "$BACK_CHANGED" = "true" ]; then
+              remove_name_conflicts back
               docker compose up -d back
             fi
             docker compose restart nginx
