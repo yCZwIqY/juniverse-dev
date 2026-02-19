@@ -6,7 +6,7 @@ import ProjectScreenshots from '@/app/(main)/projects/[id]/_components/ProjectSc
 import ProjectContent from '@/app/(main)/projects/[id]/_components/ProjectContent';
 import { Metadata } from 'next';
 
-export const revalidate = 60 * 60;
+export const revalidate = 3600;
 
 interface ProjectPageProps {
   params: Promise<{ id: string }>;
