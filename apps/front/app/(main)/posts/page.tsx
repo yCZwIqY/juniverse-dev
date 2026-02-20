@@ -15,7 +15,7 @@ interface ListPageProps {
 
 const PostListPage = async ({ searchParams }: ListPageProps) => {
   const { search, category, page } = await searchParams;
-  const posts = await getPosts(page ?? 1, 5, category ?? 0, search ?? '');
+  const posts = await getPosts(page ?? 1, 10, category ?? 0, search ?? '');
 
 
   return (

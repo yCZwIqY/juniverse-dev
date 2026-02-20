@@ -12,18 +12,22 @@ const Pagination = ({ page, total, limit }: PaginationProps) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const startIndex = page < 3 ? 1 : page - 2;
-  const maxPage = Math.min(page, limit);
+  const startIndex = Number(page) <= 3 ? 1 : Number(page) - 2;
+  const maxPage = Math.ceil(total / limit);
+  const renderMaxPage = Math.min(startIndex + 3, maxPage);
 
-  const onPageChange = (page: number) => {
+  const onPageChange = (newPage: number) => {
+    if (Number(page) === Number(newPage)) return;
     const params = new URLSearchParams(searchParams.toString());
-    params.set('page', page.toString());
+    params.set('page', newPage.toString());
     router.push(pathname + '?' + params);
   };
 
+
   return (
     <div className={'flex items-center gap-2'}>
-      <button className={'rotate-180'}
+      <button className={`rotate-180 ${1 !== Number(page) ? 'rounded-md hover:bg-foreground/30 active:bg-foreground/50' : 'opacity-50'}`}
+              disabled={1 === Number(page)}
               type={'button'}
               onClick={() => onPageChange(1)}>
         <svg width='24px'
@@ -41,29 +45,36 @@ const Pagination = ({ page, total, limit }: PaginationProps) => {
               fillRule='evenodd'
               clipRule='evenodd'
               d='M12.293 7.293a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L15.586 12l-3.293-3.293a1 1 0 0 1 0-1.414Z'
-              fill='var(--color-gray-600)'
+              fill='var(--color-foreground)'
             ></path>
             <path
               fillRule='evenodd'
               clipRule='evenodd'
               d='M6.293 7.293a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L9.586 12 6.293 8.707a1 1 0 0 1 0-1.414Z'
-              fill='var(--color-gray-600)'
+              fill='var(--color-foreground)'
             ></path>
           </g>
         </svg>
       </button>
-      {Array.from({ length: maxPage }).map((_, i) => (
+      {Array.from({ length: renderMaxPage }).map((_, i) => (
         <button
           key={i}
           type={'button'}
-          onClick={() => onPageChange(startIndex + i)}
-          className={`border border-gray-700 size-7 rounded-md ${Number(startIndex + i) === Number(page) ? 'bg-primary-500 border-none text-white opacity-50 hover:primary-300 active:primary-700' : ''}`}
+          onClick={() => {
+            if (Number(startIndex + i) === Number(page)) {
+              return;
+            }
+            onPageChange(startIndex + i);
+          }}
+          className={`border border-gray-700 size-7 rounded-md ${Number(startIndex + i) === Number(page) ? 'bg-accent' : 'border border-foreground hover:bg-foreground/30 active:bg-foreground/50'}`}
         >
           {startIndex + i}
         </button>
       ))}
       <button type={'button'}
-              onClick={() => onPageChange(Math.ceil(total / limit))}>
+              disabled={Number(page) === maxPage}
+              className={`${Number(page) !== maxPage ? 'rounded-md hover:bg-foreground/30 active:bg-foreground/50' : 'opacity-50'}`}
+              onClick={() => onPageChange(maxPage)}>
         <svg width='24px'
              height='24px'
              viewBox='0 0 24 24'
@@ -79,13 +90,13 @@ const Pagination = ({ page, total, limit }: PaginationProps) => {
               fillRule='evenodd'
               clipRule='evenodd'
               d='M12.293 7.293a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L15.586 12l-3.293-3.293a1 1 0 0 1 0-1.414Z'
-              fill='var(--color-gray-600)'
+              fill='var(--color-foreground)'
             ></path>
             <path
               fillRule='evenodd'
               clipRule='evenodd'
               d='M6.293 7.293a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L9.586 12 6.293 8.707a1 1 0 0 1 0-1.414Z'
-              fill='var(--color-gray-600)'
+              fill='var(--color-foreground)'
             ></path>
           </g>
         </svg>

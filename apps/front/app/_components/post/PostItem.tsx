@@ -13,7 +13,7 @@ const PostItem = ({ id, title, subtitle, menu, createdAt, tags, viewCount, comme
   const { startNavigation } = useNavigationLoading();
   return (
     <div
-      className={'border border-border rounded-lg p-4 flex flex-col gap-2 hover:shadow-sm shadow-accent'}
+      className={'border border-border rounded-lg p-4 flex flex-col gap-2 hover:border-accent transition-all'}
       onClick={() => {
         startNavigation();
         router.push(`/posts/${id}`);
@@ -33,7 +33,12 @@ const PostItem = ({ id, title, subtitle, menu, createdAt, tags, viewCount, comme
       </div>
       <div className={'flex flex-col lg:flex-row gap-2 justify-between items-center '}>
         <div className={'flex flex-col lg:flex-row gap-2 items-center text-gray-600'}>
-          <span>{new Date(createdAt).toLocaleDateString('ko-KR', { hour: '2-digit', minute: '2-digit' })}</span>
+          <span>{new Date(createdAt).toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            formatMatcher: 'basic',
+          }).replaceAll('. ', '-').slice(0, 10)}</span>
           <span className={'hidden lg:block'}>•</span>
           <div className={'flex gap-2 flex-wrap'}>
             {tags.slice(0, 5).map((tag) => (
