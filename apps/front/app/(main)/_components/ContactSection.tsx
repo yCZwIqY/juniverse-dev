@@ -6,7 +6,7 @@ const ContactSection = () => {
         프로젝트/협업 문의는 아래로 연락 주세요.
       </div>
       <div className={'flex flex-col md:flex-row gap-3'}>
-        <a className={'contact-pill'} href={'mailto:hello@juniverse.dev'}>
+        <a className={'contact-pill'} href={'mailto:ljy10499@gmail.com'}>
           ljy10499@gmail.com
         </a>
         <a className={'contact-pill'} href={'https://github.com/yCZwIqY'} target={'_blank'} rel={'noreferrer'}>

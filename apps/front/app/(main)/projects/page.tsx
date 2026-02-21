@@ -3,7 +3,7 @@ import MainProjects from '@/app/(main)/projects/_components/main-projects/MainPr
 import { getProjects } from 'apis';
 import ToyProjects from '@/app/(main)/projects/_components/toy-projects/ToyProjects';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
 const ProjectPage = async () => {
   const projects = await getProjects();

@@ -33,7 +33,8 @@ const SimplePostItem = ({ id, title, menu, createdAt }: PostData) => {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
-      }).replaceAll('. ', '-')}</span>
+        formatMatcher: 'basic'
+      }).replaceAll('. ', '-').slice(0, 10)}</span>
     </div>
   );
 };
