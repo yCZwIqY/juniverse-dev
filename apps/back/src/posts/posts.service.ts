@@ -9,6 +9,7 @@ import { FindPostsDto } from './dto/find-posts.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { CreateCommentDto } from '../common/dto/create-comment.dto';
 import { RedisService } from '../common/redis/redis.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class PostsService {
@@ -19,6 +20,7 @@ export class PostsService {
     private readonly commentRepo: Repository<Comment>,
     @InjectRepository(Menu) private readonly menuRepo: Repository<Menu>,
     private readonly redisService: RedisService,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   private async ensureMenu(menuId: number, children: boolean = false) {
@@ -204,7 +206,13 @@ export class PostsService {
       authorId: dto.authorId,
     });
 
-    return await this.commentRepo.save(comment);
+    const result = await this.commentRepo.save(comment);
+    this.eventEmitter.emit('comment.alarm', {
+      postTitle: post.title,
+      comment: result.content,
+      createdAt: result.createdAt,
+    });
+    return result;
   }
 
   async deleteComment(postId: number, commentId: number) {

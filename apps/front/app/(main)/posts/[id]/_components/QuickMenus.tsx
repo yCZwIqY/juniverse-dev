@@ -11,11 +11,11 @@ interface HeadingData {
 }
 
 const HEADING_STYLE_MAP: Record<HeadingData['heading'], string> = {
-  h1: 'text-[20px]',
-  h2: 'text-[18px] pl-1',
-  h3: 'text-[16px] pl-2',
-  h4: 'text-[14px] pl-3',
-  h5: 'text-[12px] pl-4',
+  h1: 'text-[15px]',
+  h2: 'text-[14px] pl-1',
+  h3: 'text-[13px] pl-2',
+  h4: 'text-[12px] pl-3',
+  h5: 'text-[11px] pl-4',
   h6: 'text-[10px] pl-5',
 };
 

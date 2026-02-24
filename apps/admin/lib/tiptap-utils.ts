@@ -4,7 +4,7 @@ import { AllSelection, NodeSelection, Selection, TextSelection } from '@tiptap/p
 import { cellAround, CellSelection } from '@tiptap/pm/tables';
 import { type Editor, findParentNodeClosestToPos, type NodeWithPos } from '@tiptap/react';
 import api from '@/utils/api';
-import { BaseResponse } from '@/app/_models/common';
+import { BaseResponse } from '@/app/(protected)/_models/common';
 
 export const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 

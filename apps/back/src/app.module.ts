@@ -9,6 +9,8 @@ import { FilesModule } from './files/files.module';
 import { ProjectsModule } from './projects/projects.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { TrafficModule } from './traffic/traffic.module';
+import { NotificationsModule } from './notifications/notifications.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
@@ -39,6 +41,8 @@ import { TrafficModule } from './traffic/traffic.module';
     ProjectsModule,
     DashboardModule,
     TrafficModule,
+    NotificationsModule,
+    EventEmitterModule.forRoot()
   ],
 })
 export class AppModule {}
