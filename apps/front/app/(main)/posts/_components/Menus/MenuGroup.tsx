@@ -28,7 +28,10 @@ const MenuGroup = ({ menu }: MenuItemProps) => {
           {menu.name}
         </button>
         {menu.children.length > 0 && (
-          <button className={`${open ? 'rotate-0' : 'rotate-180'} transition-all`} type={'button'} onClick={() => setOpen(!open)}>
+          <button title={open ? '닫기' : '열기'}
+                  className={`${open ? 'rotate-0' : 'rotate-180'} transition-all`}
+                  type={'button'}
+                  onClick={() => setOpen(!open)}>
             <svg width='12px'
                  height='12px'
                  viewBox='0 0 1024 1024'

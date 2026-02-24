@@ -65,7 +65,8 @@ const PostItem = ({ id, title, subtitle, menu, createdAt, tags, viewCount, comme
           </div>
         </div>
       </div>
-      {subtitle && <p className={'text-gray-600 overflow-hidden text-ellipsis line-clamp-1'}>{subtitle}</p>}
+      {subtitle &&
+        <p className={'text-gray-600 overflow-hidden text-ellipsis line-clamp-1 text-center lg:text-left p-2'}>{subtitle}</p>}
     </div>
   );
 };

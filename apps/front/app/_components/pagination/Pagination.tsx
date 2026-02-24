@@ -25,6 +25,7 @@ const Pagination = ({ page, total, limit }: PaginationProps) => {
       <button className={`rotate-180 ${1 !== Number(page) ? 'rounded-md hover:bg-foreground/30 active:bg-foreground/50' : 'opacity-50'}`}
               disabled={1 === Number(page)}
               type={'button'}
+              title={'첫 페이지로 이동'}
               onClick={() => onPageChange(1)}>
         <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
@@ -49,6 +50,7 @@ const Pagination = ({ page, total, limit }: PaginationProps) => {
         <button
           key={i}
           type={'button'}
+          title={`${startIndex + i}번째 페이지로 이동`}
           onClick={() => {
             if (Number(startIndex + i) === Number(page)) {
               return;
@@ -61,6 +63,7 @@ const Pagination = ({ page, total, limit }: PaginationProps) => {
         </button>
       ))}
       <button type={'button'}
+              title={'마지막 페이지로 이동'}
               disabled={Number(page) === maxPage}
               className={`${Number(page) !== maxPage ? 'rounded-md hover:bg-foreground/30 active:bg-foreground/50' : 'opacity-50'}`}
               onClick={() => onPageChange(maxPage)}>

@@ -85,7 +85,7 @@ const Header = () => {
       <div className={'flex gap-4 items-center'}>
         <form onSubmit={onSearch}>
           <div className={`border rounded-full border-border py-2 px-3 ${showInput ? 'flex' : 'lg:flex'} gap-2 items-center`}>
-            <button type={'button'} onClick={onClickSearch}>
+            <button type={'button'} onClick={onClickSearch} title={'검색'}>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g opacity="0.55">
                   <path

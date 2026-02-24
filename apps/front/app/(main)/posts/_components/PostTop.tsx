@@ -7,8 +7,6 @@ interface ListTopProps {
 
 const PostTop = async ({ search, category }: ListTopProps) => {
   const menu = await getMenu(Number(category ?? 0));
-
-  console.log(category, menu);
   return (
     <section className={'w-full glass-card p-5 flex flex-col gap-4'}>
       <div className={'text-2xl font-bold'}>{category ? menu?.data.name : '전체글 보기'}</div>

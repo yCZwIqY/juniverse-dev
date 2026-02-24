@@ -27,6 +27,7 @@ const ThemeSwitch = () => {
 
   return (
     <button type={'button'}
+            title={'테마 변경'}
             onClick={toggleDarkTheme}>
       {isDarkTheme ? <svg width='20px'
                           height='20px'
