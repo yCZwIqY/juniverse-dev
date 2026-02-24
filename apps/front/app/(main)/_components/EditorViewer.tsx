@@ -27,7 +27,7 @@ import 'prismjs/components/prism-gradle';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { useCallback, useEffect } from 'react';
-
+import { Image } from '@tiptap/extension-image';
 
 interface EditorViewerProps {
   content: string;
@@ -35,7 +35,7 @@ interface EditorViewerProps {
 
 const EditorViewer = ({ content }: EditorViewerProps) => {
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [StarterKit, Image],
     content,
     editable: false,
     immediatelyRender: false,
