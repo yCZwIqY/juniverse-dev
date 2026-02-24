@@ -109,8 +109,8 @@ const QuickMenus = ({ content }: QuickMenusProps) => {
   }, [heading, headingSelector]);
 
   return (
-    <div className={'glass-card rounded-lg p-10 hidden lg:block !fixed top-32 right-2 max-w-[400px] w-[calc((100dvw_-_1200px)_/_2)] overflow-auto break-words max-h-[calc(100vh_-_10rem)]'}>
-      <ul className={'flex flex-col gap-2'}>
+    <div className={'glass-card rounded-lg p-8 hidden xl:block !fixed top-32 right-2 max-w-[400px] w-[calc((100dvw_-_1200px)_/_2)] overflow-auto break-words max-h-[calc(100vh_-_10rem)]'}>
+      <ul className={'flex flex-col gap-2 overflow-y-auto'}>
         {heading.map((el, index) => (
           <li className={`font-bold ${HEADING_STYLE_MAP[el.heading]} ${focusHeading !== index ? 'text-gray-500' : ''} cursor-pointer`}
               onClick={() => onClick(el)}
