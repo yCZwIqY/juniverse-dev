@@ -8,14 +8,7 @@ import TrafficChart from '@/app/(protected)/_components/dashboard/TrafficChart';
 export const dynamic = 'force-dynamic';
 
 const Page = async () => {
-  const [
-    summary,
-    trafficWeek,
-    trafficMonth,
-    trafficYear,
-    popularPosts,
-    recentComments,
-  ] = await Promise.all([
+  const [summary, trafficWeek, trafficMonth, trafficYear, popularPosts, recentComments] = await Promise.all([
     getDashboardSummary(),
     getDashboardTraffic('week'),
     getDashboardTraffic('month'),
@@ -49,14 +42,8 @@ const Page = async () => {
           value={`${totalVisitors.toLocaleString()}명`}
           description={`페이지뷰 ${totalPageViews.toLocaleString()}회`}
         />
-        <DashboardStatCard
-          label="총 포스트"
-          value={`${summary?.posts?.toLocaleString() ?? 0}개`}
-        />
-        <DashboardStatCard
-          label="총 댓글"
-          value={`${summary?.comments?.toLocaleString() ?? 0}개`}
-        />
+        <DashboardStatCard label="총 포스트" value={`${summary?.posts?.toLocaleString() ?? 0}개`} />
+        <DashboardStatCard label="총 댓글" value={`${summary?.comments?.toLocaleString() ?? 0}개`} />
       </section>
 
       <TrafficChart week={trafficWeek} month={trafficMonth} year={trafficYear} />
@@ -73,10 +60,7 @@ const Page = async () => {
                 <div className="mt-2 text-sm text-gray-200 line-clamp-2">{comment.content}</div>
                 <div className="mt-2 flex items-center justify-between gap-4">
                   <div className="text-xs text-gray-500 truncate">포스트: {comment.postTitle}</div>
-                  <Link
-                    href={`/apps/admin/app/(protected)/posts/${comment.postId}`}
-                    className="text-xs text-emerald-300 hover:text-emerald-200 shrink-0"
-                  >
+                  <Link href={`/posts/${comment.postId}`} className="text-xs text-emerald-300 hover:text-emerald-200 shrink-0">
                     포스트로 이동
                   </Link>
                 </div>
@@ -95,7 +79,7 @@ const Page = async () => {
                   <div className="text-sm text-gray-400">#{index + 1}</div>
                   <div className="text-sm font-medium">{post.title}</div>
                 </div>
-                <div className='text-sm text-emerald-200 break-keep whitespace-nowrap p-2'>{post.views.toLocaleString()}회</div>
+                <div className="text-sm text-emerald-200 break-keep whitespace-nowrap p-2">{post.views.toLocaleString()}회</div>
               </div>
             ))
           ) : (

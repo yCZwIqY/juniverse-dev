@@ -16,7 +16,7 @@ const ProjectPage = async () => {
       <div className={'flex justify-between items-center'}>
         <div className={'font-bold text-xl text-white'}>{total} 개의 프로젝트</div>
         <Button className={'py-2 px-4 rounded-lg'}>
-          <Link href={'/apps/admin/app/(protected)/projects/0'}>작성하기</Link>
+          <Link href={'/projects/0'}>작성하기</Link>
         </Button>
       </div>
       <ProjectTable data={items} onDelete={deleteProject} />
