@@ -1,12 +1,14 @@
 'use client';
-import { getRecentPosts, PostData } from 'apis';
+import { PostData } from 'apis';
 import Tag from '@/app/_components/tag/Tag';
 import { useUpdateSearchParams } from '@/app/_hooks/useUpdateSearchParams';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
+interface RecentTagsProps {
+  posts: PostData[];
+}
 
-const RecentTags = () => {
-  const [posts, setPosts] = useState<PostData[]>([]);
+const RecentTags = ({ posts }: RecentTagsProps) => {
   const updateSearchParams = useUpdateSearchParams('posts');
   const tags = useMemo(() => {
     const set = new Set<string>();
@@ -18,12 +20,6 @@ const RecentTags = () => {
     return [...set].slice(0, 20);
   }, [posts]);
 
-  useEffect(() => {
-    (async () => {
-      const posts = await getRecentPosts();
-      setPosts(posts ?? []);
-    })();
-  }, []);
   return (
     <section className={'glass-card w-full p-4 lg:p-8 flex flex-col gap-6 reveal'}>
       <div className={'flex justify-between'}>

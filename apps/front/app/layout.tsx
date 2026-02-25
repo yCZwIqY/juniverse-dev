@@ -5,6 +5,14 @@ import Footer from '@/app/_components/footer/Footer';
 import TrafficTracker from '@/app/_components/TrafficTracker';
 import { NavigationLoadingProvider } from '@/app/_components/navigation/NavigationLoadingProvider';
 import localFont from 'next/font/local';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Juniverse Dev',
+  icons: {
+    icon: '/images/logo.png',
+  },
+};
 
 export const suit = localFont({
   src: [
@@ -20,7 +28,7 @@ export const suit = localFont({
     },
   ],
   display: 'swap',
-  preload: true,
+  preload: false,
 });
 
 const MainLayout = ({
@@ -31,17 +39,8 @@ const MainLayout = ({
   return (
     <html lang='ko'
           className={`${suit.className}`}>
-    <head>
-      <link rel='icon'
-            href='/images/logo.png'
-            type='image/png'
-            sizes='32x32' />
-      <title>
-        Juniverse Dev
-      </title>
-    </head>
       <body
-        className={`font-Suit antialiased bg-background w-dvw min-h-dvh !h-fit lg:w-[1120px] m-auto relative overflow-x-hidden overflow-y-auto !p-5 flex flex-col`}
+        className={`font-Suit antialiased bg-background w-full min-h-svh lg:max-w-[1120px] mx-auto relative overflow-x-hidden !p-5 flex flex-col`}
       >
         <NavigationLoadingProvider>
           <TrafficTracker />

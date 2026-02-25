@@ -33,12 +33,17 @@ const PostItem = ({ id, title, subtitle, menu, createdAt, tags, viewCount, comme
       </div>
       <div className={'flex flex-col lg:flex-row gap-2 justify-between items-center '}>
         <div className={'flex flex-col lg:flex-row gap-2 items-center text-gray-600'}>
-          <span>{new Date(createdAt).toLocaleDateString('ko-KR', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            formatMatcher: 'basic',
-          }).replaceAll('. ', '-').slice(0, 10)}</span>
+          <span>
+            {new Date(createdAt)
+              .toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                formatMatcher: 'basic',
+              })
+              .replaceAll('. ', '-')
+              .slice(0, 10)}
+          </span>
           <span className={'hidden lg:block'}>•</span>
           <div className={'flex gap-2 flex-wrap'}>
             {tags.slice(0, 5).map((tag) => (
@@ -65,8 +70,7 @@ const PostItem = ({ id, title, subtitle, menu, createdAt, tags, viewCount, comme
           </div>
         </div>
       </div>
-      {subtitle &&
-        <p className={'text-gray-600 overflow-hidden text-ellipsis line-clamp-1 text-center lg:text-left p-2'}>{subtitle}</p>}
+      {subtitle && <p className={'text-gray-600 overflow-hidden text-ellipsis line-clamp-1 text-center lg:text-left px-2'}>{subtitle}</p>}
     </div>
   );
 };

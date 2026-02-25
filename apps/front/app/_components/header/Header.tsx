@@ -67,17 +67,29 @@ const Header = () => {
     return () => window.removeEventListener('keydown', handler);
   }, [inputRef]);
 
+  const navLinkClass = (targetPath: string) =>
+    [
+      'px-3 py-1.5 rounded-full text-sm font-semibold transition-all',
+      'border border-transparent hover:border-border hover:bg-secondary/70',
+      pathname === targetPath ? 'bg-foreground text-background shadow-sm' : 'text-foreground/80',
+    ].join(' ');
+
   return (
     <div className={'!sticky top-5 w-full mt-5 py-3 px-5 flex items-center justify-between glass-card z-10'}>
       <div className={'flex items-center gap-4'}>
         <Link href={'/'} prefetch={false} onClick={onClickTo('/')}>
           <Image src={'/images/logo.png'} className={'size-6 lg:size-8'} alt={'로고'} width={24} height={24} />
         </Link>
-        <div className={`flex gap-4 ${showInput ? 'hidden lg:block' : 'block'}`}>
-          <Link href={'/posts'} prefetch={false} onClick={onClickTo('/posts')} className={'font-semibold hover:underline'}>
+        <div
+          className={`items-center gap-2 rounded-full border border-border/80 bg-background/70 p-1 ${showInput ? 'hidden lg:flex' : 'flex'}`}
+        >
+          {/*<Link href={'/about-me'} prefetch={false} onClick={onClickTo('/about-me')} className={navLinkClass('/about-me')}>*/}
+          {/*  About Me*/}
+          {/*</Link>*/}
+          <Link href={'/posts'} prefetch={false} onClick={onClickTo('/posts')} className={navLinkClass('/posts')}>
             Posts
           </Link>
-          <Link href={'/projects'} prefetch={false} onClick={onClickTo('/projects')} className={'font-semibold hover:underline'}>
+          <Link href={'/projects'} prefetch={false} onClick={onClickTo('/projects')} className={navLinkClass('/projects')}>
             Projects
           </Link>
         </div>
