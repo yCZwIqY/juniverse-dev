@@ -28,7 +28,8 @@ export const suit = localFont({
     },
   ],
   display: 'swap',
-  preload: false,
+  preload: true,
+  fallback: ['system-ui', 'Apple SD Gothic Neo', 'Noto Sans KR', 'sans-serif'],
 });
 
 const MainLayout = ({
@@ -37,10 +38,9 @@ const MainLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang='ko'
-          className={`${suit.className}`}>
+    <html lang='ko' className={suit.className}>
       <body
-        className={`font-Suit antialiased bg-background w-full min-h-svh lg:max-w-[1120px] mx-auto relative overflow-x-hidden !p-5 flex flex-col`}
+        className={`antialiased bg-background w-full min-h-svh lg:max-w-[1120px] mx-auto relative overflow-x-hidden !p-5 flex flex-col`}
       >
         <NavigationLoadingProvider>
           <TrafficTracker />
