@@ -121,15 +121,15 @@ const fetchRecentCommits = async (): Promise<RecentCommit[]> => {
   return commits.slice(0, RECENT_COMMIT_LIMIT);
 };
 
-const formatDate = (value: string) =>
-  new Date(value).toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
+// const formatDate = (value: string) =>
+//   new Date(value).toLocaleDateString('ko-KR', {
+//     year: 'numeric',
+//     month: 'short',
+//     day: 'numeric',
+//   });
 
 const GithubSection = async () => {
-  const [calendar, recentCommits] = await Promise.all([fetchContributionCalendar(), fetchRecentCommits()]);
+  const [calendar] = await Promise.all([fetchContributionCalendar(), fetchRecentCommits()]);
 
   return (
     <section className={'glass-card w-full p-4 lg:p-8 flex flex-col gap-6 reveal'}>
