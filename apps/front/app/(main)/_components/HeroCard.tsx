@@ -1,6 +1,6 @@
 const HeroCard = () => {
   return (
-    <section className={'w-full min-h-[70vh] md:min-h-[80vh] flex flex-col justify-center items-center gap-4 text-center reveal'}>
+    <section className={'w-full min-h-[70svh] md:min-h-[80svh] flex flex-col justify-center items-center gap-4 text-center reveal'}>
       <div className={'text-2xl text-center md:text-4xl font-bold leading-tight'}>
         5년차 웹 개발자
         <br /> 이지윤의 블로그입니다
