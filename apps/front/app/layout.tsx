@@ -9,6 +9,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Juniverse Dev',
+  description: '5년차 웹 개발자 이지윤의 기술 블로그입니다. 프로젝트 경험을 다룹니다.',
   icons: {
     icon: '/images/logo.png',
   },

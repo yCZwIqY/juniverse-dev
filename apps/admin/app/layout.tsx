@@ -7,8 +7,11 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Juniverse Dev 관리자 사이트',
-  description: '...',
+  title: 'Juniverse Dev: 관리자 사이트',
+  description: '관리자 외 접근 불가',
+  icons: {
+    icon: '/images/logo.png',
+  },
 };
 
 const Layout = ({

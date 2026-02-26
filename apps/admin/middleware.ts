@@ -19,6 +19,9 @@ export async function middleware(req: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
+  if (process.env.MODE === 'dev') {
+    return NextResponse.next();
+  }
 
   if (!token?.email || !process.env.ADMIN_EMAIL || token.email !== process.env.ADMIN_EMAIL) {
     if (pathname.startsWith('/api/')) {
