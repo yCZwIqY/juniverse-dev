@@ -68,6 +68,7 @@ export interface PostData {
   viewCount: number;
   createdAt: string;
   updatedAt: string;
+  status: 'PUBLISHED' | 'DRAFT'
 }
 
 export type PostsResponse = PageResponse<PostData>;
@@ -85,6 +86,7 @@ export type PostFormData = {
   content: string;
   menuId: number;
   tags: string[];
+  status: 'PUBLISHED' | 'DRAFT'
 };
 
 export type CreateCommentRequest = {

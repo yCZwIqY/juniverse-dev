@@ -10,6 +10,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Comment } from '../../comments/entities/comment.entity';
+import { PostStatus } from '../types/status.type';
 
 @Entity('posts')
 export class Post {
@@ -46,4 +47,7 @@ export class Post {
 
   @UpdateDateColumn()
   updatedAt!: Date;
+
+  @Column({ default: 'PUBLISH' })
+  status?: PostStatus = 'PUBLISH';
 }

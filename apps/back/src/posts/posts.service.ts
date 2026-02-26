@@ -65,9 +65,11 @@ export class PostsService {
     if (query.menuId && String(query.menuId) !== '0') {
       const menu = await this.ensureMenu(query.menuId, true);
       const menuIds = this.collectMenuIds(menu);
-
-      console.log('menuIds: ', menuIds);
       where.menuId = In(menuIds);
+    }
+
+    if (!query.showAll) {
+      where.status = 'PUBLISH';
     }
 
     if (query.q?.trim()) {
@@ -149,6 +151,9 @@ export class PostsService {
       order: {
         createdAt: 'DESC',
       },
+      where: {
+        status: 'PUBLISH',
+      },
       take: 6,
     });
   }
@@ -164,6 +169,7 @@ export class PostsService {
     if (dto.subtitle !== undefined) post.subtitle = dto.subtitle ?? null;
     if (dto.content !== undefined) post.content = dto.content;
     if (dto.menuId !== undefined) post.menuId = dto.menuId;
+    if (dto.status !== undefined) post.status = dto.status;
 
     return await this.postRepo.save(post);
   }

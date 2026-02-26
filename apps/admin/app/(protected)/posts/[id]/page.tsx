@@ -43,9 +43,10 @@ const PostDetailPage = () => {
     }
   }, [form, id, isNew]);
 
-  const onSubmit = async (data: PostFormData) => {
-    if (isNew) await createPost(data);
-    else if (id) await updatePost(id.toString(), data);
+  const onSubmit = async (data: PostFormData, status: PostFormData['status']) => {
+    console.log('onSubmit');
+    if (isNew) await createPost({ ...data, status });
+    else if (id) await updatePost(id.toString(), { ...data, status });
 
     router.push('/posts');
   };
@@ -53,12 +54,23 @@ const PostDetailPage = () => {
   return (
     <div className="max-w-[1100px] mx-auto w-full">
       <FormProvider {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className={'text-xl font-bold flex justify-between items-center text-white'}>
-            <span>{isNew ? '작성' : '수정'}</span>
-            <Button className={'px-4 py-2 rounded-lg bg-cyan-500/80 hover:bg-cyan-400 border border-cyan-300/50'} type={'submit'}>
-              작성완료
-            </Button>
+        <div>
+          <div className={'flex justify-between items-center text-white sticky top-0 py-2 bg-tt-bg/20 rounded-b-md z-10'}>
+            <span className={'text-xl font-bold'}>{isNew ? '작성' : '수정'}</span>
+            <div className={'flex gap-2'}>
+              <Button
+                onClick={form.handleSubmit(data => onSubmit(data, 'PUBLISHED'))}
+                className={'px-2 py-1 text-md !font-regular rounded-lg bg-cyan-500/80 hover:bg-cyan-400 border border-cyan-300/50'}
+                type={'button'}>
+                작성완료
+              </Button>
+              <Button
+                onClick={form.handleSubmit(data => onSubmit(data, 'DRAFT'))}
+                className={'px-2 py-1 text-md rounded-lg !bg-none !font-regular hover:bg-cyan-400 border border-cyan-300/50'}
+                type={'button'}>
+                임시저장
+              </Button>
+            </div>
           </div>
           <div className={'mt-6 rounded-2xl border border-white/10 bg-[linear-gradient(160deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.45)] p-4 md:p-8 flex flex-col gap-4'}>
             <TextInput name={'title'}
@@ -71,7 +83,7 @@ const PostDetailPage = () => {
             <ContentEditor />
             <TagInput />
           </div>
-        </form>
+        </div>
       </FormProvider>
     </div>
   );
