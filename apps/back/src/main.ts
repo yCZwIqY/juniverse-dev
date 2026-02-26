@@ -2,6 +2,7 @@
 import { AppModule } from './app.module';
 import * as express from 'express';
 import { ResponseInterceptor } from './common/response/response.interceptor';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -46,6 +47,7 @@ async function bootstrap() {
   app.use(express.json({ limit: '20mb' }));
   app.use(express.urlencoded({ limit: '20mb', extended: true }));
   app.useGlobalInterceptors(new ResponseInterceptor());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   await app.listen(process.env.NEST_PORT ?? 3002);
 }

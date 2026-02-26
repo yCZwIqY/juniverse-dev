@@ -8,6 +8,7 @@ import {
   Min,
   ArrayUnique,
 } from 'class-validator';
+import { PostStatus } from '../types/status.type';
 
 export class CreatePostDto {
   @IsString()
@@ -32,4 +33,7 @@ export class CreatePostDto {
   @IsArray()
   @IsString({ each: true })
   tags?: string[];
+
+  @IsString()
+  status?: PostStatus = 'PUBLISH'
 }

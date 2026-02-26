@@ -85,6 +85,7 @@ export type PostFormData = {
   content: string;
   menuId: number;
   tags: string[];
+  status: 'PUBLISHED' | 'DRAFT'
 };
 
 export type CreateCommentRequest = {

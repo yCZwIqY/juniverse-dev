@@ -13,7 +13,7 @@ interface PostPageProps {
 
 const PostPage = async ({ searchParams }: PostPageProps) => {
   const { page, limit } = await searchParams;
-  const data = await getPosts(page ?? 1, limit ?? 10, 0, '');
+  const data = await getPosts(page ?? 1, limit ?? 10, 0, '', true);
 
   return (
     <div className={'py-10 flex flex-col gap-10'}>

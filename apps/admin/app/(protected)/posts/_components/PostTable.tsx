@@ -70,7 +70,10 @@ const PostTable = ({ data }: PostTableProps) => {
         >
           <div className="flex flex-col lg:flex-row items-start justify-between gap-4">
             <div className="flex-1">
-              <div className="text-sm text-cyan-200/80">#{post.id}</div>
+              <div className="text-sm text-cyan-200/80 flex gap-2 items-center">
+                <span>#{post.id}</span>
+                <span className={'text-white bg-cyan-500 rounded-full py-1 px-2'}>임시저장</span>
+              </div>
               <div className="text-lg font-semibold tracking-tight">{post.title}</div>
               <div className="mt-1 text-sm text-gray-200/80">
                 {post.menu?.name ?? '-'} • 조회수 {post.viewCount} • {new Date(post.createdAt).toLocaleDateString('ko-KR', { hour: '2-digit', minute: '2-digit' })}

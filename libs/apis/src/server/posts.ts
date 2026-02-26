@@ -5,10 +5,10 @@ import api from '../client/api';
 import { CreateCommentRequest, PostFormData, PostResponse, PostsResponse, RecentPostResponse } from '../client/model';
 import { revalidateTag } from 'next/cache';
 
-export const getPosts = async (page: number, limit: number, menuId: number = 0, search: string = '') => {
+export const getPosts = async (page: number, limit: number, menuId: number = 0, search: string = '', showAll = false) => {
   try {
     const { data } = await api.get<PostsResponse>(
-      `/api/posts?page=${page}&limit=${limit}&menuId=${menuId}&q=${search}`,
+      `/api/posts?page=${page}&limit=${limit}&menuId=${menuId}&q=${search}&showAll=${showAll}`,
       {},
       {
         next: {
