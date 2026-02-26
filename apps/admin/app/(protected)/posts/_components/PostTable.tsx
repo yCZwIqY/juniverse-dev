@@ -72,7 +72,8 @@ const PostTable = ({ data }: PostTableProps) => {
             <div className="flex-1">
               <div className="text-sm text-cyan-200/80 flex gap-2 items-center">
                 <span>#{post.id}</span>
-                <span className={'text-white bg-cyan-500 rounded-full py-1 px-2'}>임시저장</span>
+                {post.status === 'DRAFT' &&
+                  <span className={'text-white bg-cyan-500 rounded-full py-1 px-2'}>임시저장</span>}
               </div>
               <div className="text-lg font-semibold tracking-tight">{post.title}</div>
               <div className="mt-1 text-sm text-gray-200/80">
