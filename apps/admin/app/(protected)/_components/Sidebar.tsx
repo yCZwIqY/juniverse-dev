@@ -16,7 +16,7 @@ const Sidebar = () => {
         </div>
         <div className={'gap-2 px-3 pb-4 font-semibold text-sm md:text-base text-gray-100 flex flex-col'}>
           <Link
-            href={'/apps/admin/public'}
+            href={'/'}
             data-active={String(pathname === '/')}
             className={
               'hover:bg-white/10 px-4 py-2 rounded-lg data-[active=true]:bg-white/15 data-[active=true]:text-white data-[active=true]:shadow-[inset_0_1px_0_rgba(255,255,255,0.15)] data-[active=true]:border data-[active=true]:border-white/20'
