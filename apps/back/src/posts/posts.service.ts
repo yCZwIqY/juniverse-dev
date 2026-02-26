@@ -208,6 +208,7 @@ export class PostsService {
 
     const result = await this.commentRepo.save(comment);
     this.eventEmitter.emit('comment.alarm', {
+      postId: post.id,
       postTitle: post.title,
       comment: result.content,
       createdAt: result.createdAt,

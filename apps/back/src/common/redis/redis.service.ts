@@ -88,6 +88,21 @@ export class RedisService implements OnModuleDestroy {
     return this.safe(() => this.client!.del(key), 0, 'del');
   }
 
+  async hset(key: string, field: string, value: string) {
+    if (!this.client) return 0;
+    return this.safe(() => this.client!.hset(key, field, value), 0, 'hset');
+  }
+
+  async hdel(key: string, field: string) {
+    if (!this.client) return 0;
+    return this.safe(() => this.client!.hdel(key, field), 0, 'hdel');
+  }
+
+  async hvals(key: string) {
+    if (!this.client) return [];
+    return this.safe(() => this.client!.hvals(key), [], 'hvals');
+  }
+
   getPopularKeys(days: number) {
     const keys: string[] = [];
     const today = new Date();
