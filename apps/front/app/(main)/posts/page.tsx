@@ -3,7 +3,7 @@ import PostList from '@/app/(main)/posts/_components/PostList';
 import { getMenuList, getPosts } from 'apis';
 import MenuList from '@/app/(main)/posts/_components/Menus/MenuList';
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 interface ListPageProps {
   searchParams: Promise<{

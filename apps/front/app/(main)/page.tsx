@@ -5,7 +5,7 @@ import LatestPosts from '@/app/(main)/_components/LatestPosts';
 import RecentTags from '@/app/(main)/_components/RecentTags';
 import { getRecentPosts } from 'apis';
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 const MainPage = async () => {
   const posts = await getRecentPosts();

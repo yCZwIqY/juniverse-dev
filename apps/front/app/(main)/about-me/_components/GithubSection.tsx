@@ -1,7 +1,5 @@
 const GITHUB_LOGIN = 'yCZwIqY';
 const GITHUB_GRAPHQL_URL = 'https://api.github.com/graphql';
-const GITHUB_REST_URL = 'https://api.github.com';
-const RECENT_COMMIT_LIMIT = 8;
 
 type ContributionDay = {
   date: string;
@@ -14,13 +12,6 @@ type ContributionCalendar = {
   weeks: Array<{
     contributionDays: ContributionDay[];
   }>;
-};
-
-type RecentCommit = {
-  repo: string;
-  message: string;
-  url: string;
-  date: string;
 };
 
 const fetchContributionCalendar = async (): Promise<ContributionCalendar | null> => {
@@ -75,52 +66,6 @@ const fetchContributionCalendar = async (): Promise<ContributionCalendar | null>
   return data.data?.user?.contributionsCollection?.contributionCalendar ?? null;
 };
 
-const fetchRecentCommits = async (): Promise<RecentCommit[]> => {
-  const token = process.env.GITHUB_TOKEN;
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-  };
-
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  const res = await fetch(`${GITHUB_REST_URL}/users/${GITHUB_LOGIN}/events`, {
-    headers,
-    next: { revalidate: 600 },
-  });
-
-  if (!res.ok) {
-    return [];
-  }
-
-  const events = (await res.json()) as Array<{
-    type: string;
-    created_at: string;
-    repo?: { name: string };
-    payload?: { commits?: Array<{ sha: string; message: string }> };
-  }>;
-
-  const commits: RecentCommit[] = [];
-
-  for (const event of events) {
-    if (event.type !== 'PushEvent' || !event.payload?.commits?.length || !event.repo?.name) {
-      continue;
-    }
-
-    for (const commit of event.payload.commits) {
-      commits.push({
-        repo: event.repo.name,
-        message: commit.message,
-        url: `https://github.com/${event.repo.name}/commit/${commit.sha}`,
-        date: event.created_at,
-      });
-    }
-  }
-
-  return commits.slice(0, RECENT_COMMIT_LIMIT);
-};
-
 // const formatDate = (value: string) =>
 //   new Date(value).toLocaleDateString('ko-KR', {
 //     year: 'numeric',
@@ -129,7 +74,7 @@ const fetchRecentCommits = async (): Promise<RecentCommit[]> => {
 //   });
 
 const GithubSection = async () => {
-  const [calendar] = await Promise.all([fetchContributionCalendar(), fetchRecentCommits()]);
+  const calendar = await fetchContributionCalendar();
 
   return (
     <section className={'glass-card w-full p-4 lg:p-8 flex flex-col gap-6 reveal'}>

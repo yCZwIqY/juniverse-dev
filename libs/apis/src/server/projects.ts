@@ -13,7 +13,7 @@ export const getProjects = async () => {
       {
         next: {
           tags: ['projects'],
-          revalidate: 60,
+          revalidate: 300,
         },
       },
     );

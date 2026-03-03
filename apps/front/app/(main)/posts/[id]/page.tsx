@@ -7,7 +7,7 @@ import PostComments from '@/app/(main)/posts/[id]/_components/PostComments';
 import QuickMenus from '@/app/(main)/posts/[id]/_components/QuickMenus';
 import PostNavigator from '@/app/(main)/posts/[id]/_components/PostNavigator';
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 interface PostDetailPageProps {
   params: Promise<{ id: number }>;

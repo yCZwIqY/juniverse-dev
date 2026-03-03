@@ -11,10 +11,10 @@ export const getPosts = async (page: number, limit: number, menuId: number = 0, 
       `/api/posts?page=${page}&limit=${limit}&menuId=${menuId}&q=${search}&showAll=${showAll}`,
       {},
       {
-        next: {
-          tags: ['posts'],
-          revalidate: 60,
-        },
+          next: {
+            tags: ['posts'],
+            revalidate: 300,
+          },
       },
     );
     return data;
@@ -27,10 +27,10 @@ export const getRecentPosts = async () => {
       `/api/posts/recent`,
       {},
       {
-        next: {
-          tags: ['recent-posts'],
-          revalidate: 60,
-        },
+          next: {
+            tags: ['recent-posts'],
+            revalidate: 300,
+          },
       },
     );
     return data;
@@ -43,7 +43,7 @@ export const getPost = async (id: string | number) => {
       `/api/posts/${id}`,
       {},
       {
-        next: { revalidate: 60, tags: [`post:${id ?? 0}`] },
+        next: { revalidate: 300, tags: [`post:${id ?? 0}`] },
       },
     );
   } catch {}

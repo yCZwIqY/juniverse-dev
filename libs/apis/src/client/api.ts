@@ -2,6 +2,9 @@ const BASE_URL = process.env.NEXT_API_URL;
 const DEFAULT_HEADERS = {
   'Content-Type': 'application/json',
 };
+const ENABLE_FETCH_LOG =
+  process.env.API_FETCH_LOG === 'true' ||
+  (process.env.NODE_ENV !== 'production' && process.env.API_FETCH_LOG !== 'false');
 
 type FetchOptions = Omit<RequestInit, 'method' | 'body'> & {
   next?: { tags?: string[]; revalidate?: number };
@@ -22,6 +25,7 @@ const query = searchParams.toString();
 };
 
 const logFetch = (method: string, url: string, startedAt: number, status?: number) => {
+  if (!ENABLE_FETCH_LOG) return;
   const durationMs = Date.now() - startedAt;
   const statusText = typeof status === 'number' ? ` ${status}` : '';
   console.log(`[api] ${method} ${url}${statusText} (${durationMs}ms)`);
