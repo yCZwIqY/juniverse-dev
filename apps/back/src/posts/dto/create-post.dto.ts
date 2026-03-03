@@ -8,6 +8,7 @@ import {
   Min,
   ArrayUnique,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 import { PostStatus } from '../types/status.type';
 
 export class CreatePostDto {
@@ -25,6 +26,7 @@ export class CreatePostDto {
   @IsNotEmpty()
   content!: string;
 
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   menuId!: number;
