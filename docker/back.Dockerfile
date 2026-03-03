@@ -16,4 +16,4 @@ RUN pnpm install --frozen-lockfile
 RUN pnpm --filter back build
 
 EXPOSE 3002
-CMD ["pnpm", "--filter", "back", "start"]
+CMD ["pnpm", "--filter", "back", "start:prod"]
