@@ -116,8 +116,10 @@ export class PostsService {
     const prev = await this.postRepo
       .createQueryBuilder('p')
       .select(['p.id', 'p.title', 'p.subtitle', 'p.createdAt'])
-      .where('p.createdAt > :createdAt', { createdAt: post.createdAt })
-      .andWhere('p.menuId = :menuId', { menuId: post.menu.id })
+      .where('p.createdAt < :createdAt', { createdAt: post.createdAt })
+      .andWhere('p.status = :status', { status: 'PUBLISH' })
+      .andWhere('p.id != :id', { id: post.id })
+      // .andWhere('p.menuId = :menuId', { menuId: post.menu.id })
       .orderBy('p.createdAt', 'ASC')
       .addOrderBy('p.id', 'ASC')
       .getOne();
@@ -125,8 +127,10 @@ export class PostsService {
     const next = await this.postRepo
       .createQueryBuilder('p')
       .select(['p.id', 'p.title', 'p.subtitle', 'p.createdAt'])
-      .where('p.createdAt < :createdAt', { createdAt: post.createdAt })
-      .andWhere('p.menuId = :menuId', { menuId: post.menu.id })
+      .where('p.createdAt > :createdAt', { createdAt: post.createdAt })
+      .andWhere('p.status = :status', { status: 'PUBLISH' })
+      .andWhere('p.id != :id', { id: post.id })
+      // .andWhere('p.menuId = :menuId', { menuId: post.menu.id })
       .orderBy('p.createdAt', 'DESC')
       .addOrderBy('p.id', 'DESC')
       .getOne();

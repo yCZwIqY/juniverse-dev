@@ -5,6 +5,7 @@ import { Metadata } from 'next';
 import EditorViewer from '@/app/(main)/_components/EditorViewer';
 import PostComments from '@/app/(main)/posts/[id]/_components/PostComments';
 import QuickMenus from '@/app/(main)/posts/[id]/_components/QuickMenus';
+import PostNavigator from '@/app/(main)/posts/[id]/_components/PostNavigator';
 
 export const revalidate = 60;
 
@@ -29,6 +30,7 @@ const PostDetailPage = async ({ params }: PostDetailPageProps) => {
   if (!post) return <div className={'border border-border rounded-lg p-4 bg-card mt-5'}>존재하지 않는 포스트입니다.</div>;
 
   void increaseView(id);
+
   return (
     <div>
       <div className={'glass-card p-8 mt-4'}>
@@ -36,6 +38,7 @@ const PostDetailPage = async ({ params }: PostDetailPageProps) => {
         <PostButtons title={post.data.title} subtitle={post.data.subtitle} />
         <EditorViewer content={post.data.content} />
       </div>
+      <PostNavigator next={post.data.next} prev={post.data.prev}/>
       <div className={'border border-border rounded-lg p-8 bg-card mt-4'}>
         <PostComments comments={post.data.comments} />
       </div>

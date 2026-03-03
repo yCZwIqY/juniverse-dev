@@ -20,7 +20,7 @@ const Footer = () => {
   };
 
   return (
-    <div className={'w-full my-5 py-3 px-5 flex items-center justify-between glass-card z-10'}>
+    <div className={'w-full my-5 py-3 px-5 flex items-center justify-between glass-card z-10 flex-shrink-0'}>
       <span>© 2026 Juniverse Dev</span>
       <span>
         <Link href={'/posts'} prefetch={false} onClick={(e) => moveTo(e, '/posts')} className={'hover:underline'}>

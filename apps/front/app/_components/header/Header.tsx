@@ -75,7 +75,7 @@ const Header = () => {
     ].join(' ');
 
   return (
-    <div className={'!sticky top-5 w-full mt-5 py-3 px-5 flex items-center justify-between glass-card z-10'}>
+    <header className={'!sticky top-5 w-full mt-5 py-3 px-5 flex items-center justify-between glass-card z-10 flex-shrink-0'}>
       <div className={'flex items-center gap-4'}>
         <Link href={'/'} prefetch={false} onClick={onClickTo('/')}>
           <Image src={'/images/logo.png'} className={'size-6 lg:size-8'} alt={'로고'} width={24} height={24} />
@@ -122,7 +122,7 @@ const Header = () => {
         </form>
         <ThemeSwitch />
       </div>
-    </div>
+    </header>
   );
 };
 
