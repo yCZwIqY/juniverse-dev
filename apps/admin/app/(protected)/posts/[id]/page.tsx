@@ -55,7 +55,7 @@ const PostDetailPage = () => {
     <div className="max-w-[1100px] mx-auto w-full">
       <FormProvider {...form}>
         <div>
-          <div className={'flex justify-between items-center text-white sticky top-0 py-2 bg-tt-bg/20 rounded-b-md z-10'}>
+          <div className={'flex justify-between items-center text-white sticky -top-8 py-2 bg-tt-bg/20 rounded-b-md z-10'}>
             <span className={'text-xl font-bold'}>{isNew ? '작성' : '수정'}</span>
             <div className={'flex gap-2'}>
               <Button

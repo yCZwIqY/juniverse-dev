@@ -41,7 +41,7 @@ const MainLayout = ({
   return (
     <html lang='ko' className={suit.className}>
       <body
-        className={`antialiased bg-background w-full min-h-svh lg:max-w-[1120px] mx-auto relative overflow-x-hidden !p-5 flex flex-col`}
+        className={`antialiased bg-background w-full min-h-svh lg:max-w-[1120px] mx-auto relative overflow-x-hidden !p-5 flex flex-col h-fit`}
       >
         <NavigationLoadingProvider>
           <TrafficTracker />
