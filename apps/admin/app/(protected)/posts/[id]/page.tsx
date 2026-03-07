@@ -59,26 +59,28 @@ const PostDetailPage = () => {
             <span className={'text-xl font-bold'}>{isNew ? '작성' : '수정'}</span>
             <div className={'flex gap-2'}>
               <Button
-                onClick={form.handleSubmit(data => onSubmit(data, 'PUBLISHED'))}
+                onClick={form.handleSubmit((data) => onSubmit(data, 'PUBLISH'))}
                 className={'px-2 py-1 text-md !font-regular rounded-lg bg-cyan-500/80 hover:bg-cyan-400 border border-cyan-300/50'}
-                type={'button'}>
+                type={'button'}
+              >
                 작성완료
               </Button>
               <Button
-                onClick={form.handleSubmit(data => onSubmit(data, 'DRAFT'))}
+                onClick={form.handleSubmit((data) => onSubmit(data, 'DRAFT'))}
                 className={'px-2 py-1 text-md rounded-lg !bg-none !font-regular hover:bg-cyan-400 border border-cyan-300/50'}
-                type={'button'}>
+                type={'button'}
+              >
                 임시저장
               </Button>
             </div>
           </div>
-          <div className={'mt-6 rounded-2xl border border-white/10 bg-[linear-gradient(160deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.45)] p-4 md:p-8 flex flex-col gap-4'}>
-            <TextInput name={'title'}
-                       label={'제목'}
-                       maxLength={200} />
-            <TextInput name={'subtitle'}
-                       label={'부제목'}
-                       maxLength={300} />
+          <div
+            className={
+              'mt-6 rounded-2xl border border-white/10 bg-[linear-gradient(160deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.45)] p-4 md:p-8 flex flex-col gap-4'
+            }
+          >
+            <TextInput name={'title'} label={'제목'} maxLength={200} />
+            <TextInput name={'subtitle'} label={'부제목'} maxLength={300} />
             <MenuSelect />
             <ContentEditor />
             <TagInput />
