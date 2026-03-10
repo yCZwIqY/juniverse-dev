@@ -120,8 +120,7 @@ export class PostsService {
       .andWhere('p.status = :status', { status: 'PUBLISH' })
       .andWhere('p.id != :id', { id: post.id })
       // .andWhere('p.menuId = :menuId', { menuId: post.menu.id })
-      .orderBy('p.createdAt', 'ASC')
-      .addOrderBy('p.id', 'ASC')
+      .orderBy('p.createdAt', 'DESC')
       .getOne();
 
     const next = await this.postRepo
@@ -131,8 +130,7 @@ export class PostsService {
       .andWhere('p.status = :status', { status: 'PUBLISH' })
       .andWhere('p.id != :id', { id: post.id })
       // .andWhere('p.menuId = :menuId', { menuId: post.menu.id })
-      .orderBy('p.createdAt', 'DESC')
-      .addOrderBy('p.id', 'DESC')
+      .orderBy('p.createdAt', 'ASC')
       .getOne();
 
     return {
