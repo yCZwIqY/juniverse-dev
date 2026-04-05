@@ -12,6 +12,10 @@ import { Typography } from '@tiptap/extension-typography';
 import { Highlight } from '@tiptap/extension-highlight';
 import { Subscript } from '@tiptap/extension-subscript';
 import { Superscript } from '@tiptap/extension-superscript';
+import { Table } from '@tiptap/extension-table';
+import { TableCell } from '@tiptap/extension-table-cell';
+import { TableHeader } from '@tiptap/extension-table-header';
+import { TableRow } from '@tiptap/extension-table-row';
 import { Selection } from '@tiptap/extensions';
 
 // --- UI Primitives ---
@@ -43,6 +47,7 @@ import {
 } from '@/components/tiptap-ui/color-highlight-popover';
 import { LinkButton, LinkContent, LinkPopover } from '@/components/tiptap-ui/link-popover';
 import { MarkButton } from '@/components/tiptap-ui/mark-button';
+import { TableDropdownMenu } from '@/components/tiptap-ui/table-dropdown-menu';
 import { TextAlignButton } from '@/components/tiptap-ui/text-align-button';
 import { UndoRedoButton } from '@/components/tiptap-ui/undo-redo-button';
 
@@ -137,6 +142,7 @@ const MainToolbarContent = ({
       <ToolbarSeparator />
 
       <ToolbarGroup>
+        <TableDropdownMenu portal={isMobile} />
         <ImageUploadButton text="Add" />
       </ToolbarGroup>
 
@@ -203,6 +209,12 @@ export function SimpleEditor({ value, onChange, postId }: SimpleEditorProps) {
       TaskItem.configure({ nested: true }),
       Highlight.configure({ multicolor: true }),
       Image,
+      Table.configure({
+        resizable: false,
+      }),
+      TableRow,
+      TableHeader,
+      TableCell,
       Typography,
       Superscript,
       Subscript,

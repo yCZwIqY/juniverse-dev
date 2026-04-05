@@ -108,6 +108,18 @@ importers:
       '@tiptap/extension-superscript':
         specifier: ^3.18.0
         version: 3.19.0(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0)
+      '@tiptap/extension-table':
+        specifier: 3.19.0
+        version: 3.19.0(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0)
+      '@tiptap/extension-table-cell':
+        specifier: 3.19.0
+        version: 3.19.0(@tiptap/extension-table@3.19.0(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0))
+      '@tiptap/extension-table-header':
+        specifier: 3.19.0
+        version: 3.19.0(@tiptap/extension-table@3.19.0(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0))
+      '@tiptap/extension-table-row':
+        specifier: 3.19.0
+        version: 3.19.0(@tiptap/extension-table@3.19.0(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0))
       '@tiptap/extension-text-align':
         specifier: ^3.18.0
         version: 3.19.0(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))
@@ -164,7 +176,7 @@ importers:
         version: 15.3.3(@babel/core@7.29.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.97.3)
       next-auth:
         specifier: ^4.24.13
-        version: 4.24.13(next@15.3.3(@babel/core@7.29.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.97.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 4.24.13(next@15.3.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.97.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       npm:
         specifier: ^11.4.2
         version: 11.10.0
@@ -404,6 +416,18 @@ importers:
       '@tiptap/extension-image':
         specifier: ^3.19.0
         version: 3.19.0(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))
+      '@tiptap/extension-table':
+        specifier: 3.19.0
+        version: 3.19.0(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0)
+      '@tiptap/extension-table-cell':
+        specifier: 3.19.0
+        version: 3.19.0(@tiptap/extension-table@3.19.0(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0))
+      '@tiptap/extension-table-header':
+        specifier: 3.19.0
+        version: 3.19.0(@tiptap/extension-table@3.19.0(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0))
+      '@tiptap/extension-table-row':
+        specifier: 3.19.0
+        version: 3.19.0(@tiptap/extension-table@3.19.0(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0))
       '@tiptap/pm':
         specifier: ^3.18.0
         version: 3.19.0
@@ -433,7 +457,7 @@ importers:
         version: 15.3.3(@babel/core@7.29.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.97.3)
       next-auth:
         specifier: ^4.24.13
-        version: 4.24.13(next@15.3.3(@babel/core@7.29.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.97.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 4.24.13(next@15.3.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.97.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       prismjs:
         specifier: ^1.30.0
         version: 1.30.0
@@ -3299,6 +3323,48 @@ packages:
     peerDependencies:
       '@tiptap/core': ^3.19.0
       '@tiptap/pm': ^3.19.0
+
+  '@tiptap/extension-table-cell@3.19.0':
+    resolution: {integrity: sha512-T67EDWmiRdOGctolaUpMPXffDkEFL+NUppSV61cPU3jQtDwGg01meauy5u67u6OUM8ICiZ+Sc7Xd2DIt+7Nv5g==}
+    peerDependencies:
+      '@tiptap/extension-table': ^3.19.0
+
+  '@tiptap/extension-table-cell@3.22.2':
+    resolution: {integrity: sha512-3+YUNtZRHrl6jqQ/RyoGq9iSdXVKwUw3awgu/ogdUvaanXLyESrncbWsEiRzo98PDa4m6hFvjFZ5yhw3cXEhGQ==}
+    peerDependencies:
+      '@tiptap/extension-table': ^3.22.2
+
+  '@tiptap/extension-table-header@3.19.0':
+    resolution: {integrity: sha512-fVHJUCfZp/JOE96hJ3paElRynpIVdukOiAjgZbaY9WuCKoXd3xYqdsbUSdf+XFmdPqwvQKhnkaY/qXW3FIxO3w==}
+    peerDependencies:
+      '@tiptap/extension-table': ^3.19.0
+
+  '@tiptap/extension-table-header@3.22.2':
+    resolution: {integrity: sha512-tVqbgl+it314/zzziKuOyRk2O1qptqiclYOfZKl0+ir5pgsVrUczujxzkDAPe4DPEZm/mSjWlsaYpF5OBQU0ng==}
+    peerDependencies:
+      '@tiptap/extension-table': ^3.22.2
+
+  '@tiptap/extension-table-row@3.19.0':
+    resolution: {integrity: sha512-L3DeIXQARCs+m4rsQWiUPJso1z6xZ6awa/Kc+PCoq7rbPLtwhWUIld3sm9gdLac61Mf/TVwb18EdfygHcU7jCA==}
+    peerDependencies:
+      '@tiptap/extension-table': ^3.19.0
+
+  '@tiptap/extension-table-row@3.22.2':
+    resolution: {integrity: sha512-n2IDQhThOwRU+vxYj3aGYp66P45r3lgBkWBCGFPLFSL8bx/7p7ZifEtzsk6FOmzNa/GzgKT0lq2RvWVILq/rLA==}
+    peerDependencies:
+      '@tiptap/extension-table': ^3.22.2
+
+  '@tiptap/extension-table@3.19.0':
+    resolution: {integrity: sha512-Lg8DlkkDUMYE/CcGOxoCWF98B2i7VWh+AGgqlF+XWrHjhlKHfENLRXm1a0vWuyyP3NknRYILoaaZ1s7QzmXKRA==}
+    peerDependencies:
+      '@tiptap/core': ^3.19.0
+      '@tiptap/pm': ^3.19.0
+
+  '@tiptap/extension-table@3.22.2':
+    resolution: {integrity: sha512-J9fVsboNRgmdbCVxWl+zlm5FKHmx6TnUHAb+7yt6Fum9lqy1/TwEfP3N7DAF3v7qpkIniVlU3X9ERmiiTAWxSA==}
+    peerDependencies:
+      '@tiptap/core': ^3.22.2
+      '@tiptap/pm': ^3.22.2
 
   '@tiptap/extension-text-align@3.19.0':
     resolution: {integrity: sha512-cY8bHWYojLTHXZb2j2srdh7ltmDgnwXYvSxbPL4HK4j7XxQOGnOsTakgM/BNhxymOfEj2414i5Otyy8hlgviFA==}
@@ -11521,6 +11587,40 @@ snapshots:
       '@tiptap/core': 3.19.0(@tiptap/pm@3.19.0)
       '@tiptap/pm': 3.19.0
 
+  '@tiptap/extension-table-cell@3.19.0(@tiptap/extension-table@3.19.0(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0))':
+    dependencies:
+      '@tiptap/extension-table': 3.19.0(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0)
+
+  '@tiptap/extension-table-cell@3.22.2(@tiptap/extension-table@3.22.2(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0))':
+    dependencies:
+      '@tiptap/extension-table': 3.22.2(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0)
+
+  '@tiptap/extension-table-header@3.19.0(@tiptap/extension-table@3.19.0(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0))':
+    dependencies:
+      '@tiptap/extension-table': 3.19.0(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0)
+
+  '@tiptap/extension-table-header@3.22.2(@tiptap/extension-table@3.22.2(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0))':
+    dependencies:
+      '@tiptap/extension-table': 3.22.2(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0)
+
+  '@tiptap/extension-table-row@3.19.0(@tiptap/extension-table@3.19.0(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0))':
+    dependencies:
+      '@tiptap/extension-table': 3.19.0(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0)
+
+  '@tiptap/extension-table-row@3.22.2(@tiptap/extension-table@3.22.2(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0))':
+    dependencies:
+      '@tiptap/extension-table': 3.22.2(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0)
+
+  '@tiptap/extension-table@3.19.0(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0)':
+    dependencies:
+      '@tiptap/core': 3.19.0(@tiptap/pm@3.19.0)
+      '@tiptap/pm': 3.19.0
+
+  '@tiptap/extension-table@3.22.2(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))(@tiptap/pm@3.19.0)':
+    dependencies:
+      '@tiptap/core': 3.19.0(@tiptap/pm@3.19.0)
+      '@tiptap/pm': 3.19.0
+
   '@tiptap/extension-text-align@3.19.0(@tiptap/core@3.19.0(@tiptap/pm@3.19.0))':
     dependencies:
       '@tiptap/core': 3.19.0(@tiptap/pm@3.19.0)
@@ -13327,7 +13427,7 @@ snapshots:
       eslint: 9.28.0(jiti@2.6.1)
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.28.0(jiti@2.6.1))
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.55.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.8.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.28.0(jiti@2.6.1))
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.34.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.8.3))(eslint@9.28.0(jiti@2.6.1))
       eslint-plugin-jsx-a11y: 6.10.2(eslint@9.28.0(jiti@2.6.1))
       eslint-plugin-react: 7.37.5(eslint@9.28.0(jiti@2.6.1))
       eslint-plugin-react-hooks: 5.2.0(eslint@9.28.0(jiti@2.6.1))
@@ -13347,7 +13447,7 @@ snapshots:
       eslint: 9.28.0(jiti@2.6.1)
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.28.0(jiti@2.6.1))
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.55.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.28.0(jiti@2.6.1))
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.55.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@9.28.0(jiti@2.6.1)))(eslint@9.28.0(jiti@2.6.1))
       eslint-plugin-jsx-a11y: 6.10.2(eslint@9.28.0(jiti@2.6.1))
       eslint-plugin-react: 7.37.5(eslint@9.28.0(jiti@2.6.1))
       eslint-plugin-react-hooks: 5.2.0(eslint@9.28.0(jiti@2.6.1))
@@ -13381,22 +13481,21 @@ snapshots:
       tinyglobby: 0.2.15
       unrs-resolver: 1.11.1
     optionalDependencies:
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.55.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.28.0(jiti@2.6.1))
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.34.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.8.3))(eslint@9.28.0(jiti@2.6.1))
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.1(@typescript-eslint/parser@8.55.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@9.28.0(jiti@2.6.1)):
+  eslint-module-utils@2.12.1(@typescript-eslint/parser@8.34.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint@9.28.0(jiti@2.6.1)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
-      '@typescript-eslint/parser': 8.55.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.8.3)
+      '@typescript-eslint/parser': 8.34.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.8.3)
       eslint: 9.28.0(jiti@2.6.1)
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.28.0(jiti@2.6.1))
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.1(@typescript-eslint/parser@8.55.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@9.28.0(jiti@2.6.1)):
+  eslint-module-utils@2.12.1(@typescript-eslint/parser@8.55.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@9.28.0(jiti@2.6.1)))(eslint@9.28.0(jiti@2.6.1)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -13407,7 +13506,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.55.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.8.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.28.0(jiti@2.6.1)):
+  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.34.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.8.3))(eslint@9.28.0(jiti@2.6.1)):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.9
@@ -13418,7 +13517,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.28.0(jiti@2.6.1)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.55.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@9.28.0(jiti@2.6.1))
+      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.34.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint@9.28.0(jiti@2.6.1))
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
@@ -13430,13 +13529,13 @@ snapshots:
       string.prototype.trimend: 1.0.9
       tsconfig-paths: 3.15.0
     optionalDependencies:
-      '@typescript-eslint/parser': 8.55.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.8.3)
+      '@typescript-eslint/parser': 8.34.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.8.3)
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.55.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.28.0(jiti@2.6.1)):
+  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.55.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@9.28.0(jiti@2.6.1)))(eslint@9.28.0(jiti@2.6.1)):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.9
@@ -13447,7 +13546,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.28.0(jiti@2.6.1)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.55.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@9.28.0(jiti@2.6.1))
+      eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.55.0(eslint@9.28.0(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@9.28.0(jiti@2.6.1)))(eslint@9.28.0(jiti@2.6.1))
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
@@ -15138,7 +15237,7 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  next-auth@4.24.13(next@15.3.3(@babel/core@7.29.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.97.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  next-auth@4.24.13(next@15.3.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.97.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       '@babel/runtime': 7.28.6
       '@panva/hkdf': 1.2.1

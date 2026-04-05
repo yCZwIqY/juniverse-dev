@@ -26,16 +26,15 @@ const MenuSelect = () => {
 
   return (
     <div className={'grid grid-cols-1 md:grid-cols-[120px_1fr] gap-4'}>
-      <label htmlFor="content" className={'font-bold text-base md:text-lg block pb-2 text-left md:text-center border-b border-white/20 text-gray-200'}>
+      <label
+        htmlFor="content"
+        className={'font-bold text-base md:text-lg block pb-2 text-left md:text-center border-b border-white/20 text-gray-200'}
+      >
         카테고리
       </label>
-      <select
-        value={value}
-        onChange={onChange}
-        className={'border rounded-xl p-2 after:right-2 border-white/10 bg-white/5 text-white'}
-      >
+      <select value={value} onChange={onChange} className={'border rounded-xl p-2 after:right-2 border-white/10 bg-white/5 text-white'}>
         {options.map((it) => (
-          <option key={it.value} value={it.value}>
+          <option key={it.value} value={it.value} className={'text-black'}>
             {it.label}
           </option>
         ))}

@@ -3,11 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const PUBLIC_PATHS = new Set(['/login', '/forbidden']);
 const PUBLIC_PREFIXES = ['/images/'];
-const PUBLIC_FILES = new Set([
-  '/manifest.webmanifest',
-  '/site.webmanifest',
-  '/sw.js',
-]);
+const PUBLIC_FILES = new Set(['/manifest.webmanifest', '/site.webmanifest', '/sw.js']);
 
 const isPublicPath = (pathname: string) => {
   if (PUBLIC_PATHS.has(pathname)) return true;
@@ -36,13 +32,13 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  if (!token?.email || !process.env.ADMIN_EMAIL || token.email !== process.env.ADMIN_EMAIL) {
-    if (pathname.startsWith('/api/')) {
-      return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
-    }
-
-    return NextResponse.redirect(new URL('/forbidden', req.url));
-  }
+  // if (!token?.email || !process.env.ADMIN_EMAIL || token.email !== process.env.ADMIN_EMAIL) {
+  //   if (pathname.startsWith('/api/')) {
+  //     return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+  //   }
+  //
+  //   return NextResponse.redirect(new URL('/forbidden', req.url));
+  // }
 
   return NextResponse.next();
 }
