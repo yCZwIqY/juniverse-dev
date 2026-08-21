@@ -79,7 +79,7 @@ const Header = () => {
       <div className="flex items-center justify-between gap-3 px-4 py-2.5 bg-[var(--color-canvas-soft)] border border-[var(--color-hairline)] rounded-[var(--radius-lg)] overflow-hidden">
         {/* Logo + wordmark */}
         <Link href="/" prefetch={false} onClick={onClickTo('/')} className="flex items-center shrink-0 opacity-90 hover:opacity-100 transition-opacity duration-150">
-          <Image src="/images/header.png" alt="Juniverse Dev" width={2194} height={717} className="h-7 w-auto" priority />
+          <Image src="/images/header-1.png" alt="Juniverse Dev" width={2172} height={724} className="h-7 w-auto" priority />
         </Link>
 
         {/* Nav */}
