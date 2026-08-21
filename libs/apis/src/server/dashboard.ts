@@ -1,18 +1,18 @@
 'use server';
 
 import 'server-only';
-import api from '../client/api';
-import {
+import client from '../http/client';
+import type {
   BaseResponse,
   DashboardPopularPost,
   DashboardRecentComment,
   DashboardSummaryResponse,
   DashboardTrafficResponse,
-} from '../client/model';
+} from 'shared-types';
 
 export const getDashboardSummary = async () => {
   try {
-    const { data } = await api.get<BaseResponse<DashboardSummaryResponse>>(
+    const { data } = await client.get<BaseResponse<DashboardSummaryResponse>>(
       '/api/dashboard/summary',
       {},
       {
@@ -20,12 +20,14 @@ export const getDashboardSummary = async () => {
       },
     );
     return data;
-  } catch {}
+  } catch (error) {
+    console.error('[apis] getDashboardSummary failed', error);
+  }
 };
 
 export const getDashboardTraffic = async (range: 'day' | 'week' | 'month' | 'year') => {
   try {
-    const { data } = await api.get<BaseResponse<DashboardTrafficResponse>>(
+    const { data } = await client.get<BaseResponse<DashboardTrafficResponse>>(
       '/api/dashboard/traffic',
       { range },
       {
@@ -33,12 +35,14 @@ export const getDashboardTraffic = async (range: 'day' | 'week' | 'month' | 'yea
       },
     );
     return data;
-  } catch {}
+  } catch (error) {
+    console.error('[apis] getDashboardTraffic failed', error);
+  }
 };
 
 export const getDashboardPopularPosts = async (range: 'day' | 'week' | 'month' | 'year', limit = 10) => {
   try {
-    const { data } = await api.get<BaseResponse<DashboardPopularPost[]>>(
+    const { data } = await client.get<BaseResponse<DashboardPopularPost[]>>(
       '/api/dashboard/popular-posts',
       { range, limit },
       {
@@ -46,12 +50,14 @@ export const getDashboardPopularPosts = async (range: 'day' | 'week' | 'month' |
       },
     );
     return data;
-  } catch {}
+  } catch (error) {
+    console.error('[apis] getDashboardPopularPosts failed', error);
+  }
 };
 
 export const getDashboardRecentComments = async (limit = 5) => {
   try {
-    const { data } = await api.get<BaseResponse<DashboardRecentComment[]>>(
+    const { data } = await client.get<BaseResponse<DashboardRecentComment[]>>(
       '/api/dashboard/recent-comments',
       { limit },
       {
@@ -59,5 +65,7 @@ export const getDashboardRecentComments = async (limit = 5) => {
       },
     );
     return data;
-  } catch {}
+  } catch (error) {
+    console.error('[apis] getDashboardRecentComments failed', error);
+  }
 };

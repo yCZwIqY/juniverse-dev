@@ -2,7 +2,7 @@
 import { CommentData } from 'apis';
 import { useSession } from 'next-auth/react';
 import { Fragment, useState } from 'react';
-import { deleteComment } from '@/app/_libs/comment';
+import { deleteComment } from 'apis';
 import { useParams, useRouter } from 'next/navigation';
 
 interface PostCommentItemProps {

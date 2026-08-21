@@ -16,9 +16,7 @@ type ContributionCalendar = {
 
 const fetchContributionCalendar = async (): Promise<ContributionCalendar | null> => {
   const token = process.env.GITHUB_TOKEN;
-  if (!token) {
-    return null;
-  }
+  if (!token) return null;
 
   const query = `
     query($login: String!) {
@@ -41,75 +39,59 @@ const fetchContributionCalendar = async (): Promise<ContributionCalendar | null>
 
   const res = await fetch(GITHUB_GRAPHQL_URL, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
     body: JSON.stringify({ query, variables: { login: GITHUB_LOGIN } }),
     next: { revalidate: 600 },
   });
 
-  if (!res.ok) {
-    return null;
-  }
+  if (!res.ok) return null;
 
   const data = (await res.json()) as {
-    data?: {
-      user?: {
-        contributionsCollection?: {
-          contributionCalendar?: ContributionCalendar;
-        };
-      };
-    };
+    data?: { user?: { contributionsCollection?: { contributionCalendar?: ContributionCalendar } } };
   };
 
   return data.data?.user?.contributionsCollection?.contributionCalendar ?? null;
 };
 
-// const formatDate = (value: string) =>
-//   new Date(value).toLocaleDateString('ko-KR', {
-//     year: 'numeric',
-//     month: 'short',
-//     day: 'numeric',
-//   });
-
 const GithubSection = async () => {
   const calendar = await fetchContributionCalendar();
 
   return (
-    <section className={'glass-card w-full p-4 lg:p-8 flex flex-col gap-6 reveal'}>
-      <div className={'flex flex-col gap-2'}>
-        <div className={'text-xl font-bold'}>GitHub</div>
+    <section className="flex flex-col gap-5 reveal">
+      <div>
+        <div className="eyebrow mb-1">Activity</div>
+        <h2 className="text-xl font-bold text-[var(--color-ink)]">GitHub Contributions</h2>
+        {calendar && (
+          <p className="text-sm text-[var(--muted-foreground)] mt-0.5">
+            최근 1년 · 총 {calendar.totalContributions}회
+          </p>
+        )}
       </div>
 
-      <div className={'w-full'}>
-        <div className={'rounded-xl border border-border p-4 bg-background/40 flex flex-col gap-4'}>
-          <div className={'flex items-center justify-between gap-2'}>
-            <div className={'text-base font-bold'}>Contribution</div>
-            <div className={'text-xs text-muted-foreground'}>{calendar ? `총 ${calendar.totalContributions}회` : '불러오는 중'}</div>
-          </div>
-
-          <div className={'overflow-x-auto'}>
-            {calendar ? (
-              <div className={'flex gap-1 min-w-[680px]'}>
-                {calendar.weeks.map((week, index) => (
-                  <div key={`${week.contributionDays[0]?.date ?? index}`} className={'flex flex-col gap-1 flex-1'}>
-                    {week.contributionDays.map((day) => (
-                      <div
-                        key={day.date}
-                        title={`${day.date} · ${day.contributionCount}회`}
-                        className={'aspect-square rounded-sm border border-border'}
-                        style={{ backgroundColor: day.color }}
-                      />
-                    ))}
-                  </div>
+      <div className="border border-[var(--color-hairline)] rounded-[var(--radius-lg)] p-4 lg:p-6 overflow-x-auto">
+        {calendar ? (
+          <div className="flex gap-[3px] min-w-[680px]">
+            {calendar.weeks.map((week, index) => (
+              <div
+                key={week.contributionDays[0]?.date ?? index}
+                className="flex flex-col gap-[3px] flex-1"
+              >
+                {week.contributionDays.map((day) => (
+                  <div
+                    key={day.date}
+                    title={`${day.date} · ${day.contributionCount}회`}
+                    className="aspect-square rounded-sm"
+                    style={{ backgroundColor: day.color }}
+                  />
                 ))}
               </div>
-            ) : (
-              <div className={'text-sm text-muted-foreground'}>GITHUB_TOKEN이 없거나 권한이 부족합니다.</div>
-            )}
+            ))}
           </div>
-        </div>
+        ) : (
+          <p className="text-sm text-[var(--muted-foreground)]">
+            GITHUB_TOKEN이 없거나 권한이 부족합니다.
+          </p>
+        )}
       </div>
     </section>
   );

@@ -20,17 +20,27 @@ const Footer = () => {
   };
 
   return (
-    <div className={'w-full my-5 py-3 px-5 flex items-center justify-between glass-card z-10 flex-shrink-0'}>
-      <span>© 2026 Juniverse Dev</span>
-      <span>
-        <Link href={'/posts'} prefetch={false} onClick={(e) => moveTo(e, '/posts')} className={'hover:underline'}>
+    <footer className="w-full mt-8 pt-6 pb-4 border-t border-[var(--color-hairline)] flex items-center justify-between flex-shrink-0">
+      <span className="eyebrow text-[var(--muted-foreground)]">© 2026 Juniverse Dev</span>
+      <div className="flex gap-5">
+        <Link
+          href="/posts"
+          prefetch={false}
+          onClick={(e) => moveTo(e, '/posts')}
+          className="text-sm text-[var(--muted-foreground)] hover:text-[var(--color-ink)] transition-colors"
+        >
           Posts
         </Link>
-        <Link href={'/projects'} prefetch={false} onClick={(e) => moveTo(e, '/projects')} className={'hover:underline'}>
+        <Link
+          href="/projects"
+          prefetch={false}
+          onClick={(e) => moveTo(e, '/projects')}
+          className="text-sm text-[var(--muted-foreground)] hover:text-[var(--color-ink)] transition-colors"
+        >
           Projects
         </Link>
-      </span>
-    </div>
+      </div>
+    </footer>
   );
 };
 

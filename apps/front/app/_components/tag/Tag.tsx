@@ -9,7 +9,7 @@ interface TagProps {
 const Tag = ({ children, onClick, className }: TagProps) => {
   return (
     <div
-      className={`break-keep whitespace-nowrap bg-card text-gray-600 py-1 px-3 cursor-pointer rounded-full border-border border text-sm ${className}`}
+      className={`chip cursor-pointer ${className ?? ''}`}
       onClick={onClick}
     >
       {children}

@@ -1,26 +1,25 @@
 'use client';
-import { useMenuStore } from '@/app/(protected)/menus/_store';
-import Input from '@/app/(protected)/_components/common/Input';
+
 import { useEffect, useState } from 'react';
-import Button from '@/app/(protected)/_components/common/Button';
+
+import { Button, Input, Label } from 'components';
 import { createMenu, deleteMenu, updateMenu } from '@/app/(protected)/_libs/menus';
 import Modal from '@/app/(protected)/_components/common/Modal';
+import { useMenuStore } from '@/app/(protected)/menus/_store';
 
 const MenuForm = () => {
   const { selectedMenu } = useMenuStore();
-  const [name, setName] = useState<string>('');
+  const [name, setName] = useState('');
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   useEffect(() => {
-    setName(selectedMenu?.name || '');
+    setName(selectedMenu?.name ?? '');
   }, [selectedMenu]);
 
   const onUpdate = async (id: number) => {
-    await updateMenu(id, {
-      name,
-      parentId: selectedMenu?.parent?.id ?? undefined,
-    });
+    await updateMenu(id, { name, parentId: selectedMenu?.parent?.id ?? undefined });
   };
+
   const onCreate = async () => {
     await createMenu({ name, parentId: selectedMenu?.parent?.id ?? undefined });
   };
@@ -33,35 +32,35 @@ const MenuForm = () => {
 
   const onSubmit = () => {
     if (!name || name.length < 1) return;
-    if (selectedMenu?.id) onUpdate(selectedMenu?.id);
+    if (selectedMenu?.id) onUpdate(selectedMenu.id);
     else onCreate();
   };
 
   return (
-    <div className={'h-fit flex flex-col p-2 gap-2 text-base md:text-lg text-gray-100'}>
+    <div className="flex flex-col gap-4">
       {selectedMenu?.parent && (
-        <>
-          <label className={'flex items-center text-gray-300'}>상위 메뉴</label>
-          <div className="text-white">{selectedMenu?.parent?.name}</div>
-        </>
+        <div className="flex flex-col gap-1">
+          <Label className="text-[var(--muted-foreground)]">상위 메뉴</Label>
+          <div className="text-sm font-medium">{selectedMenu.parent.name}</div>
+        </div>
       )}
-      <label id={'name'} htmlFor={'name'} className={'flex items-center text-gray-300 block'}>
-        카테고리 이름
-      </label>
-      <Input id={'name'} value={name} onChange={(e) => setName(e.target.value)} />
-      <div className={'col-span-2 flex gap-2'}>
-        <Button className={'flex-1 flex justify-center rounded-md text-center py-2 bg-cyan-500/80 hover:bg-cyan-400 text-white border border-cyan-300/50'} onClick={onSubmit}>
+
+      <div className="flex flex-col gap-1.5">
+        <Label htmlFor="menu-name">카테고리 이름</Label>
+        <Input id="menu-name" value={name} onChange={(e) => setName(e.target.value)} placeholder="카테고리 이름 입력" />
+      </div>
+
+      <div className="flex gap-2">
+        <Button variant="default" size="md" className="flex-1" onClick={onSubmit} disabled={!name}>
           {selectedMenu?.id ? '수정하기' : '추가하기'}
         </Button>
         {!!selectedMenu?.id && (
-          <Button
-            className={'flex-1 flex justify-center rounded-md text-center py-2 bg-transparent text-red-200 border border-red-400/70 hover:bg-red-500/20'}
-            onClick={() => setIsDeleteOpen(true)}
-          >
+          <Button variant="destructive" size="md" className="flex-1" onClick={() => setIsDeleteOpen(true)}>
             삭제하기
           </Button>
         )}
       </div>
+
       <Modal
         open={isDeleteOpen}
         title="메뉴 삭제"

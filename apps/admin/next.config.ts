@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
   },
   output: 'standalone',
   outputFileTracingRoot: path.join(__dirname, '../../'),
+  transpilePackages: ['components'],
   experimental: {
     serverActions: {
       bodySizeLimit: '10mb',

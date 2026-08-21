@@ -1,7 +1,9 @@
 'use client';
 
-import type { ProjectData } from 'apis';
 import { useRouter } from 'next/navigation';
+
+import type { ProjectData } from 'apis';
+import { Badge, Button } from 'components';
 
 interface ProjectTableProps {
   data: ProjectData[];
@@ -12,68 +14,50 @@ const ProjectTable = ({ data, onDelete }: ProjectTableProps) => {
   const router = useRouter();
 
   return (
-    <div className='flex flex-col gap-3'>
+    <div className="flex flex-col gap-2">
       {data.map((project) => (
         <div
-          onClick={() => router.push(`/projects/${project.id}`)}
           key={project.id}
-          className='rounded-2xl border border-white/10 bg-[linear-gradient(160deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] backdrop-blur-2xl shadow-[0_16px_50px_rgba(0,0,0,0.35)] p-4 text-white'
+          onClick={() => router.push(`/projects/${project.id}`)}
+          className="glass-card p-4 cursor-pointer hover:bg-[var(--color-surface-soft)] transition-colors"
         >
-          <div className='flex flex-col md:flex-row gap-4'>
-            <div className='w-full md:w-[160px]'>
+          <div className="flex gap-4">
+            <div className="w-[120px] shrink-0">
               {project.imageUrls?.[0] ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={project.imageUrls[0]}
                   alt={`${project.title} thumbnail`}
-                  className='h-28 w-full object-cover rounded-xl'
+                  className="h-20 w-full object-cover rounded-[var(--radius-sm)]"
                 />
               ) : (
-                <div className='h-28 w-full rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-sm text-gray-300'>
+                <div className="h-20 w-full rounded-[var(--radius-sm)] border border-[var(--color-hairline)] bg-[var(--color-surface-soft)] flex items-center justify-center text-xs text-[var(--muted-foreground)]">
                   No Image
                 </div>
               )}
             </div>
-            <div className='flex-1'>
-              <div className='text-sm text-cyan-200/80'>#{project.id}</div>
-              <div className='text-lg font-semibold tracking-tight'>{project.title}</div>
-              <div className='mt-1 text-sm text-gray-200/80 line-clamp-2'>{project.description ?? '-'}</div>
-              <div className='mt-2 flex items-center gap-2 text-xs'>
-                <span className='px-2 py-1 rounded-full border border-cyan-300/40 text-cyan-200'>
-                  {project.isToy ? 'Toy' : 'Project'}
-                </span>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-0.5">
+                <span className="text-xs text-[var(--muted-foreground)]">#{project.id}</span>
+                <Badge variant="outline">{project.isToy ? 'Toy' : 'Project'}</Badge>
               </div>
+              <div className="text-sm font-semibold text-[var(--color-ink)]">{project.title}</div>
+              <div className="mt-1 text-xs text-[var(--muted-foreground)] line-clamp-2">{project.description ?? '-'}</div>
             </div>
-            <div className='flex flex-col items-start md:items-end gap-2'>
-              <div className='flex items-center gap-2'>
-                {project.gitHubUrl && (
-                  <a
-                    href={project.gitHubUrl}
-                    target='_blank'
-                    rel='noreferrer'
-                    className='text-cyan-200 border border-cyan-300/50 px-3 py-1 rounded-lg hover:bg-cyan-400/10'
-                  >
-                    GitHub
-                  </a>
-                )}
-                {project.demoUrl && (
-                  <a
-                    href={project.demoUrl}
-                    target='_blank'
-                    rel='noreferrer'
-                    className='text-emerald-200 border border-emerald-300/50 px-3 py-1 rounded-lg hover:bg-emerald-400/10'
-                  >
-                    Demo
-                  </a>
-                )}
-              </div>
-              <button
-                type='button'
-                onClick={() => onDelete(project.id)}
-                className='text-red-200 border border-red-400/70 px-3 py-1 rounded-lg hover:bg-red-500/20'
-              >
+            <div className="flex flex-col items-end gap-1.5 shrink-0" onClick={(e) => e.stopPropagation()}>
+              {project.gitHubUrl && (
+                <Button asChild variant="outline" size="sm">
+                  <a href={project.gitHubUrl} target="_blank" rel="noreferrer">GitHub</a>
+                </Button>
+              )}
+              {project.demoUrl && (
+                <Button asChild variant="outline" size="sm">
+                  <a href={project.demoUrl} target="_blank" rel="noreferrer">Demo</a>
+                </Button>
+              )}
+              <Button variant="destructive" size="sm" onClick={() => onDelete(project.id)}>
                 삭제
-              </button>
+              </Button>
             </div>
           </div>
         </div>

@@ -16,7 +16,7 @@ const MenuGroup = ({ menu }: MenuItemProps) => {
 
   return (
     <div>
-      <div className={`${open ? 'max-h-[1000px]' : 'max-h-[34px] overflow-hidden'} transition-all flex justify-between items-center min-w-[220px] border border-border px-3 py-1 rounded-sm`}>
+      <div className={`${open ? 'max-h-[1000px]' : 'max-h-[34px] overflow-hidden'} transition-all flex justify-between items-center w-full border border-border px-3 py-1 rounded-sm`}>
         <button
           type="button"
           className={'flex-1 text-left'}

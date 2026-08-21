@@ -4,11 +4,15 @@ import Header from '@/app/_components/header/Header';
 import Footer from '@/app/_components/footer/Footer';
 import TrafficTracker from '@/app/_components/TrafficTracker';
 import { NavigationLoadingProvider } from '@/app/_components/navigation/NavigationLoadingProvider';
+import { NavigationLoadingMain } from '@/app/_components/navigation/NavigationLoadingMain';
 import localFont from 'next/font/local';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Juniverse Dev',
+  title: {
+    default: 'Juniverse Dev',
+    template: 'Juniverse Dev - %s',
+  },
   description: '5년차 웹 개발자 이지윤의 기술 블로그입니다. 프로젝트 경험을 다룹니다.',
   icons: {
     icon: '/images/logo.png',
@@ -41,12 +45,12 @@ const MainLayout = ({
   return (
     <html lang='ko' className={suit.className}>
       <body
-        className={`antialiased bg-background w-full min-h-svh lg:max-w-[1120px] mx-auto relative overflow-x-hidden !p-5 flex flex-col h-fit`}
+        className={`antialiased bg-background w-full min-h-svh lg:max-w-[1120px] mx-auto relative overflow-x-clip !p-5 flex flex-col h-fit min-w-0`}
       >
         <NavigationLoadingProvider>
           <TrafficTracker />
           <Header />
-          <main>{children}</main>
+          <NavigationLoadingMain>{children}</NavigationLoadingMain>
           <Footer />
         </NavigationLoadingProvider>
       </body>

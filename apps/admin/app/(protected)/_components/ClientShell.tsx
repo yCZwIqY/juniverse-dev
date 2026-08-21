@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactNode, useEffect, useState } from 'react';
+
 import Sidebar from '@/app/(protected)/_components/Sidebar';
 import { useSse } from '@/hooks/use-sse';
 
@@ -11,7 +12,8 @@ type CommentAlarmPayload = {
 };
 
 const ClientShell = ({ children }: { children: ReactNode }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+
   const { connect } = useSse<CommentAlarmPayload>({
     path: '/api/notifications/stream',
     events: ['comment.alarm'],
@@ -25,53 +27,51 @@ const ClientShell = ({ children }: { children: ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    connect(
-      (data) => {
-        if (!('Notification' in window) || Notification.permission !== 'granted') return;
-        const notification = new Notification(`${data.postTitle} 새 댓글 알림`, {
-          body: `${data.comment} (${new Date(data.createdAt).toLocaleDateString('ko-kr', {
-            hour: '2-digit',
-            minute: '2-digit',
-          })})`,
-        });
-        notification.onclick = () => {
-          window.focus();
-          notification.close();
-        };
-      },
-    );
+    connect((data) => {
+      if (!('Notification' in window) || Notification.permission !== 'granted') return;
+      const notification = new Notification(`${data.postTitle} 새 댓글 알림`, {
+        body: `${data.comment} (${new Date(data.createdAt).toLocaleDateString('ko-kr', { hour: '2-digit', minute: '2-digit' })})`,
+      });
+      notification.onclick = () => {
+        window.focus();
+        notification.close();
+      };
+    });
   }, [connect]);
 
   return (
-    <div className='flex flex-col md:flex-row min-h-dvh h-full overflow-y-scroll'>
-      <div className='md:hidden flex items-center justify-between px-4 py-3'>
-        <div className='text-sm font-semibold text-gray-100'>Admin</div>
+    <div className="flex min-h-dvh bg-[var(--color-canvas)]">
+      {/* Mobile header */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-30 flex items-center justify-between px-4 h-12 border-b border-[var(--color-hairline)] bg-[var(--color-canvas)]">
+        <span className="text-sm font-bold text-[var(--color-ink)]">블로그 관리</span>
         <button
-          type='button'
-          onClick={() => setIsOpen((prev) => !prev)}
-          className='px-3 py-1.5 rounded-lg border border-white/20 bg-white/10 text-gray-100 hover:bg-white/20'
+          type="button"
+          onClick={() => setIsMobileOpen((prev) => !prev)}
+          className="text-sm px-3 py-1 rounded-[var(--radius-sm)] border border-[var(--color-hairline)] hover:bg-[var(--color-surface-soft)]"
         >
           메뉴
         </button>
       </div>
-      <div
-        className={`fixed inset-0 z-40 md:hidden ${isOpen ? '' : 'pointer-events-none'}`}
-        aria-hidden={!isOpen}
-      >
-        <div
-          className={`absolute inset-0 bg-black/50 transition-opacity ${isOpen ? 'opacity-100' : 'opacity-0'}`}
-          onClick={() => setIsOpen(false)}
-        />
-        <div
-          className={`absolute left-0 top-0 h-full w-[280px] transition-transform ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
-        >
-          <Sidebar />
+
+      {/* Mobile overlay */}
+      {isMobileOpen && (
+        <div className="md:hidden fixed inset-0 z-40" aria-modal>
+          <div className="absolute inset-0 bg-[var(--color-overlay-scrim)]" onClick={() => setIsMobileOpen(false)} />
+          <div className="absolute left-0 top-0 h-full w-[220px]">
+            <Sidebar />
+          </div>
         </div>
-      </div>
-      <aside className='hidden md:block md:sticky md:top-0 md:h-dvh'>
+      )}
+
+      {/* Desktop sidebar */}
+      <aside className="hidden md:block sticky top-0 h-dvh shrink-0">
         <Sidebar />
       </aside>
-      <main className='flex-1 p-4 md:p-10 md:max-h-dvh md:overflow-y-auto'>{children}</main>
+
+      {/* Main content */}
+      <main className="flex-1 mt-12 md:mt-0 md:max-h-dvh md:overflow-y-auto p-6 md:p-10">
+        {children}
+      </main>
     </div>
   );
 };

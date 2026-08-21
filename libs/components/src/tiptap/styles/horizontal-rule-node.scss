@@ -1,0 +1,14 @@
+.tiptap.ProseMirror {
+  hr {
+    border: none;
+    height: 1px;
+    background-color: var(--color-hairline, oklch(0.27 0.008 278));
+  }
+
+  [data-type="horizontalRule"] {
+    margin-top: 2.25em;
+    margin-bottom: 2.25em;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+}

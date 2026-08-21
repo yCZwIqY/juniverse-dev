@@ -1,10 +1,12 @@
 'use server';
 
 import 'server-only';
-import api from '../client/api';
+import client from '../http/client';
 
 export const trackVisit = async () => {
   try {
-    await api.post('/api/traffic/visit');
-  } catch {}
+    await client.post('/api/traffic/visit');
+  } catch (error) {
+    console.error('[apis] trackVisit failed', error);
+  }
 };

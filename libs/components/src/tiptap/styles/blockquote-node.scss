@@ -1,0 +1,29 @@
+.tiptap.ProseMirror {
+  blockquote {
+    position: relative;
+    padding-left: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    margin: 1.5rem 0;
+    background-color: var(--color-canvas-soft, oklch(0.145 0.005 278));
+    border-radius: 0 4px 4px 0;
+
+    p {
+      margin-top: 0;
+      color: var(--color-body, oklch(0.74 0 0));
+      font-style: italic;
+    }
+
+    &::before {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 3px;
+      background-color: var(--color-primary, oklch(0.62 0.22 278));
+      content: '';
+      border-radius: 0;
+    }
+  }
+}

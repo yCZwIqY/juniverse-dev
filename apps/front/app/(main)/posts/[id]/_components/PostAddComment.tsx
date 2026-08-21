@@ -2,7 +2,7 @@
 import CommentIcon from '@/app/_components/icon/CommentIcon';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { useState } from 'react';
-import { createComment } from '@/app/_libs/comment';
+import { createComment } from 'apis';
 import { useParams, useRouter } from 'next/navigation';
 
 const PostAddComment = () => {

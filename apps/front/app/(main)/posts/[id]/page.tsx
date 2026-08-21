@@ -33,13 +33,15 @@ const PostDetailPage = async ({ params }: PostDetailPageProps) => {
 
   return (
     <div>
-      <div className={'glass-card p-8 mt-4'}>
-        <PostTitle post={post.data} />
-        <PostButtons title={post.data.title} subtitle={post.data.subtitle} />
-        <EditorViewer content={post.data.content} />
+      <div className={'glass-card mt-4 overflow-hidden'}>
+        <div className="p-4 md:p-6 border-b border-[var(--color-hairline)]">
+          <PostTitle post={post.data} />
+          <PostButtons title={post.data.title} subtitle={post.data.subtitle} />
+        </div>
+        <EditorViewer content={post.data.content} className="px-4 md:px-6 py-5 md:py-6" />
       </div>
       <PostNavigator next={post.data.next} prev={post.data.prev}/>
-      <div className={'border border-border rounded-lg p-8 bg-card mt-4'}>
+      <div className={'border border-border rounded-lg p-4 md:p-6 bg-card mt-4'}>
         <PostComments comments={post.data.comments} />
       </div>
       <QuickMenus content={post.data.content ?? ''} />
