@@ -76,7 +76,7 @@ const Header = () => {
 
   return (
     <header className="sticky top-3 mt-3 z-10 flex-shrink-0 min-w-0">
-      <div className="flex items-center justify-between gap-3 px-4 py-3 bg-[var(--color-canvas-soft)] border border-[var(--color-hairline)] rounded-[var(--radius-lg)] overflow-hidden">
+      <div className="flex items-center justify-between gap-3 px-4 py-1.5 bg-[var(--color-canvas-soft)] border border-[var(--color-hairline)] rounded-[var(--radius-lg)] overflow-hidden">
         {/* Logo + wordmark */}
         <Link href="/" prefetch={false} onClick={onClickTo('/')} className="flex items-center shrink-0 opacity-90 hover:opacity-100 transition-opacity duration-150">
           <Image src="/images/header-1.png" alt="Juniverse Dev" width={2172} height={724} className="h-12 w-auto" priority />
