@@ -32,7 +32,8 @@ const PostTable = ({ data }: PostTableProps) => {
 
       if (!res.ok) {
         setModalTitle('확인 실패');
-        setModalText(payload?.error ?? `요청 실패 (status: ${res.status})`);
+        const err = payload?.error;
+        setModalText(err ? (typeof err === 'string' ? err : JSON.stringify(err, null, 2)) : `요청 실패 (status: ${res.status})`);
         setModalOpen(true);
         return;
       }

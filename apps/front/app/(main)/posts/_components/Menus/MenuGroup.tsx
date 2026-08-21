@@ -32,7 +32,7 @@ const MenuGroup = ({ menu }: MenuItemProps) => {
                   aria-expanded={open}
                   className={`${open ? 'rotate-0' : 'rotate-180'} transition-all`}
                   type={'button'}
-                  onClick={() => setOpen(!open)}>
+                  onClick={(e) => { e.stopPropagation(); setOpen(!open); }}>
             <svg width='12px'
                  height='12px'
                  viewBox='0 0 1024 1024'
