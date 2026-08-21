@@ -14,6 +14,7 @@ COPY apps ./apps
 COPY libs ./libs
 
 RUN pnpm install --frozen-lockfile
+RUN pnpm --filter shared-types build
 RUN pnpm --filter apis build
 RUN pnpm --filter admin build
 
