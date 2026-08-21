@@ -78,11 +78,8 @@ const Header = () => {
     <header className="sticky top-3 mt-3 z-10 flex-shrink-0 min-w-0">
       <div className="flex items-center justify-between gap-3 px-4 py-2.5 bg-[var(--color-canvas-soft)] border border-[var(--color-hairline)] rounded-[var(--radius-lg)] overflow-hidden">
         {/* Logo + wordmark */}
-        <Link href="/" prefetch={false} onClick={onClickTo('/')} className="flex items-center gap-2.5 shrink-0 group">
-          <Image src="/images/logo.png" className="size-6" alt="로고" width={24} height={24} />
-          <span className="hidden sm:block text-sm font-bold tracking-tight text-[var(--color-ink)] group-hover:text-[var(--color-primary)] transition-colors duration-150">
-            JUNIVERSE DEV
-          </span>
+        <Link href="/" prefetch={false} onClick={onClickTo('/')} className="flex items-center shrink-0 opacity-90 hover:opacity-100 transition-opacity duration-150">
+          <Image src="/images/header.png" alt="Juniverse Dev" width={2194} height={717} className="h-7 w-auto" priority />
         </Link>
 
         {/* Nav */}
