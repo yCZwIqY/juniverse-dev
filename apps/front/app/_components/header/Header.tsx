@@ -83,6 +83,7 @@ const Header = () => {
   const navLinkClass = (targetPath: string) =>
     [
       'px-3 py-1.5 rounded-[var(--radius-sm)] text-sm font-medium transition-colors duration-150',
+      'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-[var(--color-primary)]',
       pathname === targetPath
         ? 'bg-[var(--color-primary)] text-[var(--color-on-primary)]'
         : 'text-[var(--color-body)] hover:text-[var(--color-ink)] hover:bg-[var(--color-surface-soft)]',
@@ -93,7 +94,7 @@ const Header = () => {
       <div className="flex items-center justify-between gap-3 px-4 py-1.5 bg-[var(--color-canvas-soft)] border border-[var(--color-hairline)] rounded-[var(--radius-lg)] overflow-hidden">
         {/* Logo + wordmark */}
         <Link href="/" prefetch={false} onClick={onClickTo('/')} className="flex items-center shrink-0 opacity-90 hover:opacity-100 transition-opacity duration-150">
-          <Image src="/images/header-1.png" alt="Juniverse Dev" width={2172} height={724} className="h-16 w-auto" priority />
+          <Image src="/images/header-1.png" alt="Juniverse Dev" width={2172} height={724} className="h-9 sm:h-14 w-auto" priority />
         </Link>
 
         {/* Nav */}
