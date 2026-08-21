@@ -1,7 +1,10 @@
 import React from 'react';
+import { Metadata } from 'next';
 import MainProjects from '@/app/(main)/projects/_components/main-projects/MainProjects';
 import { getProjects } from 'apis';
 import ToyProjects from '@/app/(main)/projects/_components/toy-projects/ToyProjects';
+
+export const metadata: Metadata = { title: 'Projects' };
 
 export const revalidate = 3600;
 

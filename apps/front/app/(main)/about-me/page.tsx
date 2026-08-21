@@ -1,5 +1,8 @@
+import { Metadata } from 'next';
 import MyInfoSection from '@/app/(main)/about-me/_components/MyInfoSection';
 import GithubSection from '@/app/(main)/about-me/_components/GithubSection';
+
+export const metadata: Metadata = { title: 'About Me' };
 
 export const revalidate = 3600;
 

@@ -11,7 +11,7 @@ const ProjectScreenshotItem = ({ imageUrl, alt }: ProjectScreenshotItemProps) =>
       href={imageUrl}
       target="_blank"
       rel="noreferrer"
-      className="group block rounded-[var(--radius-lg)] overflow-hidden border border-[var(--color-hairline)] bg-[var(--color-canvas-soft)] hover:border-[var(--color-primary)] transition-colors duration-150"
+      className="group block rounded-[var(--radius-sm)] overflow-hidden border border-[var(--color-hairline)] bg-[var(--color-canvas)] hover:border-[var(--color-primary)] transition-colors duration-150"
     >
       <Image
         src={imageUrl}

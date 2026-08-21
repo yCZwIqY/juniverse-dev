@@ -4,7 +4,6 @@
   h3,
   h4 {
     position: relative;
-    color: inherit;
     font-style: inherit;
 
     &:first-child,
@@ -13,27 +12,67 @@
     }
   }
 
+  // H1 — large title with bottom hairline divider
   h1 {
-    font-size: 1.5em;
-    font-weight: 700;
-    margin-top: 3em;
-  }
-
-  h2 {
-    font-size: 1.25em;
+    font-size: 1.45em;
     font-weight: 700;
     margin-top: 2.5em;
+    margin-bottom: 0.5em;
+    color: var(--color-ink-strong, oklch(1 0 0));
+    padding-bottom: 0.4em;
+    border-bottom: 1px solid var(--color-hairline, oklch(0.27 0.008 278));
+    letter-spacing: -0.01em;
   }
 
+  // H2 — section heading with 3px violet left bar
+  h2 {
+    font-size: 1.18em;
+    font-weight: 700;
+    margin-top: 2em;
+    margin-bottom: 0.25em;
+    color: var(--color-ink, oklch(0.94 0 0));
+    padding-left: 0.85em;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.12em;
+      bottom: 0.12em;
+      width: 3px;
+      background-color: var(--color-primary, oklch(0.62 0.22 278));
+      border-radius: 999px;
+    }
+  }
+
+  // H3 — subsection with 2px violet left bar (muted)
   h3 {
-    font-size: 1.125em;
+    font-size: 1.05em;
     font-weight: 600;
-    margin-top: 2em;
+    margin-top: 1.75em;
+    margin-bottom: 0.2em;
+    color: var(--color-ink, oklch(0.94 0 0));
+    padding-left: 0.75em;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.2em;
+      bottom: 0.2em;
+      width: 2px;
+      background-color: var(--color-primary, oklch(0.62 0.22 278));
+      border-radius: 999px;
+      opacity: 0.55;
+    }
   }
 
+  // H4 — inline label, violet tint, no bar
   h4 {
-    font-size: 1em;
+    font-size: 0.95em;
     font-weight: 600;
-    margin-top: 2em;
+    margin-top: 1.5em;
+    margin-bottom: 0.15em;
+    color: var(--color-primary-soft, oklch(0.70 0.16 278));
   }
 }

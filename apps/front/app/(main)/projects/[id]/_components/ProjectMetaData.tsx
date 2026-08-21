@@ -47,7 +47,7 @@ const ProjectMetaData = ({ project }: ProjectMetaDataProps) => {
   return (
     <section className="flex flex-col gap-2.5">
       <div className="eyebrow">Info</div>
-      <div className="border border-[var(--color-hairline)] rounded-[var(--radius-lg)] bg-[var(--color-canvas-soft)] divide-y divide-[var(--color-hairline)] overflow-hidden">
+      <div className="rounded-[var(--radius-sm)] bg-[var(--color-canvas)] divide-y divide-[var(--color-hairline)] overflow-hidden">
         {project.position && (
           <MetaRow label="Position">{project.position}</MetaRow>
         )}

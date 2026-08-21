@@ -10,7 +10,7 @@ const ProjectScreenshots = ({ imageUrls = [], title }: ProjectScreenshotsProps) 
     <section className="flex flex-col gap-2.5">
       <div className="eyebrow">Screenshots</div>
       {imageUrls.length === 0 ? (
-        <div className="border border-[var(--color-hairline)] rounded-[var(--radius-lg)] bg-[var(--color-canvas-soft)] py-12 text-center text-sm text-[var(--color-mute)]">
+        <div className="border border-[var(--color-hairline)] rounded-[var(--radius-lg)] bg-[var(--color-canvas)] py-12 text-center text-sm text-[var(--color-mute)]">
           등록된 스크린샷이 없습니다
         </div>
       ) : (

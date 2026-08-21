@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const { id } = await params;
   const project = await getProject(id);
   return {
-    title: project?.data?.title ? `Project: ${project.data.title}` : 'Project',
+    title: project?.data?.title ?? 'Project',
     description: project?.data?.description,
     keywords: project?.data?.tags,
   };

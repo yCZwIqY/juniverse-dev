@@ -1,7 +1,10 @@
+import { Metadata } from 'next';
 import PostTop from '@/app/(main)/posts/_components/PostTop';
 import PostList from '@/app/(main)/posts/_components/PostList';
 import { getMenuList, getPosts } from 'apis';
 import MenuList from '@/app/(main)/posts/_components/Menus/MenuList';
+
+export const metadata: Metadata = { title: 'Posts' };
 
 export const revalidate = 60;
 

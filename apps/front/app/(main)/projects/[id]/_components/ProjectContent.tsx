@@ -64,7 +64,7 @@ const ProjectContent = ({ content }: ProjectContentProps) => {
               </h3>
             </div>
             {/* Content card */}
-            <div className="border border-[var(--color-hairline)] rounded-[var(--radius-lg)] bg-[var(--color-canvas-soft)] overflow-hidden">
+            <div className="rounded-[var(--radius-sm)] bg-[var(--color-canvas)] overflow-hidden">
               <EditorViewer content={section.bodyHtml} />
             </div>
           </article>
