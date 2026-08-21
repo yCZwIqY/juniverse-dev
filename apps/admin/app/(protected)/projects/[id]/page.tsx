@@ -13,8 +13,45 @@ import ImageFileInput from '@/app/(protected)/_components/form/ImageFileInput';
 import TagInput from '@/app/(protected)/_components/form/TagInput';
 import TextInput from '@/app/(protected)/_components/form/TextInput';
 
-const DEFAULT_CONTENT =
-  '<h1>프로젝트 소개</h1><p>이 프로젝트는 어떤 문제를 해결하기 위해 시작되었으며, 어떤 사용자에게 어떤 가치를 제공하는지 설명합니다.</p><h2>기획 배경 및 목적</h2><p>프로젝트를 시작하게 된 계기와 기존 방식의 문제점, 이를 어떻게 개선하고자 했는지를 작성합니다.</p><h2>주요 기능</h2><ul><li>핵심 기능 1</li><li>핵심 기능 2</li></ul><h2>기술 스택</h2><ul><li>Frontend: React / Next.js</li><li>Backend: NestJS</li></ul><h2>담당 역할 및 기여도</h2><p>본인이 기여한 부분을 중심으로 작성합니다.</p><h2>소스 코드</h2>';
+const DEFAULT_CONTENT = [
+  '<h1>프로젝트명</h1>',
+  '<p>한 줄 소개 — 이 프로젝트가 무엇이고 어떤 문제를 해결하는지 간결하게 작성합니다.</p>',
+
+  '<h2>개요</h2>',
+  '<p>프로젝트의 배경과 목적, 타겟 사용자를 설명합니다. 기존에 어떤 문제가 있었고 이 프로젝트가 어떤 가치를 제공하는지 서술합니다.</p>',
+
+  '<h2>주요 기능</h2>',
+  '<ul>',
+  '<li>핵심 기능 1: 간략 설명</li>',
+  '<li>핵심 기능 2: 간략 설명</li>',
+  '<li>핵심 기능 3: 간략 설명</li>',
+  '</ul>',
+
+  '<h2>기술 스택</h2>',
+  '<h3>Frontend</h3>',
+  '<ul><li>Next.js (App Router, SSR/ISR)</li><li>TypeScript</li><li>Tailwind CSS</li></ul>',
+  '<h3>Backend</h3>',
+  '<ul><li>NestJS</li><li>PostgreSQL</li><li>Redis</li></ul>',
+  '<h3>Infrastructure</h3>',
+  '<ul><li>Docker</li><li>AWS Lightsail</li></ul>',
+
+  '<h2>아키텍처</h2>',
+  '<p>시스템 구성, 주요 설계 결정 사항, 데이터 흐름 등을 설명합니다.</p>',
+
+  '<h2>담당 역할</h2>',
+  '<p>본인이 기여한 부분을 중심으로 작성합니다. 구체적인 성과나 수치가 있다면 포함합니다.</p>',
+  '<ul>',
+  '<li>역할 1</li>',
+  '<li>역할 2</li>',
+  '</ul>',
+
+  '<h2>트러블슈팅</h2>',
+  '<h3>문제: 제목</h3>',
+  '<p>어떤 문제가 발생했고 어떻게 해결했는지 서술합니다.</p>',
+
+  '<h2>배운 점</h2>',
+  '<p>이 프로젝트를 통해 기술적으로, 또는 협업·프로세스 측면에서 배운 점을 작성합니다.</p>',
+].join('');
 
 const ProjectDetailPage = () => {
   const params = useParams();

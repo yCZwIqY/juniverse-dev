@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { useController, useFormContext } from 'react-hook-form';
 
-import { getMenuList } from 'apis';
+import { getMenuList } from '@/app/(protected)/_libs/menus';
 import { Label, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'components';
 
 const MenuSelect = () => {

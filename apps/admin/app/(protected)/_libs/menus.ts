@@ -1,9 +1,20 @@
 'use server';
 
-import { MenuRequest } from 'apis';
+import { MenuRequest, MenusResponse } from 'apis';
 import api from '@/utils/api';
 import { revalidateTag } from 'next/cache';
 import { revalidateFront } from '@/lib/revalidate-front';
+
+export const getMenuList = async (type = 'tree') => {
+  try {
+    return await api.get<MenusResponse>(`/api/menus?type=${type}`, {}, {
+      cache: 'force-cache',
+      next: { tags: [`menus:${type}`], revalidate: 60 * 60 * 24 },
+    });
+  } catch (error) {
+    console.error('[admin] getMenuList failed', error);
+  }
+};
 
 export const updateMenu = async (id: number, request: MenuRequest) => {
   const res = await api.patch(`/api/menus/${id}`, request);
