@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 const NAV_ITEMS = [
@@ -18,7 +19,8 @@ const Sidebar = () => {
 
   return (
     <div className="h-full md:h-dvh w-full md:w-[220px] flex flex-col border-r border-[var(--color-hairline)] bg-[var(--color-canvas)]">
-      <div className="px-6 py-5 border-b border-[var(--color-hairline)]">
+      <div className="px-4 py-4 border-b border-[var(--color-hairline)] flex items-center gap-2.5">
+        <Image src="/header-1.png" alt="Juniverse Dev" width={28} height={28} className="shrink-0" />
         <span className="text-sm font-bold tracking-tight text-[var(--color-ink)]">블로그 관리</span>
       </div>
       <nav className="flex-1 flex flex-col gap-0.5 px-3 py-3">
