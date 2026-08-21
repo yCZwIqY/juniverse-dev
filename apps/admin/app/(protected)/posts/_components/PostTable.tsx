@@ -51,6 +51,10 @@ const PostTable = ({ data }: PostTableProps) => {
         ].join('\n'),
       );
       setModalOpen(true);
+    } catch (e) {
+      setModalTitle('오류');
+      setModalText(e instanceof Error ? e.message : '알 수 없는 오류가 발생했습니다.');
+      setModalOpen(true);
     } finally {
       setLoadingId(null);
     }
@@ -75,11 +79,11 @@ const PostTable = ({ data }: PostTableProps) => {
                 {post.menu?.name ?? '-'} · 조회수 {post.viewCount} · {new Date(post.createdAt).toLocaleDateString('ko-KR')}
               </div>
             </div>
-            <div className="flex gap-1 shrink-0" onClick={(e) => e.stopPropagation()}>
+            <div className="flex gap-1 shrink-0">
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => requestInspect(post.id)}
+                onClick={(e) => { e.stopPropagation(); requestInspect(post.id); }}
                 loading={loadingId === post.id}
               >
                 색인 확인
@@ -87,7 +91,7 @@ const PostTable = ({ data }: PostTableProps) => {
               <Button
                 variant="destructive"
                 size="sm"
-                onClick={() => deletePost(post.id.toString())}
+                onClick={(e) => { e.stopPropagation(); deletePost(post.id.toString()); }}
               >
                 삭제
               </Button>
