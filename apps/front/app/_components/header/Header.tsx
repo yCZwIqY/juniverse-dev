@@ -19,7 +19,9 @@ const Header = () => {
   const { startNavigation, stopNavigation } = useNavigationLoading();
   const [searchText, setSearchText] = useState('');
   const [searchFocused, setSearchFocused] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const lastScrollY = useRef(0);
 
   const onSearch = (e: FormEvent) => {
     e.preventDefault();
@@ -54,6 +56,18 @@ const Header = () => {
     };
 
   useEffect(() => {
+    const onScroll = () => {
+      const current = window.scrollY;
+      if (current <= 0) { setHidden(false); }
+      else if (current > lastScrollY.current + 4) { setHidden(true); }
+      else if (current < lastScrollY.current - 4) { setHidden(false); }
+      lastScrollY.current = current;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       const isMac = navigator.userAgent.includes('Mac');
       const trigger = isMac ? e.metaKey && e.key.toLowerCase() === 'k' : e.ctrlKey && e.key.toLowerCase() === 'k';
@@ -75,7 +89,7 @@ const Header = () => {
     ].join(' ');
 
   return (
-    <header className="sticky top-3 mt-3 z-10 flex-shrink-0 min-w-0">
+    <header className={`sticky top-3 mt-3 z-10 flex-shrink-0 min-w-0 transition-transform duration-300 ${hidden ? '-translate-y-[120%]' : 'translate-y-0'}`}>
       <div className="flex items-center justify-between gap-3 px-4 py-1.5 bg-[var(--color-canvas-soft)] border border-[var(--color-hairline)] rounded-[var(--radius-lg)] overflow-hidden">
         {/* Logo + wordmark */}
         <Link href="/" prefetch={false} onClick={onClickTo('/')} className="flex items-center shrink-0 opacity-90 hover:opacity-100 transition-opacity duration-150">
