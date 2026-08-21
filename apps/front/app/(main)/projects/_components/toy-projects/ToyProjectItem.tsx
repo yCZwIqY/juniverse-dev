@@ -2,7 +2,7 @@
 import { ProjectData } from 'apis';
 import Tag from '@/app/_components/tag/Tag';
 import { ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 interface ToyProjectItemProps {
   project: ProjectData;
@@ -35,23 +35,23 @@ const TinyIconLink = ({ href, label, children }: TinyIconLinkProps) => {
 
 const ToyProjectItem = ({ project }: ToyProjectItemProps) => {
   const detailHref = `/projects/${project.id}`;
-  const router = useRouter();
 
   return (
-    <div onClick={e => {
-      e.stopPropagation();
-      router.push(detailHref);
-    }}
-         className={'glass-card p-4 lg:p-5 flex flex-col justify-between gap-3 transition-all hover:!border-accent'}>
-      <div className={'flex flex-col items-center lg:items-start gap-1'}>
-        <h3 className={'text-lg font-bold text-none text-foreground hover:underline underline-offset-4'}>
+    <article className={'glass-card p-4 lg:p-5 flex flex-col justify-between gap-3 transition-all hover:!border-accent relative'}>
+      <Link
+        href={detailHref}
+        className="absolute inset-0 rounded-[inherit]"
+        aria-label={project.title}
+      />
+      <div className={'flex flex-col items-center lg:items-start gap-1 relative z-10'}>
+        <h3 className={'text-lg font-bold text-none text-foreground'} aria-hidden="true">
           {project.title}
         </h3>
         <div className={'text-gray-500 text-sm text-center lg:text-left break-keep'}>{project.description}</div>
       </div>
 
-      <div className={'w-full flex items-end justify-between gap-2'}>
-        <div className={'flex flex-wrap lg:justify-start justify-center gap-1 [&_div]:text-sm [&_div]:!text-xs'}>
+      <div className={'w-full flex items-end justify-between gap-2 relative z-10'}>
+        <div className={'flex flex-wrap lg:justify-start justify-center gap-1 [&_span]:text-sm [&_span]:!text-xs'}>
           {project.tags.slice(0, 3).map((it) => (
             <Tag key={it}>{it}</Tag>
           ))}
@@ -73,7 +73,7 @@ const ToyProjectItem = ({ project }: ToyProjectItemProps) => {
           </TinyIconLink>
 
           <TinyIconLink href={project.gitHubUrl} label={'GitHub'}>
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
               <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
               <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
               <g id="SVGRepo_iconCarrier">
@@ -90,7 +90,7 @@ const ToyProjectItem = ({ project }: ToyProjectItemProps) => {
           </TinyIconLink>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 

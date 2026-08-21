@@ -20,7 +20,8 @@ const PostNavigator = ({ next, prev }: PostNavigatorProps) => {
                  viewBox='0 0 1024 1024'
                  version='1.1'
                  xmlns='http://www.w3.org/2000/svg'
-                 fill='var(--color-gray-400)'>
+                 fill='var(--color-gray-400)'
+                 aria-hidden>
               <g id='SVGRepo_bgCarrier'
                  strokeWidth='0'></g>
               <g id='SVGRepo_tracerCarrier'
@@ -34,6 +35,7 @@ const PostNavigator = ({ next, prev }: PostNavigatorProps) => {
             <span className={'text-sm'}>이전글</span>
           </div>
           <Link href={`/posts/${prev.id}`}
+                aria-label={`이전글: ${prev.title}`}
                 className={'flex flex-col gap-1'}>
             <div className={'text-lg font-bold font-bold hover:underline'}>{prev.title}</div>
             <div className={'text-gray-500'}>{prev.subtitle}</div>
@@ -51,7 +53,8 @@ const PostNavigator = ({ next, prev }: PostNavigatorProps) => {
                  viewBox='0 0 1024 1024'
                  version='1.1'
                  xmlns='http://www.w3.org/2000/svg'
-                 fill='var(--color-gray-400)'>
+                 fill='var(--color-gray-400)'
+                 aria-hidden>
               <g id='SVGRepo_bgCarrier'
                  strokeWidth='0'></g>
               <g id='SVGRepo_tracerCarrier'
@@ -64,6 +67,7 @@ const PostNavigator = ({ next, prev }: PostNavigatorProps) => {
             </svg>
           </div>
           <Link href={`/posts/${next.id}`}
+                aria-label={`다음글: ${next.title}`}
                 className={'flex flex-col gap-1 text-right'}>
             <div className={'text-lg font-bold font-bold hover:underline'}>{next.title}</div>
             <div className={'text-gray-500'}>{next.subtitle}</div>

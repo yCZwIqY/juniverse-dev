@@ -28,7 +28,7 @@ const PostButtons = ({ title, subtitle }: PostButtonsProps) => {
           router.push('/posts');
         }}
       >
-        <svg fill="var(--tt-theme-text)" width="18px" height="18px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+        <svg fill="var(--tt-theme-text)" width="18px" height="18px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden>
           <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
           <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
           <g id="SVGRepo_iconCarrier">
@@ -38,7 +38,7 @@ const PostButtons = ({ title, subtitle }: PostButtonsProps) => {
         <span>목록 페이지로</span>
       </button>
       <button className={'flex items-center justify-center gap-2 font-bold rounded-sm px-3 py-1 bg-accent text-white'} onClick={onShare}>
-        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
           <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
           <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
           <g id="SVGRepo_iconCarrier">

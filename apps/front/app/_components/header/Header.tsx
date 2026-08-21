@@ -86,7 +86,7 @@ const Header = () => {
         </Link>
 
         {/* Nav */}
-        <nav className={`flex items-center gap-0.5 ${searchFocused ? 'hidden sm:flex' : 'flex'}`}>
+        <nav aria-label="주 내비게이션" className={`flex items-center gap-0.5 ${searchFocused ? 'hidden sm:flex' : 'flex'}`}>
           <Link href="/posts" prefetch={false} onClick={onClickTo('/posts')} className={navLinkClass('/posts')}>
             Posts
           </Link>
@@ -109,7 +109,7 @@ const Header = () => {
               type="button"
               onClick={onClickSearchIcon}
               className="text-[var(--color-mute)] hover:text-[var(--color-ink)] transition-colors duration-150 shrink-0"
-              title="검색"
+              aria-label="검색"
             >
               <SearchIcon />
             </button>
@@ -117,6 +117,7 @@ const Header = () => {
               ref={inputRef}
               className="flex-1 min-w-0 bg-transparent text-sm text-[var(--color-ink)] placeholder:text-[var(--color-mute)] outline-none border-none"
               placeholder="검색... ⌘K"
+              aria-label="포스트 검색"
               value={searchText}
               onFocus={() => setSearchFocused(true)}
               onBlur={() => setSearchFocused(false)}

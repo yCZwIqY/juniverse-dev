@@ -39,6 +39,7 @@ const PostAddComment = () => {
           </button>
         </div>
         <textarea
+          aria-label="댓글 내용"
           placeholder={'댓글을 작성해 주세요'}
           className={'w-full h-[150px] resize-none border border-border rounded-md bg-background p-4'}
           value={comment}

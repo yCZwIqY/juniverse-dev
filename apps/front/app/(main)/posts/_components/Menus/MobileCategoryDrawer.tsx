@@ -12,11 +12,19 @@ interface MobileCategoryDrawerProps {
 export const MobileCategoryDrawer = ({ menus }: MobileCategoryDrawerProps) => {
   const [open, setOpen] = useState(false);
 
-  // 열릴 때 body 스크롤 막기
   useEffect(() => {
     if (open) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = '';
     return () => { document.body.style.overflow = ''; };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
   }, [open]);
 
   return (
@@ -46,6 +54,9 @@ export const MobileCategoryDrawer = ({ menus }: MobileCategoryDrawerProps) => {
 
           {/* 패널 */}
           <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="카테고리"
             className="absolute bottom-0 left-0 right-0 bg-[var(--color-canvas-soft)] border-t border-[var(--color-hairline)] rounded-t-[var(--radius-lg)] max-h-[72vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >

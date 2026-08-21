@@ -5,7 +5,7 @@ interface ViewIconProps {
 
 const ViewIcon = ({ color, size }: ViewIconProps) => {
   return (
-    <svg width={`${size ?? 22}px`} height={`${size ?? 22}px`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width={`${size ?? 22}px`} height={`${size ?? 22}px`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
       <g id="SVGRepo_iconCarrier">

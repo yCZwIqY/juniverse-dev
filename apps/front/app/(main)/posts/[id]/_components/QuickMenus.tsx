@@ -112,9 +112,15 @@ const QuickMenus = ({ content }: QuickMenusProps) => {
     <div className={'glass-card rounded-lg p-8 hidden xl:block !fixed top-32 right-2 max-w-[400px] w-[calc((100dvw_-_1200px)_/_2)] overflow-auto break-words max-h-[calc(100vh_-_10rem)]'}>
       <ul className={'flex flex-col gap-2 overflow-y-auto'}>
         {heading.map((el, index) => (
-          <li className={`font-bold ${HEADING_STYLE_MAP[el.heading]} ${focusHeading !== index ? 'text-gray-500' : ''} cursor-pointer`}
+          <li key={`${el.heading}-${index}`} className={`font-bold ${HEADING_STYLE_MAP[el.heading]} ${focusHeading !== index ? 'text-gray-500' : ''}`}>
+            <button
+              type="button"
+              className="text-left w-full cursor-pointer hover:opacity-80"
               onClick={() => onClick(el)}
-              key={`${el.heading}-${index}`}>{el.text}</li>
+            >
+              {el.text}
+            </button>
+          </li>
         ))}
       </ul>
     </div>

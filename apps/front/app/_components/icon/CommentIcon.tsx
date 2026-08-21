@@ -5,7 +5,7 @@ interface CommentIconProps {
 
 const CommentIcon = ({ size, color }: CommentIconProps) => {
   return (
-    <svg width={`${size ?? 24}px`} height={`${size ?? 24}px`} viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width={`${size ?? 24}px`} height={`${size ?? 24}px`} viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
       <g id="SVGRepo_iconCarrier">

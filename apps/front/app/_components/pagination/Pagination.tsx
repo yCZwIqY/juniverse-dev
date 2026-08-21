@@ -21,72 +21,75 @@ const Pagination = ({ page, total, limit }: PaginationProps) => {
   };
 
   return (
-    <div className={'flex items-center gap-2'}>
-      <button className={`rotate-180 ${1 !== Number(page) ? 'rounded-md hover:bg-foreground/30 active:bg-foreground/50' : 'opacity-50'}`}
-              disabled={1 === Number(page)}
-              type={'button'}
-              title={'첫 페이지로 이동'}
-              onClick={() => onPageChange(1)}>
-        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-          <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-          <g id="SVGRepo_iconCarrier">
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M12.293 7.293a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L15.586 12l-3.293-3.293a1 1 0 0 1 0-1.414Z"
-              fill='var(--color-foreground)'
-            ></path>
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M6.293 7.293a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L9.586 12 6.293 8.707a1 1 0 0 1 0-1.414Z"
-              fill='var(--color-foreground)'
-            ></path>
-          </g>
-        </svg>
-      </button>
-      {Array.from({ length: renderMaxPage }).map((_, i) => (
-        <button
-          key={i}
-          type={'button'}
-          title={`${startIndex + i}번째 페이지로 이동`}
-          onClick={() => {
-            if (Number(startIndex + i) === Number(page)) {
-              return;
-            }
-            onPageChange(startIndex + i);
-          }}
-          className={`border border-gray-700 size-7 rounded-md ${Number(startIndex + i) === Number(page) ? 'bg-accent' : 'border border-foreground hover:bg-foreground/30 active:bg-foreground/50'}`}
-        >
-          {startIndex + i}
+    <nav aria-label="페이지 탐색">
+      <div className={'flex items-center gap-2'}>
+        <button className={`rotate-180 ${1 !== Number(page) ? 'rounded-md hover:bg-foreground/30 active:bg-foreground/50' : 'opacity-50'}`}
+                disabled={1 === Number(page)}
+                type={'button'}
+                aria-label={'첫 페이지로 이동'}
+                onClick={() => onPageChange(1)}>
+          <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+            <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M12.293 7.293a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L15.586 12l-3.293-3.293a1 1 0 0 1 0-1.414Z"
+                fill='var(--color-foreground)'
+              ></path>
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M6.293 7.293a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L9.586 12 6.293 8.707a1 1 0 0 1 0-1.414Z"
+                fill='var(--color-foreground)'
+              ></path>
+            </g>
+          </svg>
         </button>
-      ))}
-      <button type={'button'}
-              title={'마지막 페이지로 이동'}
-              disabled={Number(page) === maxPage}
-              className={`${Number(page) !== maxPage ? 'rounded-md hover:bg-foreground/30 active:bg-foreground/50' : 'opacity-50'}`}
-              onClick={() => onPageChange(maxPage)}>
-        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-          <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-          <g id="SVGRepo_iconCarrier">
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M12.293 7.293a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L15.586 12l-3.293-3.293a1 1 0 0 1 0-1.414Z"
-              fill='var(--color-foreground)'
-            ></path>
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M6.293 7.293a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L9.586 12 6.293 8.707a1 1 0 0 1 0-1.414Z"
-              fill='var(--color-foreground)'
-            ></path>
-          </g>
-        </svg>
-      </button>
-    </div>
+        {Array.from({ length: renderMaxPage }).map((_, i) => (
+          <button
+            key={i}
+            type={'button'}
+            aria-label={`${startIndex + i}페이지`}
+            aria-current={Number(startIndex + i) === Number(page) ? 'page' : undefined}
+            onClick={() => {
+              if (Number(startIndex + i) === Number(page)) {
+                return;
+              }
+              onPageChange(startIndex + i);
+            }}
+            className={`border border-gray-700 size-7 rounded-md ${Number(startIndex + i) === Number(page) ? 'bg-accent' : 'border border-foreground hover:bg-foreground/30 active:bg-foreground/50'}`}
+          >
+            {startIndex + i}
+          </button>
+        ))}
+        <button type={'button'}
+                aria-label={'마지막 페이지로 이동'}
+                disabled={Number(page) === maxPage}
+                className={`${Number(page) !== maxPage ? 'rounded-md hover:bg-foreground/30 active:bg-foreground/50' : 'opacity-50'}`}
+                onClick={() => onPageChange(maxPage)}>
+          <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+            <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M12.293 7.293a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L15.586 12l-3.293-3.293a1 1 0 0 1 0-1.414Z"
+                fill='var(--color-foreground)'
+              ></path>
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M6.293 7.293a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L9.586 12 6.293 8.707a1 1 0 0 1 0-1.414Z"
+                fill='var(--color-foreground)'
+              ></path>
+            </g>
+          </svg>
+        </button>
+      </div>
+    </nav>
   );
 };
 

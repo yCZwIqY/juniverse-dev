@@ -7,7 +7,10 @@ export const NavigationLoadingMain = ({ children }: { children: ReactNode }) => 
   const { isNavigating } = useNavigationLoading();
 
   return (
-    <main className="min-w-0 overflow-x-clip relative">
+    <main id="main-content" className="min-w-0 overflow-x-clip relative">
+      <div role="status" aria-live="polite" className="sr-only">
+        {isNavigating ? '페이지 이동 중' : ''}
+      </div>
       {children}
       {isNavigating && (
         <div

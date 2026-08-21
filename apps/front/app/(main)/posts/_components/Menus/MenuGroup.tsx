@@ -29,6 +29,7 @@ const MenuGroup = ({ menu }: MenuItemProps) => {
         </button>
         {menu.children.length > 0 && (
           <button title={open ? '닫기' : '열기'}
+                  aria-expanded={open}
                   className={`${open ? 'rotate-0' : 'rotate-180'} transition-all`}
                   type={'button'}
                   onClick={() => setOpen(!open)}>

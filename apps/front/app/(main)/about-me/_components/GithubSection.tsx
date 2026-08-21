@@ -68,9 +68,13 @@ const GithubSection = async () => {
         )}
       </div>
 
-      <div className="border border-[var(--color-hairline)] rounded-[var(--radius-lg)] p-4 lg:p-6 overflow-x-auto">
+      <div className="border border-[var(--color-hairline)] rounded-[var(--radius-sm)] p-4 overflow-x-auto">
         {calendar ? (
-          <div className="flex gap-[3px] min-w-[680px]">
+          <div
+            role="img"
+            aria-label={`GitHub 기여 현황, 최근 1년 총 ${calendar.totalContributions}회`}
+            className="flex gap-[3px] min-w-[680px]"
+          >
             {calendar.weeks.map((week, index) => (
               <div
                 key={week.contributionDays[0]?.date ?? index}

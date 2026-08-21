@@ -2,7 +2,6 @@
 import { ProjectData } from 'apis';
 import Image from 'next/image';
 import Tag from '@/app/_components/tag/Tag';
-import { useRouter } from 'next/navigation';
 import { ReactNode } from 'react';
 import Link from 'next/link';
 
@@ -44,16 +43,11 @@ const LinkButton = ({ href, label, variant, icon }: LinkButtonProps) => {
 };
 
 const MainProjectItem = ({ project }: MainProjectItemProps) => {
-  const router = useRouter();
   const thumbnail = project.imageUrls[0];
   const detailHref = `/projects/${project.id}`;
 
   return (
-    <div
-      onClick={(e) => {
-        e.stopPropagation();
-        router.push(detailHref);
-      }}
+    <article
       className={
         'w-full bg-background border border-border rounded-lg p-4 lg:p-6 grid grid-cols-1 lg:grid-cols-12 gap-5 transition-all hover:!border-accent'
       }
@@ -118,7 +112,7 @@ const MainProjectItem = ({ project }: MainProjectItemProps) => {
           label={'GitHub'}
           variant={'secondary'}
           icon={
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
               <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
               <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
               <g id="SVGRepo_iconCarrier">
@@ -135,7 +129,7 @@ const MainProjectItem = ({ project }: MainProjectItemProps) => {
           }
         />
       </div>
-    </div>
+    </article>
   );
 };
 

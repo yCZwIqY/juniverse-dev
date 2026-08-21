@@ -2,8 +2,9 @@ import React from 'react';
 
 const Loading = () => {
   return  <div className={'py-4 flex flex-col gap-4'}>
-    <section className={'w-full border border-border p-5 bg-card rounded-xl flex flex-col gap-4 min-h-[300px] flex justify-center items-center'}>
+    <section role="status" aria-label="로딩 중" className={'w-full border border-border p-5 bg-card rounded-xl flex flex-col gap-4 min-h-[300px] flex justify-center items-center'}>
       <svg
+        aria-hidden
         className={'animate-spin'}
         width={'64px'}
         height={'64px'}

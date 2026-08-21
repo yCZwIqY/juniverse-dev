@@ -2,18 +2,26 @@ import { ReactNode, MouseEvent } from 'react';
 
 interface TagProps {
   children: ReactNode;
-  onClick?: (e: MouseEvent) => void;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   className?: string;
 }
 
 const Tag = ({ children, onClick, className }: TagProps) => {
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        className={`chip cursor-pointer ${className ?? ''}`}
+        onClick={onClick}
+      >
+        {children}
+      </button>
+    );
+  }
   return (
-    <div
-      className={`chip cursor-pointer ${className ?? ''}`}
-      onClick={onClick}
-    >
+    <span className={`chip ${className ?? ''}`}>
       {children}
-    </div>
+    </span>
   );
 };
 
