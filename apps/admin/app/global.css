@@ -1,4 +1,5 @@
 @import "../../../node_modules/tailwindcss";
+@source "../../../libs/components/src";
 
 @font-face {
   font-family: 'Suit';
