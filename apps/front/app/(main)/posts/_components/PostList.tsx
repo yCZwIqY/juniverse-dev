@@ -10,15 +10,23 @@ interface PostListProps {
 
 const PostList = ({ posts, page, total }: PostListProps) => {
   return (
-    <section className={'glass-card p-4 flex flex-col'}>
-      <div className={'flex justify-between items-center pb-[10px] border-b-2 border-border'}>
-        <span className={'font-bold'}>Posts</span>
-        <span className={'text-sm'}>총 {total}개의 포스트</span>
+    <section className="flex flex-col gap-4">
+      <div className="flex items-baseline justify-between pb-3 border-b border-[var(--color-hairline)]">
+        <div>
+          <div className="eyebrow mb-0.5">Posts</div>
+          <span className="text-sm text-[var(--muted-foreground)]">총 {total}개</span>
+        </div>
       </div>
-      <div className={'py-4 flex flex-col gap-2 flex-1 mb-2'}>{posts?.map((post) => <PostItem key={post.id} {...post} />)}</div>
-      <div className={'flex justify-center items-center'}>
-        <Pagination page={page} total={total} limit={10} />
+      <div className="flex flex-col gap-2">
+        {posts.map((post) => (
+          <PostItem key={post.id} {...post} />
+        ))}
       </div>
+      {total > 0 && (
+        <div className="flex justify-center pt-2">
+          <Pagination page={page} total={total} limit={10} />
+        </div>
+      )}
     </section>
   );
 };

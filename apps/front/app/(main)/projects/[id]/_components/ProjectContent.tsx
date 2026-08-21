@@ -10,37 +10,21 @@ interface GroupedSection {
   bodyHtml: string;
 }
 
-const stripHtml = (value: string) => {
-  return value
-    .replace(/<[^>]*>/g, ' ')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-};
+const stripHtml = (value: string) =>
+  value.replace(/<[^>]*>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
 
 const groupByHeading = (html: string): GroupedSection[] => {
   const headingRegex = /<h([1-3])\b[^>]*>([\s\S]*?)<\/h\1>/gi;
   const matches = Array.from(html.matchAll(headingRegex));
 
   if (matches.length === 0) {
-    return [
-      {
-        title: 'Details',
-        level: 2,
-        bodyHtml: html.trim() || '<p></p>',
-      },
-    ];
+    return [{ title: 'Details', level: 2, bodyHtml: html.trim() || '<p></p>' }];
   }
 
   const sections: GroupedSection[] = [];
-  const firstHeadingIndex = matches[0].index ?? 0;
-  const introHtml = html.slice(0, firstHeadingIndex).trim();
+  const introHtml = html.slice(0, matches[0].index ?? 0).trim();
   if (introHtml) {
-    sections.push({
-      title: '소개',
-      level: 2,
-      bodyHtml: introHtml,
-    });
+    sections.push({ title: '소개', level: 2, bodyHtml: introHtml });
   }
 
   matches.forEach((match, idx) => {
@@ -49,30 +33,38 @@ const groupByHeading = (html: string): GroupedSection[] => {
     const level = Number(match[1] ?? 2);
     const title = stripHtml(match[2] ?? '') || `Section ${idx + 1}`;
     const bodyStart = headingStart + headingHtml.length;
-    const nextHeadingStart = matches[idx + 1]?.index ?? html.length;
-    const bodyHtml = html.slice(bodyStart, nextHeadingStart).trim() || '<p></p>';
-
+    const nextStart = matches[idx + 1]?.index ?? html.length;
+    const bodyHtml = html.slice(bodyStart, nextStart).trim() || '<p></p>';
     sections.push({ title, level, bodyHtml });
   });
 
   return sections;
 };
 
+const headingSize = (level: number) => {
+  if (level === 1) return 'text-xl font-bold';
+  if (level === 2) return 'text-lg font-bold';
+  return 'text-base font-semibold';
+};
+
 const ProjectContent = ({ content }: ProjectContentProps) => {
   const sections = groupByHeading(content);
 
   return (
-    <section className={'flex flex-col gap-3'}>
-      <div className={'flex flex-col gap-3'}>
+    <section className="flex flex-col gap-2.5">
+      <div className="eyebrow">Content</div>
+      <div className="flex flex-col gap-3">
         {sections.map((section, idx) => (
-          <article key={`${section.title}-${idx}`}
-                   className={'p-3 lg:p-4 flex flex-col gap-3'}>
-            <div className={'px-2 pt-2'}>
-              <h3 className={`font-bold break-keep ${section.level === 1 ? 'text-2xl' : section.level === 2 ? 'text-xl' : 'text-lg'}`}>
+          <article key={`${section.title}-${idx}`} className="flex flex-col gap-1.5">
+            {/* Section heading with violet accent bar */}
+            <div className="flex items-center gap-3 px-1">
+              <div className="w-[3px] h-5 rounded-full bg-[var(--color-primary)] shrink-0" />
+              <h3 className={`text-[var(--color-ink)] break-keep ${headingSize(section.level)}`}>
                 {section.title}
               </h3>
             </div>
-            <div className={'glass-card [&_div]:!p-4'}>
+            {/* Content card */}
+            <div className="border border-[var(--color-hairline)] rounded-[var(--radius-lg)] bg-[var(--color-canvas-soft)] overflow-hidden">
               <EditorViewer content={section.bodyHtml} />
             </div>
           </article>

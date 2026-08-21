@@ -6,11 +6,19 @@ interface ListTopProps {
 }
 
 const PostTop = async ({ search, category }: ListTopProps) => {
-  const menu = await getMenu(Number(category ?? 0));
+  const menu = category ? await getMenu(Number(category)) : null;
+
   return (
-    <section className={'w-full glass-card p-5 flex flex-col gap-4'}>
-      <div className={'text-2xl font-bold'}>{category ? menu?.data.name : '전체글 보기'}</div>
-      {search && <div className={'text-lg text-gray-500'}>&quot;{search}&quot; 검색 결과</div>}
+    <section className="color-block-section reveal">
+      <div className="eyebrow mb-1">{category ? 'Category' : 'All Posts'}</div>
+      <h1 className="text-2xl font-bold text-[var(--color-ink)]">
+        {category ? (menu?.data.name ?? '카테고리') : '전체글 보기'}
+      </h1>
+      {search && (
+        <p className="text-sm text-[var(--muted-foreground)] mt-1">
+          &quot;{search}&quot; 검색 결과
+        </p>
+      )}
     </section>
   );
 };

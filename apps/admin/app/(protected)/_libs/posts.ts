@@ -2,6 +2,7 @@
 import api from '@/utils/api';
 import { PostFormData, PostResponse } from 'apis';
 import { revalidateTag } from 'next/cache';
+import { revalidateFront } from '@/lib/revalidate-front';
 
 export const getPost = async (id: string) => {
   try {
@@ -20,6 +21,7 @@ export const createPost = async (post: PostFormData) => {
   try {
     const res = await api.post('/api/posts', post);
     revalidateTag('posts');
+    await revalidateFront(['posts', 'recent-posts']);
     return res;
   } catch {}
 };
@@ -29,6 +31,7 @@ export const updatePost = async (id: string, post: PostFormData) => {
     const res = await api.patch(`/api/posts/${id}`, post);
     revalidateTag('posts');
     revalidateTag(`post:${id}`);
+    await revalidateFront(['posts', 'recent-posts', `post:${id}`]);
     return res;
   } catch {}
 };
@@ -37,6 +40,7 @@ export const deletePost = async (id: string) => {
   try {
     const res = await api.del(`/api/posts/${id}`);
     revalidateTag('posts');
+    await revalidateFront(['posts', 'recent-posts', `post:${id}`]);
     return res;
   } catch {}
 };

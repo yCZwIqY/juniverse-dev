@@ -1,0 +1,195 @@
+// ─── SVG markers (mask technique: fill color from background-color) ──────────
+// Level-1 ul: filled diamond
+$_m-diamond-fill: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M4 .5L7.5 4 4 7.5.5 4Z' fill='black'/%3E%3C/svg%3E");
+// Level-2 ul: outline diamond
+$_m-diamond-outline: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M4 1L7 4 4 7 1 4Z' stroke='black' stroke-width='1.2' fill='none'/%3E%3C/svg%3E");
+// Level-3 ul: mini square
+$_m-square: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Crect x='2' y='2' width='4' height='4' rx='.5' fill='black'/%3E%3C/svg%3E");
+
+.tiptap.ProseMirror {
+  // ─── Task list colors (dark-mode aware) ────────────────────────────────────
+  --tt-checklist-bg-color: var(--tt-gray-light-a-100);
+  --tt-checklist-bg-active-color: var(--tt-gray-light-a-900);
+  --tt-checklist-border-color: var(--tt-gray-light-a-200);
+  --tt-checklist-border-active-color: var(--tt-gray-light-a-900);
+  --tt-checklist-check-icon-color: var(--white);
+  --tt-checklist-text-active: var(--tt-gray-light-a-500);
+
+  .dark & {
+    --tt-checklist-bg-color: var(--tt-gray-dark-a-100);
+    --tt-checklist-bg-active-color: var(--tt-gray-dark-a-900);
+    --tt-checklist-border-color: var(--tt-gray-dark-a-200);
+    --tt-checklist-border-active-color: var(--tt-gray-dark-a-900);
+    --tt-checklist-check-icon-color: var(--black);
+    --tt-checklist-text-active: var(--tt-gray-dark-a-500);
+  }
+
+  // ─── Common list spacing ───────────────────────────────────────────────────
+  ol,
+  ul {
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+
+    &:first-child { margin-top: 0; }
+    &:last-child  { margin-bottom: 0; }
+
+    ol, ul { margin-top: 0.25em; margin-bottom: 0; }
+  }
+
+  li {
+    p {
+      margin-top: 0;
+      line-height: 1.7;
+    }
+  }
+
+  // ─── Ordered lists — violet mono numbers via ::marker ─────────────────────
+  ol {
+    list-style: decimal;
+    padding-left: 1.75em;
+
+    > li::marker {
+      color: var(--color-primary, oklch(0.62 0.22 278));
+      font-family: var(--font-mono, 'SFMono-Regular', Menlo, monospace);
+      font-weight: 700;
+      font-size: 0.82em;
+    }
+
+    ol {
+      list-style: lower-alpha;
+
+      > li::marker {
+        color: var(--color-mute, oklch(0.58 0.01 240));
+        font-weight: 600;
+      }
+
+      ol {
+        list-style: lower-roman;
+
+        > li::marker {
+          color: var(--color-mute, oklch(0.58 0.01 240));
+          font-weight: 400;
+        }
+      }
+    }
+  }
+
+  // ─── Unordered lists — SVG diamond markers ────────────────────────────────
+  ul:not([data-type="taskList"]) {
+    list-style: none;
+    padding-left: 1.75em;
+
+    // Level 1: filled violet diamond
+    > li {
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: -1.3em;
+        top: 0.48em;
+        width: 7px;
+        height: 7px;
+        background-color: var(--color-primary, oklch(0.62 0.22 278));
+        -webkit-mask: $_m-diamond-fill center / contain no-repeat;
+                mask: $_m-diamond-fill center / contain no-repeat;
+      }
+    }
+
+    // Level 2: outline diamond, muted color
+    ul:not([data-type="taskList"]) {
+      > li::before {
+        width: 7px;
+        height: 7px;
+        background-color: var(--color-mute, oklch(0.58 0.01 240));
+        -webkit-mask: $_m-diamond-outline center / contain no-repeat;
+                mask: $_m-diamond-outline center / contain no-repeat;
+      }
+
+      // Level 3: mini square, muted
+      ul:not([data-type="taskList"]) {
+        > li::before {
+          width: 5px;
+          height: 5px;
+          top: 0.56em;
+          left: -1.2em;
+          background-color: var(--color-mute, oklch(0.58 0.01 240));
+          -webkit-mask: $_m-square center / contain no-repeat;
+                  mask: $_m-square center / contain no-repeat;
+        }
+      }
+    }
+  }
+
+  // ─── Task lists ───────────────────────────────────────────────────────────
+  ul[data-type="taskList"] {
+    padding-left: 0.25em;
+
+    li {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+
+      &:not(:has(> p:first-child)) { list-style-type: none; }
+
+      &[data-checked="true"] {
+        > div > p {
+          opacity: 0.5;
+          text-decoration: line-through;
+        }
+        > div > p span { text-decoration: line-through; }
+      }
+
+      label {
+        position: relative;
+        padding-top: 0.375rem;
+        padding-right: 0.5rem;
+
+        input[type="checkbox"] {
+          position: absolute;
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        span {
+          display: block;
+          width: 1em;
+          height: 1em;
+          border: 1px solid var(--tt-checklist-border-color);
+          border-radius: var(--tt-radius-xs, 0.25rem);
+          position: relative;
+          cursor: pointer;
+          background-color: var(--tt-checklist-bg-color);
+          transition: background-color 80ms ease-out, border-color 80ms ease-out;
+
+          &::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 0.75em;
+            height: 0.75em;
+            background-color: var(--tt-checklist-check-icon-color);
+            opacity: 0;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22currentColor%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M21.4142%204.58579C22.1953%205.36683%2022.1953%206.63317%2021.4142%207.41421L10.4142%2018.4142C9.63317%2019.1953%208.36684%2019.1953%207.58579%2018.4142L2.58579%2013.4142C1.80474%2012.6332%201.80474%2011.3668%202.58579%2010.5858C3.36683%209.80474%204.63317%209.80474%205.41421%2010.5858L9%2014.1716L18.5858%204.58579C19.3668%203.80474%2020.6332%203.80474%2021.4142%204.58579Z%22%20fill%3D%22currentColor%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
+                    mask: url("data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22currentColor%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M21.4142%204.58579C22.1953%205.36683%2022.1953%206.63317%2021.4142%207.41421L10.4142%2018.4142C9.63317%2019.1953%208.36684%2019.1953%207.58579%2018.4142L2.58579%2013.4142C1.80474%2012.6332%201.80474%2011.3668%202.58579%2010.5858C3.36683%209.80474%204.63317%209.80474%205.41421%2010.5858L9%2014.1716L18.5858%204.58579C19.3668%203.80474%2020.6332%203.80474%2021.4142%204.58579Z%22%20fill%3D%22currentColor%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
+          }
+        }
+
+        input[type="checkbox"]:checked + span {
+          background: var(--tt-checklist-bg-active-color);
+          border-color: var(--tt-checklist-border-active-color);
+
+          &::before { opacity: 1; }
+        }
+      }
+
+      div {
+        flex: 1 1 0%;
+        min-width: 0;
+      }
+    }
+  }
+}

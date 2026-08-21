@@ -1,22 +1,22 @@
-import Link from 'next/link';
 import { PostData } from 'apis';
 import SimplePostItem from '@/app/_components/post/SimplePostItem';
 
-interface LastestPostProps {
+interface LatestPostProps {
   posts: PostData[];
 }
 
-const LatestPosts = async ({ posts }: LastestPostProps) => {
+const LatestPosts = async ({ posts }: LatestPostProps) => {
+  if (posts.length === 0) {
+    return (
+      <p className="text-sm text-[var(--muted-foreground)] py-4">아직 작성된 포스트가 없습니다.</p>
+    );
+  }
   return (
-    <section className={'glass-card w-full p-4 lg:p-8 bg-card flex flex-col gap-6 reveal'}>
-      <div className={'flex justify-between'}>
-        <div className={'text-xl font-bold'}>최근에 올라온 글</div>
-        <Link className={'text-sm text-accent'} href={'/posts'} prefetch={false}>
-          전체글 보기 →
-        </Link>
-      </div>
-      <div className={'py-4 flex flex-col gap-2'}>{posts?.map((post) => <SimplePostItem key={post.id} {...post} />)}</div>
-    </section>
+    <div className="flex flex-col gap-2">
+      {posts.map((post) => (
+        <SimplePostItem key={post.id} {...post} />
+      ))}
+    </div>
   );
 };
 

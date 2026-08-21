@@ -15,9 +15,8 @@ interface ProjectPageProps {
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
   const { id } = await params;
   const project = await getProject(id);
-
   return {
-    title: project?.data?.title ? `Project: ${project?.data?.title}` : 'Project',
+    title: project?.data?.title ? `Project: ${project.data.title}` : 'Project',
     description: project?.data?.description,
     keywords: project?.data?.tags,
   };
@@ -31,14 +30,11 @@ const ProjectPage = async ({ params }: ProjectPageProps) => {
   if (!project) notFound();
 
   return (
-    <div className={'py-4 flex flex-col gap-4 relative'}>
-      <div className={'glass-card p-6 lg:p-8 mt-4 flex flex-col gap-8'}>
-        <ProjectTitle project={project} />
-        <ProjectMetaData project={project} />
-        <ProjectScreenshots imageUrls={project.imageUrls}
-                            title={project.title} />
-        <ProjectContent content={project.content} />
-      </div>
+    <div className="py-4 flex flex-col gap-6 md:gap-8 reveal">
+      <ProjectTitle project={project} />
+      <ProjectMetaData project={project} />
+      <ProjectScreenshots imageUrls={project.imageUrls} title={project.title} />
+      <ProjectContent content={project.content} />
     </div>
   );
 };

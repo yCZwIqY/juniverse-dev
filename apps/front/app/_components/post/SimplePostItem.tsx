@@ -9,32 +9,27 @@ const SimplePostItem = ({ id, title, menu, createdAt }: PostData) => {
   const updateSearchParams = useUpdateSearchParams('posts');
   const router = useRouter();
   const { startNavigation } = useNavigationLoading();
+
+  const dateStr = new Date(createdAt)
+    .toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', formatMatcher: 'basic' })
+    .replaceAll('. ', '-')
+    .slice(0, 10);
+
   return (
     <div
-      className={'border border-border rounded-full p-1 lg:p-4 flex justify-between items-center gap-2 hover:shadow-sm shadow-accent'}
-      onClick={() => {
-        startNavigation();
-        router.push(`/posts/${id}`);
-      }}
+      className="border border-[var(--color-hairline)] bg-[var(--color-canvas)] rounded-[var(--radius-md)] px-4 py-3 flex justify-between items-center gap-3 hover:border-[var(--color-ink)] transition-colors cursor-pointer"
+      onClick={() => { startNavigation(); router.push(`/posts/${id}`); }}
     >
-      <div className={'flex-1 grid grid-cols-[1fr_2fr] flex-1 lg:flex gap-2 items-center'}>
+      <div className="flex gap-3 items-center flex-1 min-w-0">
         <Tag
-          className={'lg:!text-base break-keep break-keep overflow-hidden text-ellipsis line-clamp-1'}
-          onClick={(e) => {
-            e.stopPropagation();
-            updateSearchParams('category', menu.id.toString());
-          }}
+          className="shrink-0 text-xs"
+          onClick={(e) => { e.stopPropagation(); updateSearchParams('category', menu.id.toString()); }}
         >
           {menu.name}
         </Tag>
-        <div className={'text-base font-bold lg:pr-10 flex-1 text-left break-keep overflow-hidden text-ellipsis line-clamp-1'}>{title}</div>
+        <span className="text-sm font-semibold text-[var(--color-ink)] flex-1 truncate">{title}</span>
       </div>
-      <span className={'text-xs lg:text-sm text-gray-500 pr-5'}>{new Date(createdAt).toLocaleDateString('ko-KR', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        formatMatcher: 'basic'
-      }).replaceAll('. ', '-').slice(0, 10)}</span>
+      <span className="text-xs text-[var(--muted-foreground)] shrink-0 tabular-nums">{dateStr}</span>
     </div>
   );
 };

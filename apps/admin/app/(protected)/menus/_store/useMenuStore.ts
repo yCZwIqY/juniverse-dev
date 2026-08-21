@@ -1,5 +1,14 @@
 import { create } from 'zustand';
-import { defaultSelectedMenuData, MenuData, SelectedMenuData } from 'apis';
+import { MenuData, SelectedMenuData } from 'apis';
+
+const defaultSelectedMenuData: SelectedMenuData = {
+  id: 0,
+  depth: 0,
+  seqNo: 0,
+  name: '',
+  children: [],
+  parent: undefined,
+};
 
 interface UseMenuStore {
   selectedMenu?: SelectedMenuData;

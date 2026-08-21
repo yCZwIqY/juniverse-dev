@@ -1,11 +1,15 @@
 'use client';
+
+import { Plus } from 'lucide-react';
+
+import { Button } from 'components';
 import { useMenuStore } from '@/app/(protected)/menus/_store';
-import Button from '@/app/(protected)/_components/common/Button';
 
 const MenuAddButton = () => {
   const { addRoot } = useMenuStore();
   return (
-    <Button onClick={addRoot} className={'py-2 text-white rounded-lg border-lg font-bold bg-cyan-500/80 hover:bg-cyan-400 border border-cyan-300/50'}>
+    <Button variant="outline" size="md" className="w-full" onClick={addRoot}>
+      <Plus className="h-4 w-4" />
       루트 카테고리 추가
     </Button>
   );

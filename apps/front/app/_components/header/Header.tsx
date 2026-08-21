@@ -3,40 +3,42 @@
 import { FormEvent, MouseEvent, useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import ThemeSwitch from '@/app/_components/header/ThemeSwitch';
 import Image from 'next/image';
 import { useNavigationLoading } from '@/app/_components/navigation/NavigationLoadingProvider';
+
+const SearchIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
+    <circle cx="6" cy="6" r="4.25" stroke="currentColor" strokeWidth="1.25" />
+    <path d="M9.5 9.5L12.5 12.5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
+  </svg>
+);
 
 const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
   const { startNavigation, stopNavigation } = useNavigationLoading();
   const [searchText, setSearchText] = useState('');
-  const [showInput, setShowInput] = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onSearch = (e: FormEvent) => {
     e.preventDefault();
+    if (!searchText.trim()) return;
     startNavigation();
-    router.push(`/posts?search=${searchText}&page=1`);
+    router.push(`/posts?search=${encodeURIComponent(searchText)}&page=1`);
     setSearchText('');
+    inputRef.current?.blur();
   };
 
-  const onClickSearch = () => {
-    if (searchText) {
+  const onClickSearchIcon = () => {
+    if (searchText.trim()) {
       startNavigation();
-      router.push(`/posts?search=${searchText}&page=1`);
+      router.push(`/posts?search=${encodeURIComponent(searchText)}&page=1`);
       setSearchText('');
-      return;
-    }
-    setShowInput(true);
-    setTimeout(() => {
+      inputRef.current?.blur();
+    } else {
       inputRef.current?.focus();
-    }, 500);
-  };
-
-  const onBlur = () => {
-    setShowInput(false);
+    }
   };
 
   const onClickTo =
@@ -54,73 +56,74 @@ const Header = () => {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       const isMac = navigator.userAgent.includes('Mac');
-      const isCmdK = isMac && e.metaKey && e.key.toLowerCase() === 'k';
-      const isCtrlK = !isMac && e.ctrlKey && e.key.toLowerCase() === 'k';
-
-      if (isCmdK || isCtrlK) {
+      const trigger = isMac ? e.metaKey && e.key.toLowerCase() === 'k' : e.ctrlKey && e.key.toLowerCase() === 'k';
+      if (trigger) {
         e.preventDefault();
         inputRef.current?.focus();
       }
     };
-
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [inputRef]);
+  }, []);
 
   const navLinkClass = (targetPath: string) =>
     [
-      'px-3 py-1.5 rounded-full text-sm font-semibold transition-all',
-      'border border-transparent hover:border-border hover:bg-secondary/70',
-      pathname === targetPath ? 'bg-foreground text-background shadow-sm' : 'text-foreground/80',
+      'px-3 py-1.5 rounded-[var(--radius-sm)] text-sm font-medium transition-colors duration-150',
+      pathname === targetPath
+        ? 'bg-[var(--color-primary)] text-[var(--color-on-primary)]'
+        : 'text-[var(--color-body)] hover:text-[var(--color-ink)] hover:bg-[var(--color-surface-soft)]',
     ].join(' ');
 
   return (
-    <header className={'!sticky top-5 w-full mt-5 py-3 px-5 flex items-center justify-between glass-card z-10 flex-shrink-0'}>
-      <div className={'flex items-center gap-4'}>
-        <Link href={'/'} prefetch={false} onClick={onClickTo('/')}>
-          <Image src={'/images/logo.png'} className={'size-6 lg:size-8'} alt={'로고'} width={24} height={24} />
+    <header className="sticky top-3 mt-3 z-10 flex-shrink-0 min-w-0">
+      <div className="flex items-center justify-between gap-3 px-4 py-2.5 bg-[var(--color-canvas-soft)] border border-[var(--color-hairline)] rounded-[var(--radius-lg)] overflow-hidden">
+        {/* Logo + wordmark */}
+        <Link href="/" prefetch={false} onClick={onClickTo('/')} className="flex items-center gap-2.5 shrink-0 group">
+          <Image src="/images/logo.png" className="size-6" alt="로고" width={24} height={24} />
+          <span className="hidden sm:block text-sm font-bold tracking-tight text-[var(--color-ink)] group-hover:text-[var(--color-primary)] transition-colors duration-150">
+            JUNIVERSE DEV
+          </span>
         </Link>
-        <div
-          className={`items-center gap-2 rounded-full border border-border/80 bg-background/70 p-1 ${showInput ? 'hidden lg:flex' : 'flex'}`}
-        >
-          {/*<Link href={'/about-me'} prefetch={false} onClick={onClickTo('/about-me')} className={navLinkClass('/about-me')}>*/}
-          {/*  About Me*/}
-          {/*</Link>*/}
-          <Link href={'/posts'} prefetch={false} onClick={onClickTo('/posts')} className={navLinkClass('/posts')}>
+
+        {/* Nav */}
+        <nav className={`flex items-center gap-0.5 ${searchFocused ? 'hidden sm:flex' : 'flex'}`}>
+          <Link href="/posts" prefetch={false} onClick={onClickTo('/posts')} className={navLinkClass('/posts')}>
             Posts
           </Link>
-          <Link href={'/projects'} prefetch={false} onClick={onClickTo('/projects')} className={navLinkClass('/projects')}>
+          <Link href="/projects" prefetch={false} onClick={onClickTo('/projects')} className={navLinkClass('/projects')}>
             Projects
           </Link>
-        </div>
-      </div>
-      <div className={'flex gap-4 items-center'}>
-        <form onSubmit={onSearch}>
-          <div className={`border rounded-full border-border py-2 px-3 ${showInput ? 'flex' : 'lg:flex'} gap-2 items-center`}>
-            <button type={'button'} onClick={onClickSearch} title={'검색'}>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g opacity="0.55">
-                  <path
-                    d="M7 12C5.67392 12 4.40215 11.4732 3.46447 10.5355C2.52678 9.59785 2 8.32608 2 7C2 5.67392 2.52678 4.40215 3.46447 3.46447C4.40215 2.52678 5.67392 2 7 2C8.32608 2 9.59785 2.52678 10.5355 3.46447C11.4732 4.40215 12 5.67392 12 7C12 8.32608 11.4732 9.59785 10.5355 10.5355C9.59785 11.4732 8.32608 12 7 12Z"
-                    stroke="var(--color-gray-400)"
-                    strokeOpacity="0.72"
-                    strokeWidth="1.33333"
-                  />
-                  <path d="M11 11L14 14" stroke="var(--color-gray-400)" strokeOpacity="0.72" strokeWidth="1.33333" strokeLinecap="round" />
-                </g>
-              </svg>
+        </nav>
+
+        {/* Search */}
+        <form onSubmit={onSearch} className="shrink-0">
+          <div
+            className={[
+              'flex items-center gap-2 border rounded-[var(--radius-md)] px-2.5 py-1.5 overflow-hidden transition-all duration-200',
+              searchFocused
+                ? 'border-[var(--color-primary)] bg-[var(--color-canvas)] w-[40dvw] sm:w-52'
+                : 'border-[var(--color-hairline)] bg-[var(--color-canvas)] w-9 sm:w-44',
+            ].join(' ')}
+          >
+            <button
+              type="button"
+              onClick={onClickSearchIcon}
+              className="text-[var(--color-mute)] hover:text-[var(--color-ink)] transition-colors duration-150 shrink-0"
+              title="검색"
+            >
+              <SearchIcon />
             </button>
             <input
               ref={inputRef}
-              className={`placeholder:text-border outline-none border-none transition-all ${showInput ? 'w-[50dvw]' : '!w-0'} lg:!w-auto`}
-              placeholder={'검색'}
+              className="flex-1 min-w-0 bg-transparent text-sm text-[var(--color-ink)] placeholder:text-[var(--color-mute)] outline-none border-none"
+              placeholder="검색... ⌘K"
               value={searchText}
-              onBlur={onBlur}
+              onFocus={() => setSearchFocused(true)}
+              onBlur={() => setSearchFocused(false)}
               onChange={(e) => setSearchText(e.target.value)}
             />
           </div>
         </form>
-        <ThemeSwitch />
       </div>
     </header>
   );

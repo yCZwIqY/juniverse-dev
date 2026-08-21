@@ -2,12 +2,12 @@
 
 import 'server-only';
 import { revalidateTag } from 'next/cache';
-import api from '../client/api';
-import { ProjectFormData, ProjectResponse, ProjectsResponse } from '../client';
+import client from '../http/client';
+import type { ProjectFormData, ProjectResponse, ProjectsResponse } from 'shared-types';
 
 export const getProjects = async () => {
   try {
-    const { data } = await api.get<ProjectsResponse>(
+    const { data } = await client.get<ProjectsResponse>(
       '/api/projects',
       {},
       {
@@ -26,7 +26,9 @@ export const getProjects = async () => {
       };
     }
     return data;
-  } catch {}
+  } catch (error) {
+    console.error('[apis] getProjects failed', error);
+  }
 };
 
 export const getProject = async (id: string | number) => {
@@ -34,7 +36,7 @@ export const getProject = async (id: string | number) => {
     if (!id) {
       return null;
     }
-    return await api.get<ProjectResponse>(
+    return await client.get<ProjectResponse>(
       `/api/projects/${id}`,
       {},
       {
@@ -42,7 +44,9 @@ export const getProject = async (id: string | number) => {
         next: { revalidate: 60 * 60, tags: [`project:${id}`] },
       },
     );
-  } catch {}
+  } catch (error) {
+    console.error('[apis] getProject failed', error);
+  }
 };
 
 const buildProjectFormData = (request: ProjectFormData) => {
@@ -66,30 +70,36 @@ const buildProjectFormData = (request: ProjectFormData) => {
   return formData;
 };
 
-export const updateProject = async (id: string | number, request: ProjectFormData) => {
-  try {
-    const formData = buildProjectFormData(request);
-    const res = await api.patchFormdata(`/api/projects/${id}`, formData);
-    revalidateTag('projects');
-    revalidateTag(`project:${id}`);
-    return res;
-  } catch {}
-};
-
 export const createProject = async (request: ProjectFormData) => {
   try {
     const formData = buildProjectFormData(request);
-    const res = await api.postFormdata(`/api/projects`, formData);
+    const res = await client.postFormdata(`/api/projects`, formData);
     revalidateTag('projects');
     return res;
-  } catch {}
+  } catch (error) {
+    console.error('[apis] createProject failed', error);
+  }
+};
+
+export const updateProject = async (id: string | number, request: ProjectFormData) => {
+  try {
+    const formData = buildProjectFormData(request);
+    const res = await client.patchFormdata(`/api/projects/${id}`, formData);
+    revalidateTag('projects');
+    revalidateTag(`project:${id}`);
+    return res;
+  } catch (error) {
+    console.error('[apis] updateProject failed', error);
+  }
 };
 
 export const deleteProject = async (id: string | number) => {
   try {
-    const res = await api.del(`/api/projects/${id}`);
+    const res = await client.del(`/api/projects/${id}`);
     revalidateTag('projects');
     revalidateTag(`project:${id}`);
     return res;
-  } catch {}
+  } catch (error) {
+    console.error('[apis] deleteProject failed', error);
+  }
 };

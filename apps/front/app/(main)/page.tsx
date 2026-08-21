@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import HeroCard from '@/app/(main)/_components/HeroCard';
 import TechStackSection from '@/app/(main)/_components/TechStackSection';
 import ContactSection from '@/app/(main)/_components/ContactSection';
@@ -11,14 +13,30 @@ const MainPage = async () => {
   const posts = await getRecentPosts();
 
   return (
-    <div className={'py-4 flex flex-col gap-6'}>
+    <div className="py-4 flex flex-col gap-[var(--spacing-section)]">
       <HeroCard />
       <TechStackSection />
-      <div className={'flex flex-col lg:grid grid-cols-[2fr_1fr] gap-2 my-5'}>
-        <div className={'text-2xl md:text-3xl font-bold col-span-2  py-2'}>Posts</div>
-        <LatestPosts posts={posts ?? []} />
-        <RecentTags posts={posts ?? []} />
-      </div>
+
+      <section className="color-block-section flex flex-col gap-6 reveal">
+        <div className="flex items-baseline justify-between">
+          <div>
+            <div className="eyebrow mb-1">Recent</div>
+            <h2 className="text-2xl font-bold text-[var(--color-ink)]">최근 포스트</h2>
+          </div>
+          <Link
+            href="/posts"
+            prefetch={false}
+            className="text-sm text-[var(--muted-foreground)] hover:text-[var(--color-ink)] transition-colors"
+          >
+            전체글 보기 →
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6">
+          <LatestPosts posts={posts ?? []} />
+          <RecentTags posts={posts ?? []} />
+        </div>
+      </section>
+
       <ContactSection />
     </div>
   );

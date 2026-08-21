@@ -1,9 +1,12 @@
 'use client';
 
-import { Pagination, PostData } from 'apis';
-import { useRouter } from 'next/navigation';
-import { deletePost } from '@/app/(protected)/_libs/posts';
 import { useState } from 'react';
+
+import { useRouter } from 'next/navigation';
+
+import { Pagination, PostData } from 'apis';
+import { Badge, Button } from 'components';
+import { deletePost } from '@/app/(protected)/_libs/posts';
 import Modal from '@/app/(protected)/_components/common/Modal';
 
 interface PostTableProps extends Pagination {
@@ -16,7 +19,6 @@ const PostTable = ({ data }: PostTableProps) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('확인 결과');
   const [modalText, setModalText] = useState('');
-
 
   const requestInspect = async (id: number) => {
     try {
@@ -37,20 +39,14 @@ const PostTable = ({ data }: PostTableProps) => {
 
       const inspection = payload?.result?.inspectionResult;
       const indexStatus = inspection?.indexStatusResult;
-      const verdict = indexStatus?.verdict ?? '-';
-      const coverageState = indexStatus?.coverageState ?? '-';
-      const lastCrawlTime = indexStatus?.lastCrawlTime ?? '-';
-      const requestUrl = payload?.requestUrl;
-
-      setModalTitle('확인 결과');
+      setModalTitle('색인 확인 결과');
       setModalText(
         [
-          `URL: ${requestUrl}`,
-          `판정: ${verdict}`,
-          `커버리지 상태: ${coverageState}`,
-          `마지막 크롤링: ${lastCrawlTime}`,
+          `URL: ${payload?.requestUrl}`,
+          `판정: ${indexStatus?.verdict ?? '-'}`,
+          `커버리지: ${indexStatus?.coverageState ?? '-'}`,
+          `마지막 크롤링: ${indexStatus?.lastCrawlTime ?? '-'}`,
           '',
-          '원본 응답(JSON):',
           JSON.stringify(payload?.result ?? payload, null, 2),
         ].join('\n'),
       );
@@ -61,45 +57,40 @@ const PostTable = ({ data }: PostTableProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-2">
       {data.map((post) => (
         <div
           key={post.id}
-          className="rounded-2xl border border-white/10 bg-[linear-gradient(160deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] backdrop-blur-2xl shadow-[0_16px_50px_rgba(0,0,0,0.35)] p-4 text-white hover:shadow-[0_22px_60px_rgba(0,0,0,0.45)] transition-shadow"
+          className="glass-card p-4 cursor-pointer hover:bg-[var(--color-surface-soft)] transition-colors"
           onClick={() => router.push(`/posts/${post.id}`)}
         >
-          <div className="flex flex-col lg:flex-row items-start justify-between gap-4">
-            <div className="flex-1">
-              <div className="text-sm text-cyan-200/80 flex gap-2 items-center">
-                <span>#{post.id}</span>
-                {post.status === 'DRAFT' &&
-                  <span className={'text-white bg-cyan-500 rounded-full py-1 px-2'}>임시저장</span>}
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs text-[var(--muted-foreground)]">#{post.id}</span>
+                {post.status === 'DRAFT' && <Badge variant="secondary">임시저장</Badge>}
               </div>
-              <div className="text-lg font-semibold tracking-tight">{post.title}</div>
-              <div className="mt-1 text-sm text-gray-200/80">
-                {post.menu?.name ?? '-'} • 조회수 {post.viewCount} • {new Date(post.createdAt).toLocaleDateString('ko-KR', { hour: '2-digit', minute: '2-digit' })}
+              <div className="text-sm font-semibold text-[var(--color-ink)] line-clamp-1">{post.title}</div>
+              <div className="mt-1 text-xs text-[var(--muted-foreground)]">
+                {post.menu?.name ?? '-'} · 조회수 {post.viewCount} · {new Date(post.createdAt).toLocaleDateString('ko-KR')}
               </div>
             </div>
-            <div className={'flex gap-1'}>
-              <button
-                type='button'
-                onClick={(e) => {
-                  e.stopPropagation();
-                  deletePost(post.id.toString());
-                }}
-                className='text-red-200 border border-red-400/70 px-3 py-1 rounded-lg hover:bg-red-500/20'
+            <div className="flex gap-1 shrink-0" onClick={(e) => e.stopPropagation()}>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => requestInspect(post.id)}
+                loading={loadingId === post.id}
+              >
+                색인 확인
+              </Button>
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={() => deletePost(post.id.toString())}
               >
                 삭제
-              </button>
-              <button
-                disabled={loadingId === post.id}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  requestInspect(post.id);
-                }}
-                className={'text-emerald-200 border border-emerald-300/50 px-3 py-1 rounded-lg hover:bg-emerald-400/10'}>
-                {loadingId === post.id ? '확인 중...' : '색인 생성 확인'}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -112,7 +103,7 @@ const PostTable = ({ data }: PostTableProps) => {
         onConfirm={() => setModalOpen(false)}
         onCancel={() => setModalOpen(false)}
       >
-        <pre className="max-h-[55vh] overflow-auto whitespace-pre-wrap text-xs text-gray-100 bg-black/30 rounded-lg p-3">
+        <pre className="max-h-[55vh] overflow-auto whitespace-pre-wrap text-xs text-[var(--color-ink)] bg-[var(--color-surface-soft)] rounded-[var(--radius-sm)] p-3">
           {modalText}
         </pre>
       </Modal>

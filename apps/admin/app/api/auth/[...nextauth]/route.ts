@@ -1,6 +1,8 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 
+import { isAllowedAdminEmail } from '@/lib/admin-access';
+
 if (process.env.ADMIN_URL) {
   process.env.NEXTAUTH_URL = process.env.ADMIN_URL;
 }
@@ -14,8 +16,7 @@ const handler = NextAuth({
   ],
   callbacks: {
     async signIn({ user }) {
-      const adminEmail = process.env.ADMIN_EMAIL;
-      return Boolean(adminEmail && user.email === adminEmail);
+      return isAllowedAdminEmail(user.email);
     },
   },
   secret: process.env.NEXTAUTH_SECRET,

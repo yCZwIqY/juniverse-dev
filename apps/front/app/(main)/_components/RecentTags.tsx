@@ -11,34 +11,27 @@ interface RecentTagsProps {
 const RecentTags = ({ posts }: RecentTagsProps) => {
   const updateSearchParams = useUpdateSearchParams('posts');
   const tags = useMemo(() => {
-    const set = new Set<string>();
-    posts
+    const seen = new Set<string>();
+    return posts
       .flatMap((post) => post.tags)
-      .map((tag) => {
-        if (!set.has(tag)) set.add(tag);
-      });
-    return [...set].slice(0, 20);
+      .filter((tag) => { if (seen.has(tag)) return false; seen.add(tag); return true; })
+      .slice(0, 20);
   }, [posts]);
 
   return (
-    <section className={'glass-card w-full p-4 lg:p-8 flex flex-col gap-6 reveal'}>
-      <div className={'flex justify-between'}>
-        <div className={'text-xl font-bold'}>최근에 사용된 태그</div>
-      </div>
-      <div className={'flex gap-2 flex-wrap'}>
-        {tags.map((tag: string) => (
+    <div className="flex flex-col gap-3">
+      <div className="eyebrow">Tags</div>
+      <div className="flex gap-2 flex-wrap">
+        {tags.map((tag) => (
           <Tag
             key={tag}
-            onClick={(e) => {
-              e.stopPropagation();
-              updateSearchParams('search', tag);
-            }}
+            onClick={(e) => { e.stopPropagation(); updateSearchParams('search', tag); }}
           >
             #{tag}
           </Tag>
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 

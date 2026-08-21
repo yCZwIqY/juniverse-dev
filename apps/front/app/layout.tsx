@@ -4,6 +4,7 @@ import Header from '@/app/_components/header/Header';
 import Footer from '@/app/_components/footer/Footer';
 import TrafficTracker from '@/app/_components/TrafficTracker';
 import { NavigationLoadingProvider } from '@/app/_components/navigation/NavigationLoadingProvider';
+import { NavigationLoadingMain } from '@/app/_components/navigation/NavigationLoadingMain';
 import localFont from 'next/font/local';
 import type { Metadata } from 'next';
 
@@ -41,12 +42,12 @@ const MainLayout = ({
   return (
     <html lang='ko' className={suit.className}>
       <body
-        className={`antialiased bg-background w-full min-h-svh lg:max-w-[1120px] mx-auto relative overflow-x-hidden !p-5 flex flex-col h-fit`}
+        className={`antialiased bg-background w-full min-h-svh lg:max-w-[1120px] mx-auto relative overflow-x-clip !p-5 flex flex-col h-fit min-w-0`}
       >
         <NavigationLoadingProvider>
           <TrafficTracker />
           <Header />
-          <main>{children}</main>
+          <NavigationLoadingMain>{children}</NavigationLoadingMain>
           <Footer />
         </NavigationLoadingProvider>
       </body>

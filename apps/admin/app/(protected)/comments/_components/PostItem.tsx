@@ -1,5 +1,6 @@
-import React from 'react';
 import { PostData } from 'apis';
+import { Badge } from 'components';
+
 import { useSelectedPost } from '@/app/(protected)/comments/_store/useSelectedPost';
 
 interface PostItemProps {
@@ -9,18 +10,17 @@ interface PostItemProps {
 const PostItem = ({ data }: PostItemProps) => {
   const { setSelectedPost } = useSelectedPost();
   return (
-    <div
-      className={'flex justify-between gap-2 items-center p-3 border border-white/10 bg-white/5 rounded-xl text-white hover:bg-white/10 transition-colors'}
+    <button
+      type="button"
+      className="flex justify-between gap-2 items-center p-3 border border-[var(--color-hairline)] rounded-[var(--radius-sm)] hover:bg-[var(--color-surface-soft)] transition-colors text-left w-full"
       onClick={() => setSelectedPost(data)}
     >
-      <div className={'flex flex-col gap-1'}>
-        <div className={'font-bold text-md overflow-hidden text-ellipsis line-clamp-1'}>{data.title}</div>
-        <div className={'text-gray-300 text-sm'}>{data.createdAt}</div>
+      <div className="flex flex-col gap-0.5 min-w-0">
+        <div className="text-sm font-medium text-[var(--color-ink)] truncate">{data.title}</div>
+        <div className="text-xs text-[var(--muted-foreground)]">{data.createdAt}</div>
       </div>
-      <div className={'flex-shrink-0 font-bold bg-cyan-400/20 text-cyan-200 size-6 rounded-full flex justify-center items-center border border-cyan-300/40'}>
-        {data.comments?.length}
-      </div>
-    </div>
+      <Badge variant="secondary" className="shrink-0">{data.comments?.length ?? 0}</Badge>
+    </button>
   );
 };
 

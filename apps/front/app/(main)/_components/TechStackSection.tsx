@@ -1,23 +1,19 @@
 const stackGroups = [
   {
-    category: 'Front',
+    category: 'Frontend',
     stacks: [
-      { label: 'JavaScript', detail: 'ES6+ · Web App' },
       { label: 'Next.js', detail: 'App Router · SSR/ISR' },
       { label: 'React', detail: 'Component · State' },
-      { label: 'React Native (Expo)', detail: 'Cross Platform App' },
       { label: 'TypeScript', detail: 'Type Safety' },
+      { label: 'React Native', detail: 'Cross Platform App' },
     ],
   },
   {
-    category: 'Back',
+    category: 'Backend',
     stacks: [
       { label: 'NestJS', detail: 'API · Auth' },
-      { label: 'Java', detail: 'Backend' },
-      { label: 'Spring', detail: 'Spring Boot' },
+      { label: 'Spring Boot', detail: 'Java Enterprise' },
       { label: 'PostgreSQL', detail: 'Relational Data' },
-      { label: 'MariaDB', detail: 'Relational Data' },
-      { label: 'Oracle', detail: 'Enterprise DB' },
       { label: 'Redis', detail: 'Cache · Queue' },
     ],
   },
@@ -29,38 +25,36 @@ const stackGroups = [
     ],
   },
   {
-    category: 'AI',
+    category: 'AI Tools',
     stacks: [
-      { label: 'Codex CLI', detail: 'Terminal Coding Agent' },
+      { label: 'Claude MCP', detail: 'Tool Integration' },
       { label: 'Cursor', detail: 'AI Code Editor' },
-      { label: 'Claude MCP', detail: 'Tool Integration Protocol' },
-      { label: 'AntiGravity', detail: 'AI Workflow Tooling' },
+      { label: 'Codex CLI', detail: 'Terminal Agent' },
     ],
   },
 ];
 
 const TechStackSection = () => {
   return (
-    <section className={'glass-card w-full p-4 lg:p-8 flex flex-col gap-6 reveal'}>
-      <div className={'flex flex-col gap-2'}>
-        <div className={'text-xl font-bold'}>Tech Stack</div>
-        {/*<div className={'text-sm text-muted-foreground'}>실무에서 바로 적용 가능한 기술 목록</div>*/}
+    <section className="color-block-section w-full flex flex-col gap-5 reveal">
+      <div>
+        <div className="eyebrow mb-1">Systems</div>
+        <div className="text-xl font-bold text-[var(--color-ink)]">Tech Stack</div>
       </div>
-      <div className={'grid gap-4 md:grid-cols-2'}>
+      <div className="grid gap-3 md:grid-cols-2">
         {stackGroups.map((group) => (
-          <div key={group.category} className={'rounded-xl border border-border p-4 flex flex-col gap-3 bg-background/40'}>
-            <div className={'text-base font-bold'}>{group.category}</div>
-            <div className={'stack-grid'}>
-              {group.stacks.length > 0 ? (
-                group.stacks.map((s) => (
-                  <div key={s.label} className={'stack-card'}>
-                    <div className={'stack-title'}>{s.label}</div>
-                    <div className={'stack-detail'}>{s.detail}</div>
-                  </div>
-                ))
-              ) : (
-                <div className={'stack-detail'}>추가 예정</div>
-              )}
+          <div
+            key={group.category}
+            className="rounded-[var(--radius-md)] border border-[var(--color-hairline)] p-4 flex flex-col gap-3 bg-[var(--color-canvas)]"
+          >
+            <div className="eyebrow">{group.category}</div>
+            <div className="grid grid-cols-2 gap-2">
+              {group.stacks.map((s) => (
+                <div key={s.label} className="stack-card">
+                  <div className="stack-title text-sm">{s.label}</div>
+                  <div className="stack-detail">{s.detail}</div>
+                </div>
+              ))}
             </div>
           </div>
         ))}

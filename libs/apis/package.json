@@ -4,9 +4,26 @@
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./files": {
+      "types": "./dist/server/files.d.ts",
+      "default": "./dist/server/files.js"
+    },
+    "./notifications": {
+      "types": "./dist/server/notifications.d.ts",
+      "default": "./dist/server/notifications.js"
+    }
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
+  },
+  "dependencies": {
+    "shared-types": "workspace:*"
   },
   "peerDependencies": {
     "next": "15.3.3"

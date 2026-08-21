@@ -1,5 +1,4 @@
 import { ProjectData } from 'apis';
-import Tag from '@/app/_components/tag/Tag';
 
 interface ProjectTitleProps {
   project: ProjectData;
@@ -9,32 +8,44 @@ const ProjectTitle = ({ project }: ProjectTitleProps) => {
   const tags = project.tags ?? [];
 
   return (
-    <div className={'flex flex-col gap-4 border-b border-border pb-8'}>
-      <div className={'flex items-center gap-2'}>
+    <header className="flex flex-col gap-3 pb-5 border-b border-[var(--color-hairline)]">
+      {/* Eyebrow + badge */}
+      <div className="flex items-center gap-3">
+        <span className="eyebrow">Project</span>
         <span
-          className={`inline-flex px-2.5 py-1 rounded-full text-xs font-semibold border ${
+          className={`text-[0.65rem] font-bold tracking-widest uppercase px-2 py-0.5 rounded-[var(--radius-sm)] border ${
             project.isToy
-              ? 'bg-card text-gray-600 border-border'
-              : 'bg-accent/10 text-accent border-accent/30'
+              ? 'border-[var(--color-hairline)] text-[var(--color-mute)]'
+              : 'border-[var(--color-primary)]/50 text-[var(--color-primary)] bg-[var(--color-primary)]/10'
           }`}
         >
-          {project.isToy ? 'TOY PROJECT' : 'MAIN PROJECT'}
+          {project.isToy ? 'Mini' : 'Main'}
         </span>
       </div>
 
-      <div className={'flex flex-col gap-2'}>
-        <h1 className={'text-3xl lg:text-4xl font-bold break-keep'}>{project.title}</h1>
-        <p className={'text-gray-500 text-base lg:text-lg break-keep whitespace-pre-line'}>{project.description}</p>
+      {/* Title + description */}
+      <div className="flex flex-col gap-1.5">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[var(--color-ink)] break-keep leading-tight tracking-tight">
+          {project.title}
+        </h1>
+        {project.description && (
+          <p className="text-sm md:text-base text-[var(--muted-foreground)] break-keep leading-relaxed max-w-2xl">
+            {project.description}
+          </p>
+        )}
       </div>
 
+      {/* Tags */}
       {tags.length > 0 && (
-        <div className={'flex flex-wrap gap-2 [&_div]:!text-xs [&_div]:cursor-default'}>
+        <div className="flex flex-wrap gap-1.5">
           {tags.map((tag) => (
-            <Tag key={tag}>{tag}</Tag>
+            <span key={tag} className="chip cursor-default select-none text-xs">
+              {tag}
+            </span>
           ))}
         </div>
       )}
-    </div>
+    </header>
   );
 };
 
