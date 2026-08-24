@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { getPosts } from 'apis';
+import { getPosts } from 'apis/server';
 
 export const dynamic = 'force-dynamic';
 import { Button } from 'components';

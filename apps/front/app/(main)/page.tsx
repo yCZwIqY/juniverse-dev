@@ -5,7 +5,7 @@ import TechStackSection from '@/app/(main)/_components/TechStackSection';
 import ContactSection from '@/app/(main)/_components/ContactSection';
 import LatestPosts from '@/app/(main)/_components/LatestPosts';
 import RecentTags from '@/app/(main)/_components/RecentTags';
-import { getRecentPosts } from 'apis';
+import { getRecentPosts } from 'apis/server';
 
 export const revalidate = 300;
 

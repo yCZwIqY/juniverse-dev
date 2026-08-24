@@ -1,4 +1,5 @@
-import { getPost, increaseView } from 'apis';
+import { getPost } from 'apis/server';
+import { increaseView } from 'apis/actions';
 import PostTitle from '@/app/(main)/posts/[id]/_components/PostTitle';
 import PostButtons from '@/app/(main)/posts/[id]/_components/PostButtons';
 import { Metadata } from 'next';

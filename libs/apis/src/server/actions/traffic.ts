@@ -1,7 +1,6 @@
 'use server';
 
-import 'server-only';
-import client from '../http/client';
+import client from '../../http/client';
 
 export const trackVisit = async () => {
   try {

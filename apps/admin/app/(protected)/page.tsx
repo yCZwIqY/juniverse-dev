@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import Link from 'next/link';
 
-import { getDashboardPopularPosts, getDashboardRecentComments, getDashboardSummary, getDashboardTraffic } from 'apis';
+import { getDashboardPopularPosts, getDashboardRecentComments, getDashboardSummary, getDashboardTraffic } from 'apis/server';
 import DashboardSectionCard from '@/app/(protected)/_components/dashboard/DashboardSectionCard';
 import DashboardStatCard from '@/app/(protected)/_components/dashboard/DashboardStatCard';
 import TrafficChart from '@/app/(protected)/_components/dashboard/TrafficChart';

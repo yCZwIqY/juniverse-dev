@@ -1,4 +1,4 @@
-import { getPosts } from 'apis';
+import { getPosts } from 'apis/server';
 
 import CommentList from '@/app/(protected)/comments/_components/CommentList';
 import PostList from '@/app/(protected)/comments/_components/PostList';

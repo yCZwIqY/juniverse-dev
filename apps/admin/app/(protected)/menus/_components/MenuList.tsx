@@ -1,6 +1,5 @@
-import { MenuData } from 'apis';
-
-import { getMenuList } from 'apis';
+import type { MenuData } from 'apis';
+import { getMenuList } from 'apis/server';
 import MenuAddButton from '@/app/(protected)/menus/_components/MenuAddButton';
 import MenuItem from '@/app/(protected)/menus/_components/MenuItem';
 

@@ -1,8 +1,8 @@
 'use client';
-import { CommentData } from 'apis';
+import type { CommentData } from 'apis';
 import { useSession } from 'next-auth/react';
 import { Fragment, useState } from 'react';
-import { deleteComment } from 'apis';
+import { deleteComment } from 'apis/actions';
 import { useParams, useRouter } from 'next/navigation';
 
 interface PostCommentItemProps {

@@ -1,41 +1,23 @@
 'use server';
 
-import { MenuRequest, MenusResponse } from 'apis';
-import api from '@/utils/api';
-import { revalidateTag } from 'next/cache';
+import { createMenu as _createMenu, updateMenu as _updateMenu, deleteMenu as _deleteMenu } from 'apis/actions';
+import type { MenuRequest } from 'apis';
 import { revalidateFront } from '@/lib/revalidate-front';
 
-export const getMenuList = async (type = 'tree') => {
-  try {
-    return await api.get<MenusResponse>(`/api/menus?type=${type}`, {}, {
-      cache: 'force-cache',
-      next: { tags: [`menus:${type}`], revalidate: 60 * 60 * 24 },
-    });
-  } catch (error) {
-    console.error('[admin] getMenuList failed', error);
-  }
-};
-
-export const updateMenu = async (id: number, request: MenuRequest) => {
-  const res = await api.patch(`/api/menus/${id}`, request);
-  revalidateTag('menus:tree');
-  revalidateTag('menus:flat');
+export const createMenu = async (request: MenuRequest) => {
+  const res = await _createMenu(request);
   await revalidateFront(['menus:tree', 'menus:flat']);
   return res;
 };
 
-export const createMenu = async (request: MenuRequest) => {
-  const res = await api.post('/api/menus', request);
-  revalidateTag('menus:tree');
-  revalidateTag('menus:flat');
+export const updateMenu = async (id: number, request: MenuRequest) => {
+  const res = await _updateMenu(id, request);
   await revalidateFront(['menus:tree', 'menus:flat']);
   return res;
 };
 
 export const deleteMenu = async (id: number) => {
-  const res = await api.del(`/api/menus/${id}`);
-  revalidateTag('menus:tree');
-  revalidateTag('menus:flat');
+  const res = await _deleteMenu(id);
   await revalidateFront(['menus:tree', 'menus:flat']);
   return res;
 };

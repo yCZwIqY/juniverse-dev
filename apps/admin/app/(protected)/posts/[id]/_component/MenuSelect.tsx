@@ -1,28 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
 import { useController, useFormContext } from 'react-hook-form';
-
-import { getMenuList } from '@/app/(protected)/_libs/menus';
 import { Label, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'components';
 
-const MenuSelect = () => {
-  const [options, setOptions] = useState<{ label: string; value: number }[]>([]);
+interface MenuSelectProps {
+  options: { label: string; value: number }[];
+}
+
+const MenuSelect = ({ options }: MenuSelectProps) => {
   const { control } = useFormContext();
   const {
     field: { value, onChange },
   } = useController({ name: 'menuId', control });
-
-  useEffect(() => {
-    (async () => {
-      const response = await getMenuList('flat');
-      if (response) {
-        setOptions(response.data.map((it) => ({ label: it.name, value: it.id })));
-        if (!value) onChange(response.data[0]?.id);
-      }
-    })();
-  }, [value, onChange]);
 
   return (
     <div className="flex flex-col gap-1.5">

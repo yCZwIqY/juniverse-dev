@@ -1,4 +1,4 @@
-import { getPosts } from 'apis';
+import { getPosts } from 'apis/server';
 
 export default async function sitemap() {
   const posts = await getPosts(1, 1000, 0, '');

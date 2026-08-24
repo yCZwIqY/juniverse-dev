@@ -1,3 +1,5 @@
+'use client';
+
 import { PostData } from 'apis';
 import { Badge } from 'components';
 

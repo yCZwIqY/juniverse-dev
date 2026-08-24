@@ -1,5 +1,3 @@
-'use client';
-
 import { PostData } from 'apis';
 
 import Pagination from '@/app/(protected)/_components/common/Pagination';

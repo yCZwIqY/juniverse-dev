@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { getProjects } from 'apis';
+import { getProjects } from 'apis/server';
 import { deleteProject } from '@/app/(protected)/_libs/projects';
 import { Button } from 'components';
 import ProjectTable from '@/app/(protected)/projects/_components/ProjectTable';

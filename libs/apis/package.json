@@ -9,6 +9,14 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./server": {
+      "types": "./dist/server/queries/index.d.ts",
+      "default": "./dist/server/queries/index.js"
+    },
+    "./actions": {
+      "types": "./dist/server/actions/index.d.ts",
+      "default": "./dist/server/actions/index.js"
+    },
     "./files": {
       "types": "./dist/server/files.d.ts",
       "default": "./dist/server/files.js"

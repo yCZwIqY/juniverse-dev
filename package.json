@@ -20,7 +20,6 @@
     "libs/*"
   ],
   "dependencies": {
-    "@tanstack/react-query": "^5.80.7",
     "date-fns": "^4.1.0",
     "ky": "1.8.1",
     "lodash.throttle": "^4.1.1",

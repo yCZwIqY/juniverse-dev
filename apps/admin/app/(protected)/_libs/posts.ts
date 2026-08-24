@@ -1,46 +1,23 @@
 'use server';
-import api from '@/utils/api';
-import { PostFormData, PostResponse } from 'apis';
-import { revalidateTag } from 'next/cache';
+
+import { createPost as _createPost, updatePost as _updatePost, deletePost as _deletePost } from 'apis/actions';
+import type { PostFormData } from 'apis';
 import { revalidateFront } from '@/lib/revalidate-front';
 
-export const getPost = async (id: string) => {
-  try {
-    return await api.get<PostResponse>(
-      `/api/posts/${id}`,
-      {},
-      {
-        cache: 'force-cache',
-        next: { tags: [`post:${id ?? 0}`] },
-      },
-    );
-  } catch {}
-};
-
 export const createPost = async (post: PostFormData) => {
-  try {
-    const res = await api.post('/api/posts', post);
-    revalidateTag('posts');
-    await revalidateFront(['posts', 'recent-posts']);
-    return res;
-  } catch {}
+  const res = await _createPost(post);
+  await revalidateFront(['posts', 'recent-posts']);
+  return res;
 };
 
 export const updatePost = async (id: string, post: PostFormData) => {
-  try {
-    const res = await api.patch(`/api/posts/${id}`, post);
-    revalidateTag('posts');
-    revalidateTag(`post:${id}`);
-    await revalidateFront(['posts', 'recent-posts', `post:${id}`]);
-    return res;
-  } catch {}
+  const res = await _updatePost(id, post);
+  await revalidateFront(['posts', 'recent-posts', `post:${id}`]);
+  return res;
 };
 
 export const deletePost = async (id: string) => {
-  try {
-    const res = await api.del(`/api/posts/${id}`);
-    revalidateTag('posts');
-    await revalidateFront(['posts', 'recent-posts', `post:${id}`]);
-    return res;
-  } catch {}
+  const res = await _deletePost(id);
+  await revalidateFront(['posts', 'recent-posts', `post:${id}`]);
+  return res;
 };

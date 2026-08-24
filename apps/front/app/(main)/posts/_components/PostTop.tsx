@@ -1,4 +1,4 @@
-import { getMenu } from 'apis';
+import { getMenu } from 'apis/server';
 
 interface ListTopProps {
   search: string;

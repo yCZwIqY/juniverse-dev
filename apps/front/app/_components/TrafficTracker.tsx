@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { trackVisit } from 'apis';
+import { trackVisit } from 'apis/actions';
 
 const TrafficTracker = () => {
   useEffect(() => {

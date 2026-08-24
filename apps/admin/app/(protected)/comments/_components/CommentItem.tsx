@@ -1,4 +1,7 @@
-import { CommentData, deleteComment } from 'apis';
+'use client';
+
+import type { CommentData } from 'apis';
+import { deleteComment } from 'apis/actions';
 import { Button } from 'components';
 
 interface CommentItemProps {

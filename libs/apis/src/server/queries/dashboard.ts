@@ -1,7 +1,5 @@
-'use server';
-
 import 'server-only';
-import client from '../http/client';
+import client from '../../http/client';
 import type {
   BaseResponse,
   DashboardPopularPost,
@@ -15,9 +13,7 @@ export const getDashboardSummary = async () => {
     const { data } = await client.get<BaseResponse<DashboardSummaryResponse>>(
       '/api/dashboard/summary',
       {},
-      {
-        next: { revalidate: 60, tags: ['dashboard-summary'] },
-      },
+      { next: { revalidate: 60, tags: ['dashboard-summary'] } },
     );
     return data;
   } catch (error) {
@@ -30,9 +26,7 @@ export const getDashboardTraffic = async (range: 'day' | 'week' | 'month' | 'yea
     const { data } = await client.get<BaseResponse<DashboardTrafficResponse>>(
       '/api/dashboard/traffic',
       { range },
-      {
-        next: { revalidate: 60, tags: [`dashboard-traffic:${range}`] },
-      },
+      { next: { revalidate: 60, tags: [`dashboard-traffic:${range}`] } },
     );
     return data;
   } catch (error) {
@@ -45,9 +39,7 @@ export const getDashboardPopularPosts = async (range: 'day' | 'week' | 'month' |
     const { data } = await client.get<BaseResponse<DashboardPopularPost[]>>(
       '/api/dashboard/popular-posts',
       { range, limit },
-      {
-        next: { revalidate: 60, tags: [`dashboard-popular:${range}`] },
-      },
+      { next: { revalidate: 60, tags: [`dashboard-popular:${range}`] } },
     );
     return data;
   } catch (error) {
@@ -60,9 +52,7 @@ export const getDashboardRecentComments = async (limit = 5) => {
     const { data } = await client.get<BaseResponse<DashboardRecentComment[]>>(
       '/api/dashboard/recent-comments',
       { limit },
-      {
-        next: { revalidate: 60, tags: ['dashboard-comments'] },
-      },
+      { next: { revalidate: 60, tags: ['dashboard-comments'] } },
     );
     return data;
   } catch (error) {

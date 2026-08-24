@@ -1,3 +1,5 @@
+'use client';
+
 import { useController, useFormContext } from 'react-hook-form';
 
 import { Input, Label } from 'components';

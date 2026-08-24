@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import PostTop from '@/app/(main)/posts/_components/PostTop';
 import PostList from '@/app/(main)/posts/_components/PostList';
-import { getMenuList, getPosts } from 'apis';
+import { getMenuList, getPosts } from 'apis/server';
 import MenuList from '@/app/(main)/posts/_components/Menus/MenuList';
 import { MobileCategoryDrawer } from '@/app/(main)/posts/_components/Menus/MobileCategoryDrawer';
 

@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getProject } from 'apis';
+import { getProject } from 'apis/server';
 import ProjectTitle from '@/app/(main)/projects/[id]/_components/ProjectTitle';
 import ProjectMetaData from '@/app/(main)/projects/[id]/_components/ProjectMetaData';
 import ProjectScreenshots from '@/app/(main)/projects/[id]/_components/ProjectScreenshots';

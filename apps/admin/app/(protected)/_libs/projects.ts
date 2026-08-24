@@ -1,6 +1,6 @@
 'use server';
 
-import { createProject as _create, updateProject as _update, deleteProject as _delete } from 'apis';
+import { createProject as _create, updateProject as _update, deleteProject as _delete } from 'apis/actions';
 import type { ProjectFormData } from 'apis';
 import { revalidateFront } from '@/lib/revalidate-front';
 
