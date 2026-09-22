@@ -25,16 +25,27 @@ export async function GET(req: Request) {
   const authorization = req.headers.get('authorization');
   const cookie = req.headers.get('cookie');
 
-  const upstreamRes = await fetch(upstreamUrl, {
-    method: 'GET',
-    headers: {
-      Accept: 'text/event-stream',
-      ...(authorization ? { Authorization: authorization } : {}),
-      ...(cookie ? { Cookie: cookie } : {}),
-    },
-    cache: 'no-store',
-    signal: req.signal,
-  });
+  let upstreamRes: Response;
+  try {
+    upstreamRes = await fetch(upstreamUrl, {
+      method: 'GET',
+      headers: {
+        Accept: 'text/event-stream',
+        ...(authorization ? { Authorization: authorization } : {}),
+        ...(cookie ? { Cookie: cookie } : {}),
+      },
+      cache: 'no-store',
+      signal: req.signal,
+    });
+  } catch (err) {
+    if (req.signal.aborted) {
+      return new Response(null, { status: 499 });
+    }
+    return Response.json(
+      { error: 'SSE proxy error', message: err instanceof Error ? err.message : 'fetch failed' },
+      { status: 502 },
+    );
+  }
 
   if (!upstreamRes.ok || !upstreamRes.body) {
     const message = await upstreamRes.text().catch(() => 'Failed to connect to upstream SSE');

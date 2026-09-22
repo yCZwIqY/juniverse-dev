@@ -22,16 +22,16 @@ const SimplePostItem = ({ id, title, menu, createdAt }: PostData) => {
         className="absolute inset-0 rounded-[var(--radius-md)]"
         aria-label={title}
       />
-      <div className="flex gap-3 items-center flex-1 min-w-0 relative z-10">
+      <div className="flex gap-3 items-center flex-1 min-w-0 pointer-events-none">
         <Tag
-          className="shrink-0 text-xs"
+          className="shrink-0 text-xs pointer-events-auto relative z-10"
           onClick={(e) => { e.stopPropagation(); updateSearchParams('category', menu.id.toString()); }}
         >
           {menu.name}
         </Tag>
         <span className="text-sm font-semibold text-[var(--color-ink)] flex-1 truncate" aria-hidden="true">{title}</span>
       </div>
-      <span className="text-xs text-[var(--muted-foreground)] shrink-0 tabular-nums relative z-10">{dateStr}</span>
+      <span className="text-xs text-[var(--muted-foreground)] shrink-0 tabular-nums">{dateStr}</span>
     </article>
   );
 };

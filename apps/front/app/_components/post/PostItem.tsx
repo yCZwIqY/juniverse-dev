@@ -24,9 +24,9 @@ const PostItem = ({ id, title, subtitle, menu, createdAt, tags, viewCount, comme
         className="absolute inset-0 rounded-[var(--radius-md)]"
         aria-label={title}
       />
-      <div className="flex flex-col gap-1.5 relative z-10">
+      <div className="flex flex-col gap-1.5 pointer-events-none">
         <Tag
-          className="self-start text-xs"
+          className="self-start text-xs pointer-events-auto relative z-10"
           onClick={(e) => { e.stopPropagation(); updateSearchParams('category', menu.id.toString()); }}
         >
           {menu.name}
@@ -36,12 +36,12 @@ const PostItem = ({ id, title, subtitle, menu, createdAt, tags, viewCount, comme
           <p className="text-sm text-[var(--muted-foreground)] line-clamp-1 leading-relaxed">{subtitle}</p>
         )}
       </div>
-      <div className="flex items-center justify-between gap-2 relative z-10">
+      <div className="flex items-center justify-between gap-2 pointer-events-none">
         <div className="flex gap-2 flex-wrap">
           {tags.slice(0, 5).map((tag) => (
             <Tag
               key={tag}
-              className="text-xs"
+              className="text-xs pointer-events-auto relative z-10"
               onClick={(e) => { e.stopPropagation(); updateSearchParams('search', tag); }}
             >
               #{tag}
