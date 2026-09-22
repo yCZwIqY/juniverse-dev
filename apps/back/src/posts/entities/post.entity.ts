@@ -1,4 +1,4 @@
-import { Menu } from 'src/menus/entities/menu.entity';
+import { Menu } from '../../menus/entities/menu.entity';
 import {
   Column,
   CreateDateColumn,
