@@ -102,82 +102,84 @@ jobs:
           docker build --progress=plain -t $DOCKER_USER/portfolio-back:latest -f docker/back.Dockerfile .
           docker push $DOCKER_USER/portfolio-back:latest
 
-      - name: SSH into Lightsail and update changed containers
-        if: steps.changes.outputs.front == 'true' || steps.changes.outputs.admin == 'true' || steps.changes.outputs.back == 'true'
-        uses: appleboy/ssh-action@v1.0.3
-        env:
-          FRONT_CHANGED: ${{ steps.changes.outputs.front }}
-          ADMIN_CHANGED: ${{ steps.changes.outputs.admin }}
-          BACK_CHANGED: ${{ steps.changes.outputs.back }}
-        with:
-          host: ${{ env.LIGHTSAIL_HOST }}
-          username: ${{ env.LIGHTSAIL_USER }}
-          key: ${{ env.SSH_KEY }}
-          envs: FRONT_CHANGED,ADMIN_CHANGED,BACK_CHANGED
-          command_timeout: 60m
-          script: |
-            set -e
-            cd ~/portfolio-deploy
-
-            pull_with_retry() {
-              service="$1"
-              max_retries=3
-              retry_delay=15
-              count=1
-
-              while [ "$count" -le "$max_retries" ]; do
-                echo "▶ Pull $service (try $count/$max_retries)"
-                if docker compose pull "$service"; then
-                  return 0
-                fi
-                if [ "$count" -lt "$max_retries" ]; then
-                  echo "Pull failed for $service. retry in ${retry_delay}s..."
-                  sleep "$retry_delay"
-                fi
-                count=$((count + 1))
-              done
-
-              echo "Pull failed for $service after $max_retries attempts."
-              return 1
-            }
-
-            remove_name_conflicts() {
-              service="$1"
-              conflict_ids="$(
-                docker ps -a --format '{{.ID}} {{.Names}}' \
-                  | awk -v svc="$service" '$2 == "portfolio-"svc || $2 ~ ("_portfolio-"svc"$") { print $1 }'
-              )"
-              if [ -n "$conflict_ids" ]; then
-                echo "▶ Remove name conflicts for $service"
-                echo "$conflict_ids" | xargs -r docker rm -f
-              fi
-            }
-            
-            if [ "$FRONT_CHANGED" = "true" ]; then
-              pull_with_retry front
-            fi
-            if [ "$ADMIN_CHANGED" = "true" ]; then
-              pull_with_retry admin
-            fi
-            if [ "$BACK_CHANGED" = "true" ]; then
-              pull_with_retry back
-            fi
-            
-            echo "▶ Up"
-            if [ "$FRONT_CHANGED" = "true" ]; then
-              remove_name_conflicts front
-              docker compose up -d front
-            fi
-            if [ "$ADMIN_CHANGED" = "true" ]; then
-              remove_name_conflicts admin
-              docker compose up -d admin
-            fi
-            if [ "$BACK_CHANGED" = "true" ]; then
-              remove_name_conflicts back
-              docker compose up -d back
-            fi
-            docker compose restart nginx
-                     
-            echo "▶ Cleanup"
-            docker image prune -f
-            docker builder prune -f --filter "until=168h"
+      # SECURITY RECOVERY: keep remote deployment disabled until the clean server and rotated credentials are verified.
+#       - name: SSH into Lightsail and update changed containers
+#         if: steps.changes.outputs.front == 'true' || steps.changes.outputs.admin == 'true' || steps.changes.outputs.back == 'true'
+#         uses: appleboy/ssh-action@v1.0.3
+#         env:
+#           FRONT_CHANGED: ${{ steps.changes.outputs.front }}
+#           ADMIN_CHANGED: ${{ steps.changes.outputs.admin }}
+#           BACK_CHANGED: ${{ steps.changes.outputs.back }}
+#         with:
+#           host: ${{ env.LIGHTSAIL_HOST }}
+#           username: ${{ env.LIGHTSAIL_USER }}
+#           key: ${{ env.SSH_KEY }}
+#           envs: FRONT_CHANGED,ADMIN_CHANGED,BACK_CHANGED
+#           command_timeout: 60m
+#           script: |
+#             set -e
+#             cd ~/portfolio-deploy
+#
+#             pull_with_retry() {
+#               service="$1"
+#               max_retries=3
+#               retry_delay=15
+#               count=1
+#
+#               while [ "$count" -le "$max_retries" ]; do
+#                 echo "▶ Pull $service (try $count/$max_retries)"
+#                 if docker compose pull "$service"; then
+#                   return 0
+#                 fi
+#                 if [ "$count" -lt "$max_retries" ]; then
+#                   echo "Pull failed for $service. retry in ${retry_delay}s..."
+#                   sleep "$retry_delay"
+#                 fi
+#                 count=$((count + 1))
+#               done
+#
+#               echo "Pull failed for $service after $max_retries attempts."
+#               return 1
+#             }
+#
+#             remove_name_conflicts() {
+#               service="$1"
+#               conflict_ids="$(
+#                 docker ps -a --format '{{.ID}} {{.Names}}' \
+#                   | awk -v svc="$service" '$2 == "portfolio-"svc || $2 ~ ("_portfolio-"svc"$") { print $1 }'
+#               )"
+#               if [ -n "$conflict_ids" ]; then
+#                 echo "▶ Remove name conflicts for $service"
+#                 echo "$conflict_ids" | xargs -r docker rm -f
+#               fi
+#             }
+#
+#             if [ "$FRONT_CHANGED" = "true" ]; then
+#               pull_with_retry front
+#             fi
+#             if [ "$ADMIN_CHANGED" = "true" ]; then
+#               pull_with_retry admin
+#             fi
+#             if [ "$BACK_CHANGED" = "true" ]; then
+#               pull_with_retry back
+#             fi
+#
+#             echo "▶ Up"
+#             if [ "$FRONT_CHANGED" = "true" ]; then
+#               remove_name_conflicts front
+#               docker compose up -d front
+#             fi
+#             if [ "$ADMIN_CHANGED" = "true" ]; then
+#               remove_name_conflicts admin
+#               docker compose up -d admin
+#             fi
+#             if [ "$BACK_CHANGED" = "true" ]; then
+#               remove_name_conflicts back
+#               docker compose up -d back
+#             fi
+#             docker compose restart nginx
+#
+#             echo "▶ Cleanup"
+#             docker image prune -f
+#             docker builder prune -f --filter "until=168h"
+#

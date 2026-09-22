@@ -34,7 +34,7 @@
     "shared-types": "workspace:*"
   },
   "peerDependencies": {
-    "next": "15.3.3"
+    "next": "15.5.25"
   },
   "keywords": [],
   "author": "",
