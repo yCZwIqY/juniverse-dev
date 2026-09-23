@@ -35,6 +35,7 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   other: {
+    'google-adsense-account': 'ca-pub-2956934323325702',
     'msapplication-TileColor': '#ffffff',
     'msapplication-TileImage': '/ms-icon-144x144.png',
   },

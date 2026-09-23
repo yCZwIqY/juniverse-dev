@@ -3,6 +3,7 @@ import { increaseView } from 'apis/actions';
 import PostTitle from '@/app/(main)/posts/[id]/_components/PostTitle';
 import PostButtons from '@/app/(main)/posts/[id]/_components/PostButtons';
 import { Metadata } from 'next';
+import Script from 'next/script';
 import EditorViewer from '@/app/(main)/_components/EditorViewer';
 import PostComments from '@/app/(main)/posts/[id]/_components/PostComments';
 import QuickMenus from '@/app/(main)/posts/[id]/_components/QuickMenus';
@@ -34,6 +35,12 @@ const PostDetailPage = async ({ params }: PostDetailPageProps) => {
 
   return (
     <div>
+      <Script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2956934323325702"
+        crossOrigin="anonymous"
+        strategy="afterInteractive"
+      />
       <div className={'glass-card mt-4 overflow-hidden'}>
         <div className="p-4 md:p-6 border-b border-[var(--color-hairline)]">
           <PostTitle post={post.data} />
