@@ -1,3 +1,5 @@
+'use client';
+
 import { StarterKit } from '@tiptap/starter-kit';
 import { ResizableImage } from './nodes/resizable-image';
 import { TaskItem, TaskList } from '@tiptap/extension-list';

@@ -1,3 +1,5 @@
+'use client';
+
 import { Image } from '@tiptap/extension-image';
 import { ReactNodeViewRenderer } from '@tiptap/react';
 import { ResizableImageView } from './resizable-image-view';
