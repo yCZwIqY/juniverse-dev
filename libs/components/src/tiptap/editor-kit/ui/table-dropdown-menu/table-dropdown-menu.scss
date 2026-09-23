@@ -1,0 +1,169 @@
+/* ============================================================
+   Table Dropdown Menu — 좌측 메뉴 + 우측 grid picker 2-pane
+   ============================================================ */
+
+.tiptap-table-menu {
+  display: flex;
+  align-items: stretch;
+  gap: 0.25rem;
+  background-color: var(--tt-dropdown-menu-bg-color, #fff);
+}
+
+/* --- 좌측 메뉴 리스트 --- */
+
+.tiptap-table-menu-list {
+  display: flex;
+  flex-direction: column;
+  min-width: 8.5rem;
+  padding: 0.25rem;
+}
+
+.tiptap-table-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.375rem 0.5rem;
+  border: none;
+  border-radius: var(--tt-radius-md, 6px);
+  background: transparent;
+  color: var(--tt-dropdown-menu-text-color, #374151);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color 0.1s ease,
+    color 0.1s ease;
+
+  .tiptap-table-menu-item-icon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+  }
+
+  .tiptap-table-menu-item-label {
+    flex: 1;
+  }
+
+  .tiptap-table-menu-item-chevron {
+    width: 0.875rem;
+    height: 0.875rem;
+    flex-shrink: 0;
+    opacity: 0.55;
+  }
+
+  &:hover:not([data-disabled='true']),
+  &[data-highlighted='true'] {
+    background-color: var(--tt-brand-color-50, #eef2ff);
+    color: var(--tt-brand-color-600, #4263eb);
+  }
+
+  &[data-disabled='true'] {
+    color: var(--tt-gray-light-a-400, rgba(0, 0, 0, 0.3));
+    cursor: default;
+  }
+
+  &[data-danger='true']:hover:not([data-disabled='true']) {
+    background-color: var(--tt-color-red-inc-1, #fff5f5);
+    color: var(--tt-color-red, #e03131);
+  }
+}
+
+.tiptap-table-menu-separator {
+  height: 1px;
+  margin: 0.25rem 0.25rem;
+  background-color: var(--tt-gray-light-a-200, rgba(0, 0, 0, 0.08));
+}
+
+/* --- 우측 패널 --- */
+
+.tiptap-table-menu-panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 11rem;
+  padding: 0.5rem;
+  border-left: 1px solid var(--tt-gray-light-a-200, rgba(0, 0, 0, 0.08));
+}
+
+/* --- grid picker --- */
+
+.tiptap-table-grid {
+  display: grid;
+  gap: 3px;
+  margin: 0 auto;
+}
+
+.tiptap-table-grid-cell {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--tt-gray-light-a-300, rgba(0, 0, 0, 0.15));
+  border-radius: 2px;
+  background-color: var(--white, #fff);
+  cursor: pointer;
+  transition:
+    background-color 0.05s ease,
+    border-color 0.05s ease;
+
+  &[data-selected='true'] {
+    background-color: var(--tt-brand-color-300, #91a7ff);
+    border-color: var(--tt-brand-color-500, #4263eb);
+  }
+}
+
+.tiptap-table-grid-label {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--tt-dropdown-menu-text-color, #6b7280);
+}
+
+/* --- 우측 패널의 액션 버튼 리스트 --- */
+
+.tiptap-table-panel-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.tiptap-table-panel-title {
+  padding: 0.25rem 0.5rem 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--tt-dropdown-menu-label-color, #6b7280);
+}
+
+.tiptap-table-panel-button {
+  width: 100%;
+  padding: 0.375rem 0.5rem;
+  border: none;
+  border-radius: var(--tt-radius-md, 6px);
+  background: transparent;
+  color: var(--tt-dropdown-menu-text-color, #374151);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color 0.1s ease,
+    color 0.1s ease;
+
+  &:hover:not(:disabled) {
+    background-color: var(--tt-brand-color-50, #eef2ff);
+    color: var(--tt-brand-color-600, #4263eb);
+  }
+
+  &:disabled {
+    color: var(--tt-gray-light-a-400, rgba(0, 0, 0, 0.3));
+    cursor: default;
+  }
+}
+
+/* --- 셀 배경색 사용자 지정 입력(디자인 시스템 TextInput) 크기 --- */
+
+.tiptap-table-cell-custom-input {
+  flex: 1;
+  min-width: 0;
+}

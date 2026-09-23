@@ -1,5 +1,5 @@
 import { StarterKit } from '@tiptap/starter-kit';
-import { Image } from '@tiptap/extension-image';
+import { ResizableImage } from './nodes/resizable-image';
 import { TaskItem, TaskList } from '@tiptap/extension-list';
 import { TextAlign } from '@tiptap/extension-text-align';
 import { Typography } from '@tiptap/extension-typography';
@@ -7,8 +7,8 @@ import { Highlight } from '@tiptap/extension-highlight';
 import { Subscript } from '@tiptap/extension-subscript';
 import { Superscript } from '@tiptap/extension-superscript';
 import { Table } from '@tiptap/extension-table';
-import { TableCell } from '@tiptap/extension-table-cell';
-import { TableHeader } from '@tiptap/extension-table-header';
+import { TableCellWithBackground, TableHeaderWithBackground } from './nodes/table-background';
+import { TableCellSplit } from './nodes/table-split';
 import { TableRow } from '@tiptap/extension-table-row';
 import type { AnyExtension } from '@tiptap/core';
 import { HorizontalRule } from './nodes/horizontal-rule';
@@ -35,11 +35,12 @@ export const createTiptapContentExtensions = (): AnyExtension[] => [
   TaskList,
   TaskItem.configure({ nested: true }),
   Highlight.configure({ multicolor: true }),
-  Image,
-  Table.configure({ resizable: false }),
+  ResizableImage,
+  Table.configure({ resizable: true }),
   TableRow,
-  TableHeader,
-  TableCell,
+  TableHeaderWithBackground,
+  TableCellWithBackground,
+  TableCellSplit,
   Typography,
   Superscript,
   Subscript,

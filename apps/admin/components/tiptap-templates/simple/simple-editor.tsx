@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { EditorContent, EditorContext, useEditor } from '@tiptap/react';
 
 // --- Tiptap Core Extensions ---
@@ -20,7 +20,7 @@ import 'components/src/tiptap/styles/content.scss';
 
 // --- Tiptap UI ---
 import { HeadingDropdownMenu } from 'components/src/tiptap/editor-kit/ui/heading-dropdown-menu';
-import { ImageUploadButton } from 'components/src/tiptap/editor-kit/ui/image-upload-button';
+import { ImageTools } from './image-tools';
 import { ListDropdownMenu } from 'components/src/tiptap/editor-kit/ui/list-dropdown-menu';
 import { BlockquoteButton } from 'components/src/tiptap/editor-kit/ui/blockquote-button';
 import { CodeBlockButton } from 'components/src/tiptap/editor-kit/ui/code-block-button';
@@ -31,6 +31,7 @@ import {
 } from 'components/src/tiptap/editor-kit/ui/color-highlight-popover';
 import { LinkButton, LinkContent, LinkPopover } from 'components/src/tiptap/editor-kit/ui/link-popover';
 import { MarkButton } from 'components/src/tiptap/editor-kit/ui/mark-button';
+import { TableContextMenu } from 'components/src/tiptap/editor-kit/ui/table-context-menu/table-context-menu';
 import { TableDropdownMenu } from 'components/src/tiptap/editor-kit/ui/table-dropdown-menu';
 import { TextAlignButton } from 'components/src/tiptap/editor-kit/ui/text-align-button';
 import { UndoRedoButton } from 'components/src/tiptap/editor-kit/ui/undo-redo-button';
@@ -42,8 +43,6 @@ import { LinkIcon } from 'components/src/tiptap/editor-kit/icons/link-icon';
 
 // --- Hooks ---
 import { useIsBreakpoint } from 'components/src/tiptap/editor-kit/hooks/use-is-breakpoint';
-import { useWindowSize } from 'components/src/tiptap/editor-kit/hooks/use-window-size';
-import { useCursorVisibility } from 'components/src/tiptap/editor-kit/hooks/use-cursor-visibility';
 
 // --- Lib ---
 import { MAX_FILE_SIZE } from 'components/src/tiptap/editor-kit/lib/tiptap-editor-utils';
@@ -71,10 +70,12 @@ const MainToolbarContent = ({
   onHighlighterClick,
   onLinkClick,
   isMobile,
+  postId,
 }: {
   onHighlighterClick: () => void;
   onLinkClick: () => void;
   isMobile: boolean;
+  postId: string;
 }) => {
   return (
     <>
@@ -125,8 +126,8 @@ const MainToolbarContent = ({
       <ToolbarSeparator />
 
       <ToolbarGroup>
-        <TableDropdownMenu portal={isMobile} />
-        <ImageUploadButton text="Add" />
+        <TableDropdownMenu portal />
+        <ImageTools postId={postId} />
       </ToolbarGroup>
 
       <Spacer />
@@ -162,9 +163,7 @@ interface SimpleEditorProps {
 
 export function SimpleEditor({ value, onChange, postId }: SimpleEditorProps) {
   const isMobile = useIsBreakpoint();
-  const { height } = useWindowSize();
   const [mobileView, setMobileView] = useState<'main' | 'highlighter' | 'link'>('main');
-  const toolbarRef = useRef<HTMLDivElement>(null);
 
   const editor = useEditor({
     immediatelyRender: false,
@@ -204,10 +203,6 @@ export function SimpleEditor({ value, onChange, postId }: SimpleEditorProps) {
     editor.commands.setContent(value || '');
   }, [editor, value]);
 
-  const rect = useCursorVisibility({
-    editor,
-    overlayHeight: toolbarRef.current?.getBoundingClientRect().height ?? 0,
-  });
 
   useEffect(() => {
     if (!isMobile && mobileView !== 'main') {
@@ -217,21 +212,13 @@ export function SimpleEditor({ value, onChange, postId }: SimpleEditorProps) {
 
   return (
     <EditorContext.Provider value={{ editor }}>
-      <Toolbar
-        ref={toolbarRef}
-        style={{
-          ...(isMobile
-            ? {
-                bottom: `calc(100% - ${height - rect.y}px)`,
-              }
-            : {}),
-        }}
-      >
+      <Toolbar>
         {mobileView === 'main' ? (
           <MainToolbarContent
             onHighlighterClick={() => setMobileView('highlighter')}
             onLinkClick={() => setMobileView('link')}
             isMobile={isMobile}
+            postId={postId}
           />
         ) : (
           <MobileToolbarContent type={mobileView === 'highlighter' ? 'highlighter' : 'link'} onBack={() => setMobileView('main')} />
@@ -239,6 +226,7 @@ export function SimpleEditor({ value, onChange, postId }: SimpleEditorProps) {
       </Toolbar>
 
       <EditorContent editor={editor} role="presentation" className="simple-editor-content" />
+      <TableContextMenu editor={editor} />
     </EditorContext.Provider>
   );
 }

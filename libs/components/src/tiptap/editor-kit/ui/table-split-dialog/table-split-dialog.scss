@@ -1,0 +1,99 @@
+/* ============================================================
+   셀 나누기 대화상자 — 화면 중앙 모달
+   ============================================================ */
+
+.tiptap-table-split-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 65;
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+.tiptap-table-split-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 70;
+  transform: translate(-50%, -50%);
+  width: 17.5rem;
+  padding: 1rem;
+  border-radius: var(--tt-radius-lg, 10px);
+  background-color: var(--tt-dropdown-menu-bg-color, #fff);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.18);
+}
+
+.tiptap-table-split-dialog-title {
+  margin-bottom: 0.875rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--tt-dropdown-menu-text-color, #374151);
+}
+
+.tiptap-table-split-dialog-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tiptap-table-split-dialog-field {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.tiptap-table-split-dialog-label {
+  flex-shrink: 0;
+  width: 3.5rem;
+  font-size: 0.8125rem;
+  color: var(--tt-dropdown-menu-text-color, #374151);
+}
+
+.tiptap-table-split-dialog-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.tiptap-table-split-dialog-hint {
+  margin-top: 0.625rem;
+  font-size: 0.75rem;
+  color: var(--tt-dropdown-menu-label-color, #6b7280);
+}
+
+.tiptap-table-split-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.375rem;
+  margin-top: 1rem;
+}
+
+.tiptap-table-split-dialog-button {
+  padding: 0.4375rem 0.875rem;
+  border: 1px solid var(--tt-gray-light-a-200, rgba(0, 0, 0, 0.12));
+  border-radius: var(--tt-radius-md, 6px);
+  background-color: var(--white, #fff);
+  color: var(--tt-dropdown-menu-text-color, #374151);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition:
+    background-color 0.1s ease,
+    border-color 0.1s ease;
+
+  &:hover:not(:disabled) {
+    background-color: var(--tt-gray-light-a-100, rgba(0, 0, 0, 0.04));
+  }
+
+  &[data-variant='primary'] {
+    border-color: var(--tt-brand-color-500, #4263eb);
+    background-color: var(--tt-brand-color-500, #4263eb);
+    color: var(--white, #fff);
+
+    &:hover:not(:disabled) {
+      background-color: var(--tt-brand-color-600, #3b5bdb);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}

@@ -29,3 +29,25 @@
     margin: 0;
   }
 }
+.tiptap.ProseMirror .tiptap-resizable-image {
+  position: relative;
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 1rem 0;
+  line-height: 0;
+  img { display: block; max-width: 100%; height: auto; margin: 0; }
+  &[data-selected='true'] { outline: 2px solid var(--tt-brand-color-500, #6366f1); }
+}
+.tiptap-resizable-image-handle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: white;
+  border: 1px solid #6366f1;
+  touch-action: none;
+  &[data-corner='top-left'] { top: -6px; left: -6px; cursor: nwse-resize; }
+  &[data-corner='top-right'] { top: -6px; right: -6px; cursor: nesw-resize; }
+  &[data-corner='bottom-left'] { bottom: -6px; left: -6px; cursor: nesw-resize; }
+  &[data-corner='bottom-right'] { bottom: -6px; right: -6px; cursor: nwse-resize; }
+}

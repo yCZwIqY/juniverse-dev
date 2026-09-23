@@ -204,3 +204,22 @@ pre[class*='language-'] {
   font-family: var(--font-mono) !important;
   text-shadow: none !important;
 }
+.admin-editor .simple-editor-content {
+  height: auto;
+  min-height: min(280px, 50dvh);
+  max-height: 50vh;
+  max-height: 50dvh;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+.admin-editor .simple-editor-content .tiptap.ProseMirror.simple-editor {
+  min-height: min(280px, 50dvh);
+  padding: 1.5rem;
+}
+.admin-editor .tiptap-toolbar[data-variant="fixed"] {
+  position: relative;
+  top: auto;
+  bottom: auto !important;
+  flex-shrink: 0;
+}

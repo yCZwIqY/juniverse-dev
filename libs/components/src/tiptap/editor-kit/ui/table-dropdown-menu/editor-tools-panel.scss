@@ -1,0 +1,24 @@
+.editor-tools-panel {
+  width: min(340px, calc(100vw - 24px));
+  max-height: min(600px, 75dvh);
+  overflow: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--color-canvas-soft, #fff);
+  color: var(--color-ink, #222);
+  border: 1px solid var(--color-hairline, #ccc);
+  border-radius: 8px;
+  label { display: flex; align-items: center; gap: 8px; }
+  input { min-width: 0; max-width: 100%; border: 1px solid #888; border-radius: 4px; padding: 4px; }
+  input[type='number'] { width: 80px; }
+  fieldset { display: flex; flex-wrap: wrap; gap: 8px; border: 1px solid #888; padding: 8px; }
+  button { padding: 6px; border-radius: 4px; text-align: left; }
+  button:hover:not(:disabled) { background: var(--color-surface-soft, #ddd); }
+  button:disabled { opacity: .4; cursor: not-allowed; }
+}
+.editor-table-grid { display: grid; grid-template-columns: repeat(8, 24px); gap: 3px; }
+.editor-table-grid button { height: 24px; border: 1px solid #888; }
+.editor-table-grid button[data-active='true'] { background: #818cf8; }
+.editor-table-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
