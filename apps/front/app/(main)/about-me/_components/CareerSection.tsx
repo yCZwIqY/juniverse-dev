@@ -1,19 +1,31 @@
 const careers = [
   {
-    period: '2022.07 – 현재',
-    company: 'Saycore',
+    period: '2025.07 – 현재',
+    company: '세이코어',
     role: 'Frontend Engineer',
-    tags: ['Next.js', 'React', 'TypeScript', 'NestJS'],
+    tags: ['React', 'Next.js', 'TypeScript', 'Turborepo', 'SSE'],
     description:
-      '콘텐츠 플랫폼 및 어드민 시스템 설계·개발. Next.js App Router 기반 SSR/ISR 적용, 다크 디자인 시스템 구축 및 TipTap 기반 에디터 개발.',
+      '공공기관 업무 시스템과 AI 서비스의 프론트엔드 아키텍처 및 공통 개발 환경을 설계하고 개발합니다.',
+    highlights: [
+      'pnpm · Turborepo 모노레포와 공통 UI · API · 타입 패키지 구성',
+      '권한 기반 라우팅과 서버 상태 · 폼 · 클라이언트 상태 처리 공통화',
+      'AI 응답 스트리밍, 문서 편집 및 장시간 작업의 실시간 상태 UI 구현',
+      'Storybook 문서화, 웹접근성 개선 및 CI/CD · 컨테이너 배포 구성',
+    ],
   },
   {
-    period: '2020.03 – 2022.06',
-    company: '이전 회사',
-    role: 'Frontend Developer',
-    tags: ['React', 'TypeScript', 'Spring Boot'],
+    period: '2021.12 – 2025.04',
+    company: '씨알에스큐브',
+    role: 'Web Developer',
+    tags: ['Vue', 'React', 'TypeScript', 'Java', 'Spring', 'RabbitMQ'],
     description:
-      '서비스 프론트엔드 개발 및 유지보수. 공통 컴포넌트 라이브러리 정비, 성능 최적화 및 배포 자동화 작업 담당.',
+      '의약품 안전관리 및 임상시험 솔루션의 프론트엔드와 Java · Spring 서버 기능을 개발했습니다.',
+    highlights: [
+      '복잡한 데이터 입력 화면과 REST API 기반 업무 로직 · 외부 시스템 연동',
+      '비동기 요청 상태 처리와 다중 사용자 동시 수정 충돌 감지 구현',
+      '운영 로그 조회와 관리자 도구 개발로 문제 확인 흐름 개선',
+      '레거시 화면의 Vue 3 전환, 공통 UI 정비 및 테스트 작성 기준 문서화',
+    ],
   },
 ];
 
@@ -46,6 +58,9 @@ const CareerSection = () => {
                   <span className="text-sm text-[var(--color-body)]">{c.role}</span>
                 </div>
                 <p className="text-sm text-[var(--color-body)] leading-relaxed">{c.description}</p>
+                <ul className="list-disc pl-5 space-y-1 text-sm text-[var(--color-body)] leading-relaxed">
+                  {c.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
+                </ul>
                 <div className="flex flex-wrap gap-1.5 mt-0.5">
                   {c.tags.map((tag) => (
                     <span key={tag} className="chip text-xs cursor-default select-none">

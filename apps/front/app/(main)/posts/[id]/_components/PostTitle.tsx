@@ -16,19 +16,25 @@ const PostTitle = ({ post }: PostTitleProps) => {
   const { startNavigation } = useNavigationLoading();
   return (
     <div className={'flex flex-col items-start gap-2'}>
-      <Tag className={'!text-base lg:hidden'} onClick={() => {
-        startNavigation();
-        router.push(`/posts?category=${menu.id}`);
-      }}>
+      <Tag
+        className={'!text-base lg:hidden'}
+        onClick={() => {
+          startNavigation();
+          router.push(`/posts?category=${menu.id}`);
+        }}
+      >
         {menu.name}
       </Tag>
       <h1 className={'text-2xl font-bold'}>{title}</h1>
       {subtitle && <h3 className={'text-lg'}>{subtitle}</h3>}
       <div className={'flex flex-col lg:flex-row gap-2 items-start py-2'}>
-        <Tag className={'!text-base hidden lg:block'} onClick={() => {
-          startNavigation();
-          router.push(`/posts?category=${menu.id}`);
-        }}>
+        <Tag
+          className={'!text-base hidden lg:block'}
+          onClick={() => {
+            startNavigation();
+            router.push(`/posts?category=${menu.id}`);
+          }}
+        >
           {menu.name}
         </Tag>
         <div className={'flex flex-col lg:flex-row gap-2 lg:items-center text-gray-600'}>
@@ -36,10 +42,13 @@ const PostTitle = ({ post }: PostTitleProps) => {
           <span className={'hidden lg:block'}>•</span>
           <div className={'flex gap-2'}>
             {tags.slice(0, 5).map((tag) => (
-              <Tag key={tag} onClick={() => {
-                startNavigation();
-                router.push(`/posts?search=${tag}`);
-              }}>
+              <Tag
+                key={tag}
+                onClick={() => {
+                  startNavigation();
+                  router.push(`/posts?search=${tag}`);
+                }}
+              >
                 #{tag}
               </Tag>
             ))}
@@ -47,12 +56,12 @@ const PostTitle = ({ post }: PostTitleProps) => {
         </div>
       </div>
       <div className={'flex gap-2'}>
-        <div className={'flex items-center gap-1 text-accent'}>
-          <CommentIcon />
+        <div className={'flex items-center gap-1 text-white'}>
+          <CommentIcon color={'white'} />
           <span>{comments.length}</span>
         </div>
-        <div className={'flex items-center gap-1 text-accent'}>
-          <ViewIcon />
+        <div className={'flex items-center gap-1 text-white'}>
+          <ViewIcon color={'white'} />
           <span>{viewCount}</span>
         </div>
       </div>

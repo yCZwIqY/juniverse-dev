@@ -28,7 +28,7 @@ const PostButtons = ({ title, subtitle }: PostButtonsProps) => {
           router.push('/posts');
         }}
       >
-        <svg fill="var(--tt-theme-text)" width="18px" height="18px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+        <svg fill="white" width="18px" height="18px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden>
           <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
           <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
           <g id="SVGRepo_iconCarrier">
