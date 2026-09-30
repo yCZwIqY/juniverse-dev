@@ -31,6 +31,13 @@ const PostDetailPage = async ({ params }: PostDetailPageProps) => {
   const post = await getPost(id);
   if (!post) return <div className={'border border-border rounded-lg p-4 bg-card mt-5'}>존재하지 않는 포스트입니다.</div>;
 
+  const adminEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+  const adminCommentIds = adminEmail
+    ? post.data.comments
+        .filter((comment) => comment.authorId.trim().toLowerCase() === adminEmail)
+        .map((comment) => comment.id)
+    : [];
+
   void increaseView(id);
 
   return (
@@ -50,7 +57,7 @@ const PostDetailPage = async ({ params }: PostDetailPageProps) => {
       </div>
       <PostNavigator next={post.data.next} prev={post.data.prev}/>
       <div className={'border border-border rounded-lg p-4 md:p-6 bg-card mt-4'}>
-        <PostComments comments={post.data.comments} />
+        <PostComments comments={post.data.comments} adminCommentIds={adminCommentIds} />
       </div>
       <QuickMenus content={post.data.content ?? ''} />
     </div>

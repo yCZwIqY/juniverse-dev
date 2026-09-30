@@ -7,9 +7,10 @@ import PostCommentItem from '@/app/(main)/posts/[id]/_components/PostCommentItem
 
 interface PostCommentsProps {
   comments: CommentData[];
+  adminCommentIds: number[];
 }
 
-const PostComments = ({ comments }: PostCommentsProps) => {
+const PostComments = ({ comments, adminCommentIds }: PostCommentsProps) => {
   return (
     <SessionProvider>
       <div className={'flex flex-col items-center'}>
@@ -24,7 +25,11 @@ const PostComments = ({ comments }: PostCommentsProps) => {
             {comments && comments.length > 0 ? (
               <>
                 {comments.map((comment: CommentData) => (
-                  <PostCommentItem key={comment.id} comment={comment} />
+                  <PostCommentItem
+                    key={comment.id}
+                    comment={comment}
+                    isAdmin={adminCommentIds.includes(comment.id)}
+                  />
                 ))}
               </>
             ) : (

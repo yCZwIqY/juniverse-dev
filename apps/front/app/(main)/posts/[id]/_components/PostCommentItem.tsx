@@ -7,9 +7,10 @@ import { useParams, useRouter } from 'next/navigation';
 
 interface PostCommentItemProps {
   comment: CommentData;
+  isAdmin: boolean;
 }
 
-const PostCommentItem = ({ comment }: PostCommentItemProps) => {
+const PostCommentItem = ({ comment, isAdmin }: PostCommentItemProps) => {
   const { id } = useParams();
   const router = useRouter();
   const { data: session } = useSession();
@@ -29,8 +30,11 @@ const PostCommentItem = ({ comment }: PostCommentItemProps) => {
 
   return (
     <div className={'w-full flex flex-col items-start gap-3 relative'}>
-      <div className={'flex gap-2 items-end'}>
+      <div className={'flex gap-2 items-center'}>
         <span className={'font-semibold'}>{comment.authorName}</span>
+        {isAdmin && (
+          <span className={'rounded-full bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-700'}>관리자</span>
+        )}
         <span className={'text-sm text-gray-400'}>
           {new Date(comment.createdAt).toLocaleDateString('ko-KR', { hour: '2-digit', minute: '2-digit' })}
         </span>
