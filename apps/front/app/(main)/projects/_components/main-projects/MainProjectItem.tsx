@@ -90,7 +90,7 @@ const MainProjectItem = ({ project }: MainProjectItemProps) => {
       <div className={'lg:col-span-2 flex lg:flex-col gap-2'}>
         <LinkButton
           href={project.demoUrl}
-          label={'프로젝트 바로가기'}
+          label={'바로가기'}
           variant={'primary'}
           icon={
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
