@@ -97,7 +97,7 @@ const MainProjects = ({ projects }: MainProjectsProps) => {
               type={'button'}
               aria-label={`${index + 1}번째 프로젝트 보기`}
               className={`h-2.5 w-2.5 rounded-full transition-colors ${
-                currentIndex === index ? 'bg-zinc-900' : 'bg-zinc-300'
+                currentIndex === index ? 'bg-[var(--color-primary)]' : 'bg-zinc-300'
               }`}
               onClick={() => setCurrentIndex(index)}
             />

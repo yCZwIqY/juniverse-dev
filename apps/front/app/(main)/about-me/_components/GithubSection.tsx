@@ -4,10 +4,18 @@ import { connection } from 'next/server';
 const GITHUB_LOGIN = 'yCZwIqY';
 const GITHUB_GRAPHQL_URL = 'https://api.github.com/graphql';
 
+const CONTRIBUTION_COLORS = {
+  NONE: 'var(--color-canvas-soft)',
+  FIRST_QUARTILE: 'color-mix(in srgb, var(--color-primary) 25%, var(--color-canvas-soft))',
+  SECOND_QUARTILE: 'color-mix(in srgb, var(--color-primary) 50%, var(--color-canvas-soft))',
+  THIRD_QUARTILE: 'color-mix(in srgb, var(--color-primary) 75%, var(--color-canvas-soft))',
+  FOURTH_QUARTILE: 'var(--color-primary)',
+} as const;
+
 type ContributionDay = {
   date: string;
   contributionCount: number;
-  color: string;
+  contributionLevel: keyof typeof CONTRIBUTION_COLORS;
 };
 
 type ContributionCalendar = {
@@ -31,7 +39,7 @@ const fetchContributionCalendar = async (): Promise<ContributionCalendar> => {
               contributionDays {
                 date
                 contributionCount
-                color
+                contributionLevel
               }
             }
           }
@@ -75,7 +83,7 @@ const fetchContributionCalendar = async (): Promise<ContributionCalendar> => {
       week.contributionDays.every((day) =>
         day && typeof day.date === 'string' &&
         Number.isInteger(day.contributionCount) && day.contributionCount >= 0 &&
-        typeof day.color === 'string',
+        Object.hasOwn(CONTRIBUTION_COLORS, day.contributionLevel),
       ),
     )
   ) {
@@ -88,7 +96,7 @@ const fetchContributionCalendar = async (): Promise<ContributionCalendar> => {
 // A failed refresh throws, allowing Next.js to retain the last successful calendar.
 const getCachedContributionCalendar = unstable_cache(
   fetchContributionCalendar,
-  ['github-contributions', GITHUB_LOGIN],
+  ['github-contributions', GITHUB_LOGIN, 'contribution-levels'],
   { revalidate: 600 },
 );
 
@@ -135,7 +143,7 @@ const GithubSection = async () => {
                     key={day.date}
                     title={`${day.date} · ${day.contributionCount}회`}
                     className="aspect-square rounded-sm"
-                    style={{ backgroundColor: day.color }}
+                    style={{ backgroundColor: CONTRIBUTION_COLORS[day.contributionLevel] }}
                   />
                 ))}
               </div>

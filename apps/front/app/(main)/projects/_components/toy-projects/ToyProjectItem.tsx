@@ -58,7 +58,7 @@ const ToyProjectItem = ({ project }: ToyProjectItemProps) => {
         </div>
 
         <div className={'flex items-center gap-1.5 shrink-0'}>
-          <TinyIconLink href={project.demoUrl} label={'데모 보기'}>
+          <TinyIconLink href={project.demoUrl} label={'프로젝트 바로가기'}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
               <path d="M14 3H21V10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               <path d="M10 14L21 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

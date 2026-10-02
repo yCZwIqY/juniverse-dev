@@ -57,8 +57,8 @@ const ProjectMetaData = ({ project }: ProjectMetaDataProps) => {
         {period && (
           <MetaRow label="기간">{period}</MetaRow>
         )}
-        <MetaRow label="Demo">
-          <LinkText href={project.demoUrl} label={project.demoUrl ? '바로가기 ↗' : undefined} />
+        <MetaRow label="프로젝트">
+          <LinkText href={project.demoUrl} label={project.demoUrl ? '프로젝트 바로가기 ↗' : undefined} />
         </MetaRow>
         <MetaRow label="GitHub">
           <LinkText href={project.gitHubUrl} label={project.gitHubUrl ? '저장소 보기 ↗' : undefined} />
