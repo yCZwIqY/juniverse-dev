@@ -27,14 +27,17 @@ const PostItem = ({ id, title, subtitle, menu, createdAt, tags, viewCount, comme
       <div className="flex flex-col gap-1.5 pointer-events-none">
         <Tag
           className="self-start text-xs pointer-events-auto relative z-10"
-          onClick={(e) => { e.stopPropagation(); updateSearchParams('category', menu.id.toString()); }}
+          onClick={(e) => {
+            e.stopPropagation();
+            updateSearchParams('category', menu.id.toString());
+          }}
         >
           {menu.name}
         </Tag>
-        <div className="text-base font-bold text-[var(--color-ink)] leading-snug" aria-hidden="true">{title}</div>
-        {subtitle && (
-          <p className="text-sm text-[var(--muted-foreground)] line-clamp-1 leading-relaxed">{subtitle}</p>
-        )}
+        <div className="text-base font-bold text-[var(--color-ink)] leading-snug" aria-hidden="true">
+          {title}
+        </div>
+        {subtitle && <p className="text-sm text-[var(--muted-foreground)] line-clamp-1 leading-relaxed">{subtitle}</p>}
       </div>
       <div className="flex items-center justify-between gap-2 pointer-events-none">
         <div className="flex gap-2 flex-wrap">
@@ -42,7 +45,10 @@ const PostItem = ({ id, title, subtitle, menu, createdAt, tags, viewCount, comme
             <Tag
               key={tag}
               className="text-xs pointer-events-auto relative z-10"
-              onClick={(e) => { e.stopPropagation(); updateSearchParams('search', tag); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                updateSearchParams('search', tag);
+              }}
             >
               #{tag}
             </Tag>
@@ -52,11 +58,11 @@ const PostItem = ({ id, title, subtitle, menu, createdAt, tags, viewCount, comme
           <span className="tabular-nums">{dateStr}</span>
           <div className="flex gap-2">
             <span className="flex gap-1 items-center">
-              <CommentIcon />
+              <CommentIcon color={'var(--muted-foreground)'} />
               {comments?.length ?? 0}
             </span>
             <span className="flex gap-1 items-center">
-              <ViewIcon />
+              <ViewIcon color={'var(--muted-foreground)'} />
               {viewCount}
             </span>
           </div>

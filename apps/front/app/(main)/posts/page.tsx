@@ -19,10 +19,7 @@ interface ListPageProps {
 
 const PostListPage = async ({ searchParams }: ListPageProps) => {
   const { search, category, page } = await searchParams;
-  const [posts, menus] = await Promise.all([
-    getPosts(page ?? 1, 10, category ?? 0, search ?? ''),
-    getMenuList('tree'),
-  ]);
+  const [posts, menus] = await Promise.all([getPosts(page ?? 1, 10, category ?? 0, search ?? ''), getMenuList('tree')]);
 
   const menuItems = menus?.data ?? [];
 
@@ -33,10 +30,10 @@ const PostListPage = async ({ searchParams }: ListPageProps) => {
       {/* 모바일 카테고리 트리거 */}
       <MobileCategoryDrawer menus={menuItems} />
 
-      <div className={'lg:grid lg:grid-cols-[5fr_2fr] gap-4 min-w-0 flex flex-col'}>
+      <div className={'lg:grid lg:grid-cols-[5fr_2fr] gap-4 min-w-0 flex flex-col '}>
         <PostList posts={posts?.items ?? []} page={posts?.page ?? 1} total={posts?.total ?? 0} />
         {/* 데스크탑 사이드바 */}
-        <div className="hidden lg:block">
+        <div className="hidden lg:sticky lg:top-24 lg:block lg:self-start">
           <MenuList menus={menuItems} />
         </div>
       </div>

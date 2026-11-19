@@ -1,23 +1,50 @@
 'use client';
 
 import { mergeAttributes, Node } from '@tiptap/core';
+import type { Node as ProseMirrorNode } from '@tiptap/pm/model';
+import { Plugin } from '@tiptap/pm/state';
+import { Decoration, DecorationSet } from '@tiptap/pm/view';
 import type { NodeViewProps } from '@tiptap/react';
 import { NodeViewContent, NodeViewWrapper, ReactNodeViewRenderer } from '@tiptap/react';
-import { useEffect, useRef } from 'react';
 import Prism from 'prismjs';
 
-const LANGUAGES = ['javascript', 'typescript', 'css', 'html', 'bash', 'java', 'sql', 'jsx', 'tsx', 'yaml', 'docker', 'gradle', 'dart'];
+const LANGUAGES = ['javascript', 'typescript', 'css', 'html', 'bash', 'java', 'kotlin', 'rust', 'sql', 'jsx', 'tsx', 'yaml', 'docker', 'gradle', 'dart'];
+
+function highlightCodeBlocks(doc: ProseMirrorNode, nodeName: string) {
+  const decorations: Decoration[] = [];
+
+  doc.descendants((node, position) => {
+    if (node.type.name !== nodeName) return;
+
+    const language = node.attrs.language;
+    const grammar = Object.hasOwn(Prism.languages, language) && Prism.languages[language];
+    if (!grammar) return false;
+
+    let offset = position + 1;
+    function decorate(tokens: (string | Prism.Token)[]) {
+      for (const token of tokens) {
+        if (typeof token === 'string') {
+          offset += token.length;
+          continue;
+        }
+
+        const start = offset;
+        decorate(Array.isArray(token.content) ? token.content : [token.content]);
+        if (start < offset) {
+          decorations.push(Decoration.inline(start, offset, { class: ['token', token.type, token.alias].flat().filter(Boolean).join(' ') }));
+        }
+      }
+    }
+
+    decorate(Prism.tokenize(node.textContent, grammar));
+    return false;
+  });
+
+  return DecorationSet.create(doc, decorations);
+}
 
 const CodeBlockPrismView = ({ node, updateAttributes, editor }: Pick<NodeViewProps, 'node' | 'updateAttributes' | 'editor'>) => {
   const { language } = node.attrs as { language: string };
-  const code = node.textContent;
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (ref.current) {
-      Prism.highlightElement(ref.current);
-    }
-  }, [code, language]);
 
   const onChangeLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
     updateAttributes({ language: e.target.value });
@@ -51,9 +78,9 @@ const CodeBlockPrismView = ({ node, updateAttributes, editor }: Pick<NodeViewPro
         </select>
       )}
       <pre className={`language-${language}`}>
-        <NodeViewContent
+        <NodeViewContent<'code'>
+          as="code"
           spellCheck={false}
-          ref={ref}
           className={`language-${language}`}
           style={{ outline: 'none', whiteSpace: 'pre-wrap' }}
         />
@@ -74,12 +101,16 @@ export const CodeBlockPrism = Node.create({
     return {
       language: {
         default: 'javascript',
+        parseHTML: (element) => element.getAttribute('language')
+          ?? element.querySelector('code')?.className.match(/(?:^|\s)language-([^\s]+)/)?.[1]
+          ?? element.className.match(/(?:^|\s)language-([^\s]+)/)?.[1]
+          ?? 'javascript',
       },
     };
   },
 
   parseHTML() {
-    return [{ tag: 'pre' }];
+    return [{ tag: 'pre', preserveWhitespace: 'full' }];
   },
 
   renderHTML({ node, HTMLAttributes }) {
@@ -88,6 +119,23 @@ export const CodeBlockPrism = Node.create({
 
   addNodeView() {
     return ReactNodeViewRenderer(CodeBlockPrismView);
+  },
+
+  addProseMirrorPlugins() {
+    const nodeName = this.name;
+    return [new Plugin<DecorationSet>({
+      state: {
+        init: (_, state) => highlightCodeBlocks(state.doc, nodeName),
+        apply: (transaction, previous) => transaction.docChanged
+          ? highlightCodeBlocks(transaction.doc, nodeName)
+          : previous,
+      },
+      props: {
+        decorations(state) {
+          return this.getState(state);
+        },
+      },
+    })];
   },
 });
 

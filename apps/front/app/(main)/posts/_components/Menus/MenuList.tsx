@@ -7,7 +7,7 @@ interface MenuListProps {
 
 const MenuList = async ({ menus }: MenuListProps) => {
   return (
-    <section className="glass-card p-4 sticky top-24 self-start">
+    <section className="glass-card p-4">
       <div className="eyebrow mb-3">Categories</div>
       <div className="flex flex-col gap-1">
         {(menus ?? []).map((menu) => (
